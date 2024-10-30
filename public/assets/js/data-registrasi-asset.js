@@ -319,7 +319,7 @@ $(document).ready(function() {
                 $('#edit-purchase_date').val(data.purchase_date);
                 $('#edit-warranty').val(data.warranty);
                 $('#edit-periodic_maintenance').val(data.periodic_maintenance);
-                
+                $('#submitUpdate').attr('data_id', assetId);
                 // Show the modal
                 $('#editDataAsset').modal('show');
             },
@@ -331,34 +331,37 @@ $(document).ready(function() {
     
     
     
-
     $('#updateAssetForm').on('submit', function(e) {
-      e.preventDefault(); // Prevent default form submission
-
-      const assetId = $('#assetId').val();
-      const formData = $(this).serialize(); // Serialize form data
-
-      $.ajax({
-          url: `/admin/registrasi_asset/${assetId}`,
-          method: 'PUT',
-          data: formData,
-          success: function(response) {
-              alert(response.message); // Show success message
-              $('#editDataAsset').modal('hide'); // Hide the modal
-              table.ajax.reload(); // Reload the DataTable to reflect changes
-          },
-          error: function(xhr) {
-              const errors = xhr.responseJSON.errors;
-              let errorMessage = 'Please fix the following errors:<ul>';
-              $.each(errors, function(key, value) {
-                  errorMessage += `<li>${value[0]}</li>`;
-              });
-              errorMessage += '</ul>';
-              alert(errorMessage);
-          }
-      });
-  });
-
+        e.preventDefault();
+    
+        const assetId = $('#submitUpdate').attr('data_id');
+        console.log(assetId)
+        if (!assetId) {
+            alert("Asset ID is missing!");
+            return;
+        }
+    
+        $.ajax({
+            url: `/admin/registrasi_asset/update_data_registrasi_asset/${assetId}`,
+            method: 'PUT',
+            data: $(this).serialize(),
+            success: function(response) {
+                alert(response.message);
+                $('#editDataAsset').modal('hide');
+                table.ajax.reload();
+            },
+            error: function(xhr) {
+                const errors = xhr.responseJSON.errors;
+                let errorMessage = 'Please fix the following errors:<ul>';
+                $.each(errors, function(key, value) {
+                    errorMessage += `<li>${value[0]}</li>`;
+                });
+                errorMessage += '</ul>';
+                alert(errorMessage);
+            }
+        });
+    });
+    
 
       //get detail data
       // $('#coba').on('click', '.update-btn', function() {

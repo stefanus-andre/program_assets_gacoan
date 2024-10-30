@@ -10,6 +10,7 @@ class MasterRegistrasiImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new MasterRegistrasiModel([
+            'id' => $row['id'],
             'register_code' => $row['register_code'],
             'asset_name' => $row['asset_name'],
             'serial_number' => $row['serial_number'],
@@ -28,6 +29,8 @@ class MasterRegistrasiImport implements ToModel, WithHeadingRow
             'purchase_date' => $row['purchase_date'],
             'warranty' => $row['warranty'],
             'periodic_maintenance' => $row['periodic_maintenance'],
+            'qr_code_path' => $row['qr_core_path'],
+            'approve_status' => $row['approve_status']
         ]);
     }
 }

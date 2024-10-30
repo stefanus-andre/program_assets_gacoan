@@ -126,17 +126,21 @@ public function AddDataRegistrasiAsset(Request $request) {
     imagefilledrectangle($qrImage, $xPosition, $yPosition, $xPosition + $squareSize, $yPosition + $squareSize, $squareColor);
 
     // Define the file path for the QR code
-    $filePath = public_path('qrcodes');
+    $filePath = base_path('qrcodes');
     $fileName = $register_code . '.png';
 
     // Create the directory if it doesn't exist
     if (!File::exists($filePath)) {
         File::makeDirectory($filePath, 0755, true);
     }
+    
+    if (!File::exists($filePath)) {
+    File::makeDirectory($filePath, 0755, true);
+}
 
     // Save the modified QR code image
-    imagepng($qrImage, $filePath . '/' . $fileName);
-    imagedestroy($qrImage); // Free up memory
+  imagepng($qrImage, $filePath . '/' . $fileName);
+imagedestroy($qrImage); // Free
 
     // Store asset data in the database
     $asset = new MasterRegistrasiModel();
@@ -256,9 +260,13 @@ public function AddDataRegistrasiAsset(Request $request) {
 
 
 
-    public function show($id)
+    public function GetDetailDataRegistrasiAsset($id)
     {
-        $asset = MasterRegistrasiModel::findOrFail($id);
+        $asset = MasterRegistrasiModel::find($id);
+        if (!$asset) {
+            return response()->json(['message' => 'Asset not found.'], 404);
+        }
+    
         return response()->json($asset);
     }
 
@@ -276,22 +284,21 @@ public function AddDataRegistrasiAsset(Request $request) {
             'satuan' => 'nullable|string|max:100',
             'register_location' => 'nullable|string|max:255',
             'layout' => 'nullable|string|max:255',
-            'register_date' => 'nullable|date', // Ensure the date format is valid
+            'register_date' => 'nullable|date',
             'supplier' => 'nullable|string|max:255',
             'status' => 'nullable|string|max:100',
             'purchase_number' => 'nullable|string|max:255',
-            'purchase_date' => 'nullable|date', // Ensure the date format is valid
+            'purchase_date' => 'nullable|date',
             'warranty' => 'nullable|string|max:255',
             'periodic_maintenance' => 'nullable|string|max:255',
         ]);
         
-
         $asset = MasterRegistrasiModel::findOrFail($id);
         $asset->update($request->all());
-
+    
         return response()->json(['message' => 'Asset updated successfully!']);
     }
-
+    
 
     
     

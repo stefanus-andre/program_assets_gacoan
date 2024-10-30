@@ -128,9 +128,9 @@ public function getMoveOutById($id)
 
 public function AddDataMoveOut(Request $request)
 {
-    // Validasi data yang dikirimkan
+    // Validate the incoming request data
     $request->validate([
-        'out_date' => 'required|date',
+        'out_date' => 'required|date_format:Y-m-d', // Change to just date format
         'from_loc' => 'required|string|max:255',
         'dest_loc' => 'required|string|max:255',
         'out_desc' => 'required|string|max:255',
@@ -145,9 +145,9 @@ public function AddDataMoveOut(Request $request)
     ]);
 
     try {
-        // Buat instance dari model MasterMoveOut
+        // Create a new instance of the MasterMoveOut model
         $moveout = new MasterMoveOut();
-        $moveout->out_date = $request->input('out_date');
+        $moveout->out_date = Carbon::createFromFormat('Y-m-d', $request->input('out_date')); // Use date format
         $moveout->from_loc = $request->input('from_loc');
         $moveout->dest_loc = $request->input('dest_loc');
         $moveout->out_desc = $request->input('out_desc');
@@ -158,26 +158,25 @@ public function AddDataMoveOut(Request $request)
         $moveout->is_confirm = '1';
         $moveout->create_by = Auth::user()->username;
 
-        // Menghasilkan out_no secara otomatis untuk setiap aset
+        // Generate out_no automatically for each asset
         $maxMoveoutId = MasterMoveOut::max('out_no');
         $out_no_base = $maxMoveoutId ? $maxMoveoutId + 1 : 1;
 
-        // Menyimpan data moveout ke database
-        $moveout->out_no = $out_no_base; // Set out_no untuk pertama
-        // Menghasilkan out_id secara otomatis
-        $moveout->out_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-01-' . Carbon::now()->format('mY'); // Misal, untuk out_id
-        
-        $moveout->save(); // Simpan moveout
+        // Save the moveout data to the database
+        $moveout->out_no = $out_no_base; // Set out_no for the first
+        $moveout->out_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-01-' . Carbon::now()->format('mY'); // Generate out_id
 
-        // Loop melalui aset untuk menyimpan detail
+        $moveout->save(); // Save the moveout
+
+        // Loop through assets to save detail
         foreach ($request->input('asset_id') as $index => $assetId) {
-            // Menghasilkan out_det_id secara otomatis
+            // Generate out_det_id automatically
             $out_det_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-' . str_pad($index + 1, 4, '0', STR_PAD_LEFT) . '-' . Carbon::now()->format('mY');
 
-            // Simpan data detail untuk aset
+            // Save asset detail data
             DB::table('t_out_detail')->insert([
-                'out_det_id' => $out_det_id,  // Menggunakan out_det_id yang dihasilkan
-                'out_id' => $moveout->out_id,  // Menggunakan out_id yang dihasilkan
+                'out_det_id' => $out_det_id,
+                'out_id' => $moveout->out_id,
                 'asset_id' => $assetId,
                 'asset_tag' => $request->input('register_code')[$index],
                 'serial_number' => $request->input('serial_number')[$index],

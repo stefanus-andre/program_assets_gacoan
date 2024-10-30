@@ -11,7 +11,7 @@ use Carbon\Carbon; // Untuk tanggal dan waktu
 class MasterMoveOut extends Model
 {
     use HasFactory;
-    // use SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 't_out';
     protected $primaryKey = 'out_id';
@@ -40,6 +40,7 @@ class MasterMoveOut extends Model
     ];
     
     
+    
     public function details()
     {
         return $this->hasMany(TOutDetail::class, 'out_id', 'out_id');
@@ -50,7 +51,7 @@ class MasterMoveOut extends Model
         return $this->hasMany(TOutDetail::class, 'out_id', 'out_id');
     }
 
-    public $timestamps = false; // Nonaktifkan pengelolaan otomatis kolom created_at dan updated_at
+    public $timestamps = true; // Nonaktifkan pengelolaan otomatis kolom created_at dan updated_at
 
     protected static function boot()
     {

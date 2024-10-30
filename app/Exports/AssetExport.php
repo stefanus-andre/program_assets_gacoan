@@ -34,7 +34,6 @@ class AssetExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'ID',
             'Register Code',
             'Asset Name',
             'Serial Number',
@@ -52,11 +51,7 @@ class AssetExport implements FromCollection, WithHeadings
             'Purchase Number',
             'Purchase Date',
             'Warranty',
-            'Periodic Maintenance',
-            'QR Code Path',
-            'created_at',
-            'updated_at',
-            'deleted_at'
+            'Periodic Maintenance'
         ];
     }
 }

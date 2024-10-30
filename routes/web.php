@@ -22,16 +22,12 @@ use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ConditionController;
 use App\Http\Controllers\ControlController;
 use App\Http\Controllers\DeptController;
-use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\GroupUserController;
 use App\Http\Controllers\JobLevelController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MtcController;
-use App\Http\Controllers\MovementController;
-use App\Http\Controllers\MovementInController;
-use App\Http\Controllers\MovementOutController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\PeriodicMtcController;
 use App\Http\Controllers\PriorityController;
@@ -50,10 +46,9 @@ Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login'); // Pastikan nama metode ditulis kecil
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Auth::routes();
+Auth::routes();
 
-Route::group(['middleware' => ['auth']], function()
-{
+Route::group(['middleware' => ['auth']], function(){
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     // Route::resource('products', );
@@ -65,13 +60,13 @@ Route::prefix('admin/registrasi_asset')->group(function(){
     Route::get('/get_data_registrasi_asset',[RegistrasiAssetController::class, 'GetDataRegistrasiAsset']);
     Route::post('/tambah_data_registrasi_asset', [RegistrasiAssetController::class,'AddDataRegistrasiAsset']);
     Route::get('/get_detail_data_asset/{id}', [RegistrasiAssetController::class,'GetDetailDataRegistrasiAsset']);
-    Route::put('/update_data_registrasi_asset/{id}', [RegistrasiAssetController::class,'UpdateDataRegistrasiAsset']);
+    Route::put('/admin/registrasi_asset/update_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
     Route::delete('/delete_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'DeleteDataRegistrasiAsset']);
     Route::get('/export_data_asset', [RegistrasiAssetController::class,'ExportToExcel']);
     Route::post('/import', [MasterRegistrasiModel::class, 'import'])->name('import');
 }); 
-Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController::class, 'show']);
-Route::put('/admin/registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
+Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController::class, 'GetDetailDataRegistrasiAsset']);
+Route::put('/admin/registrasi_asset/update_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
 Route::post('admin/registrasi_asset/approve', [RegistrasiAssetController::class, 'approve']);
 Route::get('/assets/details/{register_code}', [RegistrasiAssetController::class, 'TampilDataQR'])->name('assets.details');
 
@@ -130,195 +125,6 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::put('/admin/review-regs/edit/{id}', [AssetsController::class, 'updateDataReview'])->name('update.review-reg');
     Route::delete('/admin/review-regs/delete/{id}', [AssetsController::class, 'deleteDataReview'])->name('delete.review-reg');
 
-    // Disposal
-    Route::get('/admin/moveout', [MovementOutController::class, 'HalamanMoveOut']);
-    Route::get('/admin/moveout', [MovementOutController::class, 'HalamanMoveOut'])->name('Admin.moveout');
-    Route::post('/add-moveout', [MovementOutController::class, 'AddDataMoveOut'])->name('add.moveout');
-    Route::get('/get-moveout', [MovementOutController::class, 'GetMoveOut'])->name('get.moveout');
-    Route::get('/admin/moveouts', [MovementOutController::class, 'Index'])->name('Admin.moveout');
-    Route::get('/admin/moveouts/edit/{id}', [MovementOutController::class, 'showEditForm'])->name('edit.moveout');
-    Route::get('/admin/moveouts/put/{id}', [MovementOutController::class, 'showPutForm']);
-    Route::put('/admin/moveouts/edit/{id}', [MovementOutController::class, 'updateDataMoveOut'])->name('update.moveout');
-    Route::delete('/admin/moveouts/delete/{id}', [MovementOutController::class, 'deleteDataMoveOut'])->name('delete.moveout');
-    Route::get('/get-asset-details/{id}', [MovementOutController::class, 'getAssetDetails']);
-    Route::get('/admin/moveouts/detail/{id}', [MovementOutController::class, 'getMoveoutDetail']);
-    Route::get('/fetch-moveout-details/{id}', [MovementOutController::class, 'getDetails']);
-    Route::get('/moveout/{id}', [MovementOutController::class, 'getMoveOutById']);
-    Route::get('/moveout/{id}/edit', 'MovementOutController@edit');
-    Route::get('/assets/{id}', 'AssetController@show');
-    
-    Route::get('/admin/movein', [MovementInController::class, 'HalamanMoveIn']);
-    Route::get('/admin/movein', [MovementInController::class, 'HalamanMoveIn'])->name('Admin.movein');
-    Route::post('/add-movein', [MovementInController::class, 'AddDataMoveIn'])->name('add.movein');
-    Route::get('/get-movein', [MovementInController::class, 'GetMoveIn'])->name('get.movein');
-    Route::get('/admin/moveins', [MovementInController::class, 'Index'])->name('Admin.movein');
-    Route::get('/admin/moveins/edit/{id}', [MovementInController::class, 'showEditForm'])->name('edit.movein');
-    Route::put('/admin/moveins/edit/{id}', [MovementInController::class, 'updateDataMoveIn'])->name('update.movein');
-    Route::delete('/admin/moveins/delete/{id}', [MovementInController::class, 'deleteDataMoveIn'])->name('delete.movein');
-    Route::get('/get-asset-details/{id}', [MovementInController::class, 'getAssetDetails']);
-    Route::get('/admin/moveins/detail/{id}', [MovementInController::class, 'getMoveinDetail']);
-    Route::get('/fetch-movein-details/{id}', [MovementInController::class, 'getDetails']);
-    Route::get('/movein/{id}/edit', 'MoveInController@edit');
-    Route::get('/assets/{id}', 'AssetController@show');
-    
-    Route::get('/admin/data-movement', [MovementController::class, 'HalamanMove']);
-    Route::get('/admin/data-movement', [MovementController::class, 'HalamanMove'])->name('Admin.data-movement');
-    Route::post('/add-data-movement', [MovementController::class, 'AddDataMove'])->name('add.data-movement');
-    Route::get('/get-data-movement', [MovementController::class, 'GetMove'])->name('get.data-movement');
-    Route::get('/admin/data-movements', [MovementController::class, 'Index'])->name('Admin.data-movement');
-    Route::get('/admin/data-movements/edit/{id}', [MovementController::class, 'showEditForm'])->name('edit.data-movement');
-    Route::put('/admin/data-movements/edit/{id}', [MovementController::class, 'updateDataMove'])->name('update.data-movement');
-    Route::delete('/admin/data-movements/delete/{id}', [MovementController::class, 'deleteDataMove'])->name('delete.data-movement');
-    
-    // Delivery & Confirm
-    Route::get('/admin/delivery', [DeliveryController::class, 'HalamanDelivery']);
-    Route::get('/admin/delivery', [DeliveryController::class, 'HalamanDelivery'])->name('Admin.delivery');
-    Route::post('/add-delivery', [DeliveryController::class, 'AddDataDelivery'])->name('add.delivery');
-    Route::get('/get-delivery', [DeliveryController::class, 'GetDelivery'])->name('get.delivery');
-    Route::get('/admin/deliverys', [DeliveryController::class, 'Index'])->name('Admin.delivery');
-    Route::get('/admin/deliverys/edit/{id}', [DeliveryController::class, 'showEditForm'])->name('edit.delivery');
-    Route::put('/admin/deliverys/edit/{id}', [DeliveryController::class, 'updateDataDelivery'])->name('update.delivery');
-    Route::delete('/admin/deliverys/delete/{id}', [DeliveryController::class, 'deleteDataDelivery'])->name('delete.delivery');
-    
-    Route::get('/admin/confirm', [DeliveryController::class, 'HalamanConfirm']);
-    Route::get('/admin/confirm', [DeliveryController::class, 'HalamanConfirm'])->name('Admin.confirm');
-    Route::post('/add-confirm', [DeliveryController::class, 'AddDataConfirm'])->name('add.confirm');
-    Route::get('/get-confirm', [DeliveryController::class, 'GetConfirm'])->name('get.confirm');
-    Route::get('/admin/confirms', [DeliveryController::class, 'IndexConfirm'])->name('Admin.confirm');
-    Route::get('/admin/confirms/edit/{id}', [DeliveryController::class, 'showEditForm'])->name('edit.confirm');
-    Route::put('/admin/confirms/edit/{id}', [DeliveryController::class, 'updateDataConfirm'])->name('update.confirm');
-    Route::delete('/admin/confirms/delete/{id}', [DeliveryController::class, 'deleteDataConfirm'])->name('delete.confirm');
-    
-    // Approval
-    Route::get('/admin/apprmoveout-am', [MovementController::class, 'HalamanAmo1']);
-    Route::get('/admin/apprmoveout-am', [MovementController::class, 'HalamanAmo1'])->name('Admin.apprmoveout-am');
-    Route::post('/add-apprmoveout-am', [MovementController::class, 'AddDataAmo1'])->name('add.apprmoveout-am');
-    Route::get('/get-apprmoveout-am', [MovementController::class, 'GetAmo1'])->name('get.apprmoveout-am');
-    Route::get('/admin/apprmoveout-ams', [MovementController::class, 'Index1'])->name('Admin.apprmoveout-am');
-    Route::get('/admin/apprmoveout-ams/edit/{id}', [MovementController::class, 'showEditForm1'])->name('edit.apprmoveout-am');
-    Route::put('/admin/apprmoveout-ams/edit/{id}', [MovementController::class, 'updateDataAmo1'])->name('update.apprmoveout-am');
-    Route::delete('/admin/apprmoveout-ams/delete/{id}', [MovementController::class, 'deleteDataAmo1'])->name('delete.apprmoveout-am');
-    
-    Route::get('/admin/apprmoveout-rm', [MovementController::class, 'HalamanAmo2']);
-    Route::get('/admin/apprmoveout-rm', [MovementController::class, 'HalamanAmo2'])->name('Admin.apprmoveout-rm');
-    Route::post('/add-apprmoveout-rm', [MovementController::class, 'AddDataAmo2'])->name('add.apprmoveout-rm');
-    Route::get('/get-apprmoveout-rm', [MovementController::class, 'GetAmo1'])->name('get.apprmoveout-rm');
-    Route::get('/admin/apprmoveout-rms', [MovementController::class, 'Index2'])->name('Admin.apprmoveout-rm');
-    Route::get('/admin/apprmoveout-rms/edit/{id}', [MovementController::class, 'showEditForm2'])->name('edit.apprmoveout-rm');
-    Route::put('/admin/apprmoveout-rms/edit/{id}', [MovementController::class, 'updateDataAmo2'])->name('update.apprmoveout-rm');
-    Route::delete('/admin/apprmoveout-rms/delete/{id}', [MovementController::class, 'deleteDataAmo2'])->name('delete.apprmoveout-rm');
-    
-    Route::get('/admin/apprmoveout-sdgasset', [MovementController::class, 'HalamanAmo3']);
-    Route::get('/admin/apprmoveout-sdgasset', [MovementController::class, 'HalamanAmo3'])->name('Admin.apprmoveout-sdgasset');
-    Route::post('/add-apprmoveout-sdgasset', [MovementController::class, 'AddDataAmo3'])->name('add.apprmoveout-sdgasset');
-    Route::get('/get-apprmoveout-sdgasset', [MovementController::class, 'GetAmo1'])->name('get.apprmoveout-sdgasset');
-    Route::get('/admin/apprmoveout-sdgassets', [MovementController::class, 'Index3'])->name('Admin.apprmoveout-sdgasset');
-    Route::get('/admin/apprmoveout-sdgassets/edit/{id}', [MovementController::class, 'showEditForm3'])->name('edit.apprmoveout-sdgasset');
-    Route::put('/admin/apprmoveout-sdgassets/edit/{id}', [MovementController::class, 'updateDataAmo3'])->name('update.apprmoveout-sdgasset');
-    Route::delete('/admin/apprmoveout-sdgassets/delete/{id}', [MovementController::class, 'deleteDataAmo3'])->name('delete.apprmoveout-sdgasset');
-
-    //Review    
-    Route::get('/admin/rev-head', [MovementController::class, 'HalamanHead']);
-    Route::get('/admin/rev-head', [MovementController::class, 'HalamanHead'])->name('Admin.rev-head');
-    Route::get('/admin/rev-mnr', [MovementController::class, 'HalamanMnr']);
-    Route::get('/admin/rev-mnr', [MovementController::class, 'HalamanMnr'])->name('Admin.rev-mnr');
-    Route::get('/admin/rev-taf', [MovementController::class, 'HalamanTaf']);
-    Route::get('/admin/rev-taf', [MovementController::class, 'HalamanTaf'])->name('Admin.rev-taf');
-
-    // Disposal
-    Route::get('/admin/disout', [DisposalOutController::class, 'HalamanDisOut']);
-    Route::get('/admin/disout', [DisposalOutController::class, 'HalamanDisOut'])->name('Admin.disout');
-    Route::post('/add-disout', [DisposalOutController::class, 'AddDataDisOut'])->name('add.disout');
-    Route::get('/get-disout', [DisposalOutController::class, 'GetDisOut'])->name('get.disout');
-    Route::get('/admin/disouts', [DisposalOutController::class, 'Index'])->name('Admin.disout');
-    Route::get('/admin/disouts/edit/{id}', [DisposalOutController::class, 'showEditForm'])->name('edit.disout');
-    Route::get('/admin/disouts/put/{id}', [DisposalOutController::class, 'showPutForm']);
-    Route::put('/admin/disouts/edit/{id}', [DisposalOutController::class, 'updateDataDisOut'])->name('update.disout');
-    Route::delete('/admin/disouts/delete/{id}', [DisposalOutController::class, 'deleteDataDisOut'])->name('delete.disout');
-    Route::get('/get-asset-details/{id}', [DisposalOutController::class, 'getAssetDetails']);
-    Route::get('/admin/disouts/detail/{id}', [DisposalOutController::class, 'getDisoutDetail']);
-    Route::get('/fetch-disout-details/{id}', [DisposalOutController::class, 'getDetails']);
-    Route::get('/disout/{id}', [DisposalOutController::class, 'getDisOutById']);
-    Route::get('/disout/{id}/edit', 'DisposalController@edit');
-    Route::get('/assets/{id}', 'AssetController@show');
-    
-    Route::get('/admin/disin', [DisposalInController::class, 'HalamanMoveIn']);
-    Route::get('/admin/disin', [DisposalInController::class, 'HalamanMoveIn'])->name('Admin.movein');
-    Route::post('/add-disin', [DisposalInController::class, 'AddDataMoveIn'])->name('add.movein');
-    Route::get('/get-disin', [DisposalInController::class, 'GetMoveIn'])->name('get.movein');
-    Route::get('/admin/disins', [DisposalInController::class, 'Index'])->name('Admin.movein');
-    Route::get('/admin/disins/edit/{id}', [DisposalInController::class, 'showEditForm'])->name('edit.movein');
-    Route::put('/admin/disins/edit/{id}', [DisposalInController::class, 'updateDataMoveIn'])->name('update.movein');
-    Route::delete('/admin/disins/delete/{id}', [DisposalInController::class, 'deleteDataMoveIn'])->name('delete.movein');
-    Route::get('/get-asset-details/{id}', [DisposalInController::class, 'getAssetDetails']);
-    Route::get('/admin/disins/detail/{id}', [DisposalInController::class, 'getMoveinDetail']);
-    Route::get('/fetch-disin-details/{id}', [DisposalInController::class, 'getDetails']);
-    Route::get('/disin/{id}/edit', 'MoveInController@edit');
-    Route::get('/assets/{id}', 'AssetController@show');
-    
-    Route::get('/admin/data-disposal', [DisposalController::class, 'HalamanDisposal']);
-    Route::get('/admin/data-disposal', [DisposalController::class, 'HalamanDisposal'])->name('Admin.data-disposal');
-    Route::post('/add-data-disposal', [DisposalController::class, 'AddDataDisposal'])->name('add.data-disposal');
-    Route::get('/get-data-disposal', [DisposalController::class, 'GetDisposal'])->name('get.data-disposal');
-    Route::get('/admin/data-disposals', [DisposalController::class, 'Index'])->name('Admin.data-disposal');
-    Route::get('/admin/data-disposals/edit/{id}', [DisposalController::class, 'showEditForm'])->name('edit.data-disposal');
-    Route::put('/admin/data-disposals/edit/{id}', [DisposalController::class, 'updateDataDisposal'])->name('update.data-disposal');
-    Route::delete('/admin/data-disposals/delete/{id}', [DisposalController::class, 'deleteDataDisposal'])->name('delete.data-disposal');
-    
-    // Delivery & Confirm
-    Route::get('/admin/deliverydisposal', [DeliveryDisposalController::class, 'HalamanDeliveryDisposal']);
-    Route::get('/admin/deliverydisposal', [DeliveryDisposalController::class, 'HalamanDeliveryDisposal'])->name('Admin.deliverydisposal');
-    Route::post('/add-deliverydisposal', [DeliveryDisposalController::class, 'AddDataDeliveryDisposal'])->name('add.deliverydisposal');
-    Route::get('/get-deliverydisposal', [DeliveryDisposalController::class, 'GetDeliveryDisposal'])->name('get.deliverydisposal');
-    Route::get('/admin/deliverydisposals', [DeliveryDisposalController::class, 'Index'])->name('Admin.deliverydisposal');
-    Route::get('/admin/deliverydisposals/edit/{id}', [DeliveryDisposalController::class, 'showEditForm'])->name('edit.deliverydisposal');
-    Route::put('/admin/deliverydisposals/edit/{id}', [DeliveryDisposalController::class, 'updateDataDeliveryDisposal'])->name('update.deliverydisposal');
-    Route::delete('/admin/deliverydisposals/delete/{id}', [DeliveryDisposalController::class, 'deleteDataDeliveryDisposal'])->name('delete.deliverydisposal');
-    
-    Route::get('/admin/confirmdis', [DeliveryDisposalController::class, 'HalamanConfirmDis']);
-    Route::get('/admin/confirmdis', [DeliveryDisposalController::class, 'HalamanConfirmDis'])->name('Admin.confirmdis');
-    Route::post('/add-confirmdis', [DeliveryDisposalController::class, 'AddDataConfirmDis'])->name('add.confirmdis');
-    Route::get('/get-confirmdis', [DeliveryDisposalController::class, 'GetConfirmDis'])->name('get.confirmdis');
-    Route::get('/admin/confirmdiss', [DeliveryDisposalController::class, 'IndexConfirmDis'])->name('Admin.confirmdis');
-    Route::get('/admin/confirmdiss/edit/{id}', [DeliveryDisposalController::class, 'showEditForm'])->name('edit.confirmdis');
-    Route::put('/admin/confirmdiss/edit/{id}', [DeliveryDisposalController::class, 'updateDataConfirmDis'])->name('update.confirmdis');
-    Route::delete('/admin/confirmdiss/delete/{id}', [DeliveryDisposalController::class, 'deleteDataConfirmDis'])->name('delete.confirmdis');
-    
-    // Approval
-    Route::get('/admin/apprdis-am', [DisposalController::class, 'HalamanAmd1']);
-    Route::get('/admin/apprdis-am', [DisposalController::class, 'HalamanAmd1'])->name('Admin.apprdis-am');
-    Route::post('/add-apprdis-am', [DisposalController::class, 'AddDataAmd1'])->name('add.apprdis-am');
-    Route::get('/get-apprdis-am', [DisposalController::class, 'GetAmd1'])->name('get.apprdis-am');
-    Route::get('/admin/apprdis-ams', [DisposalController::class, 'Index1'])->name('Admin.apprdis-am');
-    Route::get('/admin/apprdis-ams/edit/{id}', [DisposalController::class, 'showEditForm1'])->name('edit.apprdis-am');
-    Route::put('/admin/apprdis-ams/edit/{id}', [DisposalController::class, 'updateDataAmd1'])->name('update.apprdis-am');
-    Route::delete('/admin/apprdis-ams/delete/{id}', [DisposalController::class, 'deleteDataAmd1'])->name('delete.apprdis-am');
-    
-    Route::get('/admin/apprdis-rm', [DisposalController::class, 'HalamanAmd2']);
-    Route::get('/admin/apprdis-rm', [DisposalController::class, 'HalamanAmd2'])->name('Admin.apprdis-rm');
-    Route::post('/add-apprdis-rm', [DisposalController::class, 'AddDataAmd2'])->name('add.apprdis-rm');
-    Route::get('/get-apprdis-rm', [DisposalController::class, 'GetAmd1'])->name('get.apprdis-rm');
-    Route::get('/admin/apprdis-rms', [DisposalController::class, 'Index2'])->name('Admin.apprdis-rm');
-    Route::get('/admin/apprdis-rms/edit/{id}', [DisposalController::class, 'showEditForm2'])->name('edit.apprdis-rm');
-    Route::put('/admin/apprdis-rms/edit/{id}', [DisposalController::class, 'updateDataAmd2'])->name('update.apprdis-rm');
-    Route::delete('/admin/apprdis-rms/delete/{id}', [DisposalController::class, 'deleteDataAmd2'])->name('delete.apprdis-rm');
-    
-    Route::get('/admin/apprdis-sdgasset', [DisposalController::class, 'HalamanAmd3']);
-    Route::get('/admin/apprdis-sdgasset', [DisposalController::class, 'HalamanAmd3'])->name('Admin.apprdis-sdgasset');
-    Route::post('/add-apprdis-sdgasset', [DisposalController::class, 'AddDataAmd3'])->name('add.apprdis-sdgasset');
-    Route::get('/get-apprdis-sdgasset', [DisposalController::class, 'GetAmd1'])->name('get.apprdis-sdgasset');
-    Route::get('/admin/apprdis-sdgassets', [DisposalController::class, 'Index3'])->name('Admin.apprdis-sdgasset');
-    Route::get('/admin/apprdis-sdgassets/edit/{id}', [DisposalController::class, 'showEditForm3'])->name('edit.apprdis-sdgasset');
-    Route::put('/admin/apprdis-sdgassets/edit/{id}', [DisposalController::class, 'updateDataAmd3'])->name('update.apprdis-sdgasset');
-    Route::delete('/admin/apprdis-sdgassets/delete/{id}', [DisposalController::class, 'deleteDataAmd3'])->name('delete.apprdis-sdgasset');
-
-    //Review    
-    Route::get('/admin/revdis-head', [DisposalController::class, 'HalamanHead']);
-    Route::get('/admin/revdis-head', [DisposalController::class, 'HalamanHead'])->name('Admin.revdis-head');
-    Route::get('/admin/revdis-mnr', [DisposalController::class, 'HalamanMnr']);
-    Route::get('/admin/revdis-mnr', [DisposalController::class, 'HalamanMnr'])->name('Admin.revdis-mnr');
-    Route::get('/admin/revdis-taf', [DisposalController::class, 'HalamanTaf']);
-    Route::get('/admin/revdis-taf', [DisposalController::class, 'HalamanTaf'])->name('Admin.revdis-taf');
     
 
     // Route::get('/admin/regist', [AssetsController::class, 'index'])->name('admin.assets');

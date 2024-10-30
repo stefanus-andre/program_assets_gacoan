@@ -380,24 +380,24 @@
                                           <div class="modal-body">
                                               <div class="row">
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="out_date">Tanggal Movement Out:</label>
-                                                      <input type="date" name="out_date" id="out_date" class="form-control" required>
+                                                      <label for="edit-out_date">Tanggal Movement Out:</label>
+                                                      <input type="date" name="out_date" id="edit-out_date" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="from_loc">Lokasi Asal:</label>
-                                                      <input type="text" name="from_loc" id="from_loc" class="form-control" required>
+                                                      <label for="edit-from_loc">Lokasi Asal:</label>
+                                                      <input type="text" name="from_loc" id="edit-from_loc" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="dest_loc">Lokasi Tujuan:</label>
-                                                      <input type="text" name="dest_loc" id="dest_loc" class="form-control" required>
+                                                      <label for="edit-dest_loc">Lokasi Tujuan:</label>
+                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="out_desc">Deskripsi Movement Out:</label>
-                                                      <input type="text" name="out_desc" id="out_desc" class="form-control" required>
+                                                      <label for="edit-out_desc">Deskripsi Movement Out:</label>
+                                                      <input type="text" name="out_desc" id="edit-out_desc" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="reason_id">Alasan Movement Out:</label>
-                                                      <select name="reason_id" id="reason_id" class="form-control" required>
+                                                      <label for="edit-reason_id">Alasan Movement Out:</label>
+                                                      <select name="reason_id" id="edit-reason_id" class="form-control" required>
                                                           <option value="">Pilih Alasan</option>
                                                           @foreach($reasons as $reason)
                                                               <option value="{{ $reason->reason_id }}">{{ $reason->reason_name }}</option>
@@ -405,8 +405,8 @@
                                                       </select>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="asset_id">Data Asset:</label>
-                                                      <select name="asset_id" id="asset_id" class="form-control" required>
+                                                      <label for="edit-asset_id">Data Asset:</label>
+                                                      <select name="asset_id" id="edit-asset_id" class="form-control" required>
                                                           <option value="">Pilih Asset</option>
                                                           @foreach($assets as $asset)
                                                               <option value="{{ $asset->id }}">{{ $asset->asset_name }}</option>
@@ -414,28 +414,28 @@
                                                       </select>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="merk">Merk:</label>
-                                                      <input type="text" name="merk" id="merk" class="form-control" readonly>
+                                                      <label for="edit-merk">Merk:</label>
+                                                      <input type="text" name="merk" id="edit-merk" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="qty">Quantity:</label>
-                                                      <input type="text" name="qty" id="qty" class="form-control" readonly>
+                                                      <label for="edit-qty">Quantity:</label>
+                                                      <input type="text" name="qty" id="edit-qty" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="satuan">Satuan:</label>
-                                                      <input type="text" name="satuan" id="satuan" class="form-control" readonly>
+                                                      <label for="edit-satuan">Satuan:</label>
+                                                      <input type="text" name="satuan" id="edit-satuan" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="serial_number">Serial Number:</label>
-                                                      <input type="text" name="serial_number" id="serial_number" class="form-control" readonly>
+                                                      <label for="edit-serial_number">Serial Number:</label>
+                                                      <input type="text" name="serial_number" id="edit-serial_number" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="register_code">Register Code:</label>
-                                                      <input type="text" name="register_code" id="register_code" class="form-control" readonly>
+                                                      <label for="edit-register_code">Register Code:</label>
+                                                      <input type="text" name="register_code" id="edit-register_code" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="condition_id">Kondisi Asset:</label>
-                                                      <select name="condition_id" id="condition_id" class="form-control" required>
+                                                      <label for="edit-condition_id">Kondisi Asset:</label>
+                                                      <select name="condition_id" id="edit-condition_id" class="form-control" required>
                                                           <option value="">Pilih Kondisi</option>
                                                           @foreach($conditions as $condition)
                                                               <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
@@ -786,7 +786,14 @@
 
     {{-- Update Data moveout --}}
     <script>
-      // Event handler for edit button click
+      function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options); // Adjust locale and options as needed
+}
+
+
+
       $(document).on('click', '.edit-button', function() {
           const outId = $(this).data('id'); // Get the asset ID from button
   
@@ -796,19 +803,19 @@
               method: 'GET',
               success: function(data) {
                   // Populate modal fields with fetched data
-                  $('#out_id').val(data.out_id);
-                  $('#out_date').val(data.out_date);
-                  $('#from_loc').val(data.from_loc);
-                  $('#dest_loc').val(data.dest_loc);
-                  $('#out_desc').val(data.out_desc);
-                  $('#reason_id').val(data.reason_id);
-                  $('#asset_id').val(data.asset_id).change(); // Trigger change to fetch asset details
-                  $('#merk').val(data.merk);
-                  $('#qty').val(data.qty);
-                  $('#satuan').val(data.satuan);
-                  $('#serial_number').val(data.serial_number);
-                  $('#register_code').val(data.register_code);
-                  $('#condition_id').val(data.condition_id);
+                  //$('#out_id').val(data.out_id);
+                  $('#edit-out_date').val(formatDate(data.out_date));
+                  $('#edit-from_loc').val(data.from_loc);
+                  $('#edit-dest_loc').val(data.dest_loc);
+                  $('#edit-out_desc').val(data.out_desc);
+                  $('#edit-reason_id').val(data.reason_id);
+                  $('#edit-asset_id').val(data.asset_id).change(); // Trigger change to fetch asset details
+                  $('edit-#merk').val(data.merk);
+                  $('#edit-qty').val(data.qty);
+                  $('#edit-satuan').val(data.satuan);
+                  $('#edit-serial_number').val(data.serial_number);
+                  $('#edit-register_code').val(data.register_code);
+                  $('#edit-condition_id').val(data.condition_id);
   
                   // Show the modal
                   $('#updateModal').modal('show');
