@@ -1,0 +1,201 @@
+/*! -----------------------------------------------------------------------------------
+
+    Template Name: Enzo Admin
+    Template URI: http://admin.pixelstrap.com/enzo/template
+    Description: This is Admin theme
+    Author: Pixelstrap
+    Author URI: https://themeforest.net/user/pixelstrap
+
+-----------------------------------------------------------------------------------
+01. Reset CSS
+02. Typography CSS
+03. Theme-font CSS
+04. Variable CSS
+05. According CSS
+06. Alert CSS
+07. Avatars CSS
+08. Badge CSS
+09. Breadcrumb CSS
+10. Buttons CSS
+11. Card CSS
+12. Datatable CSS
+13. Datepicker CSS
+14. Dropdown CSS
+15. Form-input CSS
+16. From-wizard CSS
+17. Forms CSS
+18. Icons CSS
+19. List CSS
+20. Loader CSS
+21. Popover CSS
+22. Print CSS
+23. Radio CSS
+24. Ribbon CSS
+25. Scrollbar CSS
+26. Switch CSS
+27. Tab CSS
+28. Table CSS
+29. Touchspin CSS
+30. Tour CSS
+31. Tree CSS
+32. Typehead-search CSS
+33. Box-layout CSS
+34. Footer CSS
+35. Grid CSS
+36. Header CSS
+37. Navs CSS
+38. Rtl CSS
+39. Search CSS
+40. Select2 CSS
+41. Sidebar CSS
+42. Blog CSS
+43. Bookmark-app CSS
+44. Cart CSS
+45. Chart CSS
+46. Chat CSS
+47. Checkout CSS
+48. Coming soon CSS
+49. Contacts CSS
+50. Dashboard_2 CSS
+51. Dashboard_default CSS
+52. Ecommerce CSS
+53. Email-application CSS
+54. Errorpage CSS
+55. Faq CSS
+56. File CSS
+57. Gallery CSS
+58. Genreal-widget CSS
+59. Internationalization CSS
+60. Invoice CSS
+61. Job-search CSS
+62. Jsgrid CSS
+63. Kanban CSS
+64. Knowledgebase CSS
+65. Landing-responsive CSS
+66. Landing CSS
+67. Language CSS
+68. Learning CSS
+69. Login CSS
+70. Megaoption CSS
+71. Order-history CSS
+72. Page CSS
+73. Pricing CSS
+74. progress CSS
+75. Project-list CSS
+76. Social-app CSS
+77. Task CSS
+78. Timeline-v CSS
+79. Timeliny CSS
+80. User-profile CSS
+81. Wishlist CSS
+82. Dark CSS
+83. Responsive CSS
+84. Theme-customizer CSS
+85. Update CSS
+86. Todo CSS
+ */
+
+ 
+// *** utils ***
+@import "utils/variables";
+@import "utils/theme-font";
+:root {
+  --theme-default: #3e5fce;
+  --theme-secondary: #ffce00;
+}
+
+// *** base ***
+@import "base/reset";
+@import "base/typography";
+
+//  *** components ***
+@import "components/according";
+@import "components/alert";
+@import "components/avatars";
+@import "components/badge";
+@import "components/breadcrumb";
+@import "components/buttons";
+@import "components/card";
+@import "components/datatable";
+@import "components/datepicker";
+@import "components/dropdown";
+@import "components/form-input";
+@import "components/form-wizard";
+@import "components/forms";
+@import "components/icons";
+@import "components/list";
+@import "components/loader";
+@import "components/popover";
+@import "components/print";
+@import "components/radio";
+@import "components/ribbon";
+@import "components/switch";
+@import "components/tab";
+@import "components/table";
+@import "components/touchspin";
+@import "components/tour";
+@import "components/tree";
+@import "components/typeahead-search";
+@import "components/scrollbar";
+
+//	*** pages ***
+
+@import "pages/blog";
+@import "pages/bookmark-app";
+@import "pages/cart";
+@import "pages/chart";
+@import "pages/chat";
+@import "pages/checkout";
+@import "pages/comingsoon";
+@import "pages/contacts";
+@import "pages/dashboard_default";
+@import "pages/dashboard_2";
+@import "pages/general-widget";
+@import "pages/ecommerce";
+@import "pages/email-application";
+@import "pages/errorpage";
+@import "pages/faq";
+@import "pages/file";
+@import "pages/gallery";
+@import "pages/internationalization";
+@import "pages/job-search";
+@import "pages/jsgrid";
+@import "pages/kanban";
+@import "pages/knowledgebase";
+@import "pages/landing";
+@import "pages/landing-responsive";
+@import "pages/language";
+@import "pages/learning";
+@import "pages/login";
+@import "pages/megaoption";
+@import "pages/order-history";
+@import "pages/page";
+@import "pages/pricing";
+@import "pages/progress";
+@import "pages/projectlist";
+@import "pages/social-app";
+@import "pages/task";
+@import "pages/timeline-v";
+@import "pages/timeliny";
+@import "pages/user-profile";
+@import "pages/wishlist";
+@import "pages/invoice";
+
+// *** layout ***
+
+@import "layout/footer";
+@import "layout/grid";
+@import "layout/header";
+@import "layout/navs";
+@import "layout/search";
+@import "layout/select2";
+@import "layout/sidebar";
+@import "layout/rtl";
+@import "layout/box-layout";
+
+/* ---------------------
+	*** themes ***
+-----------------------*/
+@import "themes/dark";
+@import "themes/theme-customizer";
+@import "themes/update";

@@ -1,0 +1,496 @@
+-var animate      = true ;
+-var wow          = true ;
+-var landing_wow  = true ;
+
+doctype html
+html(lang='en')
+    include ../../components/header-files
+    body.landing-page
+        // page-wrapper Start
+        .page-wrapper.compact-wrapper
+            // Page Body Start
+            // header start
+            header.landing-header
+              .custom-container
+                .row
+                  .col-12
+                    nav#navbar-example2.navbar.navbar-light.p-0
+                        a.navbar-brand(href="index.html" target="_blank") 
+                          img.img-fluid(src="../assets/images/logo/logo.png" alt="")
+                        ul.landing-menu.nav.nav-pills
+                          li.nav-item.menu-back
+                            | back
+                            i.fa.fa-angle-right
+                          li.nav-item
+                            a.nav-link(href='#home') Home
+                          li.nav-item
+                            a.nav-link(href='#demo') Demo
+                          li.nav-item
+                            a.nav-link(href='#framework') Frameworks
+                          li.nav-item
+                            a.nav-link(href='#Applications') Applications
+                          li.nav-item
+                            a.nav-link(href='#core-feature') Core Feature 
+                          li.nav-item
+                            a.nav-link(href='#footer') Footer
+                        .buy-block
+                          a.btn-landing.btn-white(href="https://themeforest.net/user/pixelstrap/portfolio" target="_blank") Purchase                           
+                          .toggle-menu
+                            i.fa.fa-bars
+            // header end
+
+
+            // landing home start
+            section#home.landing-home
+              img.img-fluid.bg-img-cover(src="../assets/images/landing/landing-home/home-bg.jpg" alt="")
+              .custom-container
+                .row
+                  .col-12
+                    .landing-home-contain
+                      div                                              
+                        h2 Enzo Bootstrap 5 HTML 
+                          span Admin Template
+                        p  When it comes to dashboard or web apps. one of the first impression you consider is the design. It needs to be high quality enough otherwise you will lose potential users due to bad design.
+                        ul.btn-home-list
+                          li
+                            a.btn.btn-success(href="#demo") view demo
+                          li
+                            a.btn.btn-danger(href="https://themeforest.net/user/pixelstrap/portfolio" target="_blank") Buy Now
+              ul.animat-block
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/1.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/2.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/3.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/4.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/5.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/6.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/7.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/8.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/9.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/10.jpg" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/react-red.png" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/react-red.png" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/react-red.png" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/react-yellow.png" alt="")
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/react-yellow.png" alt="")
+                li
+                  img.img-fluid(src="../assets/images/landing/landing-home/react-red.png" alt="")  
+                li
+                 img.img-fluid(src="../assets/images/landing/landing-home/react-yellow.png" alt="")
+
+            // landing home end
+
+
+
+            // demo section start
+            section#demo.demo-section.section-py-space
+                .title
+                  .logo-wrraper
+                    img.img-fluid.bg-img(src="../assets/images/logo/logo-icon.png" alt="")
+                  h2 Creative Layouts
+                .custom-container
+                  .row.demo-block
+                    .col-md-6.wow.pulse   
+                      .demo-box
+                        .img-wrraper
+                          img.img-fluid(src="../assets/images/landing/demo/1.jpg" alt="")
+                        .demo-title
+                          a.btn(href="index.html" target="_blank") Preview
+                          //- a.btn.ms-2(href="javascript:void(0)" target="_blank") Laravel
+                    .col-md-6.wow.pulse   
+                      .demo-box
+                        .img-wrraper
+                          img.img-fluid(src="../assets/images/landing/demo/2.jpg" alt="")
+                        .demo-title
+                          a.btn(href="dashboard-02.html" target="_blank") Preview
+                          //- a.btn.ms-2(href="javascript:void(0)" target="_blank") Laravel                   
+            // demo section end
+
+
+            // frameworks start
+            section#framework.framework.section-py-space
+              .custom-container
+                .row                  
+                  .col-sm-12.wow.pulse
+                    .title                       
+                      .logo-wrraper
+                        img.img-fluid.bg-img(src="../assets/images/logo/logo-icon.png" alt="")
+                      h2 Top Frameworks 
+                  .col-sm-12.framworks                  
+                    ul#pills-tab.nav.nav-pills.justify-content-center(role='tablist')
+                      li.nav-item
+                        a#pills-home-tab.nav-link.d-flex.active(data-bs-toggle='pill', href='#pills-home', role='tab', aria-controls='pills-home', aria-selected='true') 
+                          img(src="../assets/images/landing/icon/html/html.png" alt="")
+                          .text-start
+                            h5.mb-0 HTML
+                            p.mb-0 Frameworks
+                    #pills-tabContent.tab-content
+                      #pills-home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='pills-home-tab')
+                        ul.framworks-list
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/laravel/bootstrap.png" alt="")
+                              h6 Bootstrap 5
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/css.png" alt="")
+                              h6 CSS
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/sass.png" alt="")
+                              h6 Sass
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/pug.png" alt="")
+                              h6 Pug
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/npm.png" alt="")
+                              h6 NPM
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/gulp.png" alt="")
+                              h6 Gulp
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/kit.png" alt="")
+                              h6 Starter Kit
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/uikits.png" alt="")
+                              h6 40+ UI Kits
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/layout.png" alt="")
+                              h6 8+ Layout
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/builders.png" alt="")
+                              h6 Builders
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/iconset.png" alt="")
+                              h6 11 Icon Sets
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/forms.png" alt="")
+                              h6 Forms
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/table.png" alt="")
+                              h6 Tables
+                          li.bounceIn.wow
+                              div 
+                                img(src="../assets/images/landing/icon/html/apps.png" alt="")
+                              h6 17+ Apps
+            //frameworks end
+
+
+
+            //Applications start
+            section#Applications.demo-section.section-py-space
+              .title
+                .logo-wrraper
+                    img.img-fluid.bg-img(src="../assets/images/logo/logo-icon.png" alt="")
+                h2 Usefull application
+              .container
+                .row.demo-block
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="social-app.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/1.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title                           
+                          a.btn(href="social-app.html" target="_blank") Social App
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="knowledgebase.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/2.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="knowledgebase.html" target="_blank") Knowledgebase                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href='support-ticket.html' target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/3.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="support-ticket.html" target="_blank") Support Ticket                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="email_inbox.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/4.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="email_inbox.html" target="_blank") Email Dashboard                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href='to-do.html' target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/5.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title                           
+                          a.btn(href="to-do.html" target="_blank") To-Do
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="job-cards-view.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/6.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="job-cards-view.html" target="_blank") Job Search                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="product-page.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/7.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="product.html" target="_blank") Ecommerce                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="kanban.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/8.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="kanban.html" target="_blank") Kanban                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="file-manager.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/9.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="file-manager.html" target="_blank") File Manager                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="projects.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/10.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="projects.html" target="_blank") Project 
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="contacts.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/11.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title
+                          a.btn(href="contacts.html" target="_blank") Contacts                           
+                  .col-xl-4.col-lg-4.col-sm-6.wow.pulse
+                    .demo-box
+                      .img-wrraper
+                        a(href="chat.html" target="_blank")
+                          img.img-fluid(src="../assets/images/landing/application/12.jpg" alt="")
+                      .demo-detail                        
+                        .demo-title                           
+                          a.btn(href="chat.html" target="_blank") Chat
+            //Applications end
+
+            //Core Feature start
+            section#core-feature.core-feature.section-py-space
+              .title
+                .logo-wrraper
+                    img.img-fluid.bg-img(src="../assets/images/logo/logo-icon.png" alt="")
+                h2 Unique Features            
+              .custom-container
+                .row.feature-block
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="code")
+                        h4 Seamless Coding
+                        p We have crafted our templates very carefully and our code is W3C validated
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="layout")
+                        h4 Lots of Table Example
+                        p We made sure that you get lots of table options to choose
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="settings")
+                        h4 Easy to Customize
+                        p Our Template is easy to do any required changes
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="upload-cloud")
+                        h4 Multiple File Uploads
+                        p Option to upload more than one file at one time
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="calendar")
+                        h4 Calendar Design
+                        p We have included Calendar  application  with  Material art
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="image")
+                        h4 Gallery Options
+                        p Included gallery options for you to showcase products
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="cpu")
+                        h4 Editors
+                        p Options to select the editors that you are comfortable with
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="sliders")
+                        h4 Owl carousel
+                        p Touch enabled jQuery plugin that lets you create a beautiful responsive carousel
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="bold")
+                        h4 Bootstrap
+                        p Cloudui is built with latest version of bootstrap
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="codepen")
+                        h4 Data visualisation
+                        p A lot of customised chart libraries
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="airplay")
+                        h4 Fully responsive
+                        p 100% fully responsive layout, It display well in any size of devices
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="trello")
+                        h4 Rich components
+                        p A lot of UI components, plugins and widgets
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="droplet")
+                        h4 3000s of icons
+                        p Over 3000+ icons to choose
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="help-circle")
+                        h4 Support
+                        p we are always there as your backbone for any of your minor query
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="trash-2")
+                        h4 Clean design
+                        p Clean and attractive design
+                  .col-xl-3.col-lg-4.col-sm-6
+                    .feature-box
+                      div
+                        .icon-wrraper
+                          i(data-feather="aperture")
+                        h4 Color templates
+                        p Dark and light templates available
+            //Core Feature end
+
+
+            // counter-section start
+            section.counter-sec.section-py-space
+              .custom-container
+                .row.counter-block
+                  .col-lg-3.col-sm-6
+                    .counter-box
+                      div
+                        .count-number
+                          h3 12
+                        .count-detail
+                          h4 Workable App
+                          p Enzo theme is comes with 10+ different clean modern & Usefull Application.
+                  .col-lg-3.col-sm-6
+                    .counter-box
+                      div
+                        .count-number
+                          h3 2
+                        .count-detail
+                          h4 Layouts  
+                          p Enzo theme has include light , dark , box & vertical layouts.                       
+                  .col-lg-3.col-sm-6
+                    .counter-box
+                      div
+                        .count-number
+                          h3 42
+                        .count-detail
+                          h4 Components
+                          p Enzo admin theme includes 42+ new and usefull Components.                          
+                  .col-lg-3.col-sm-6
+                    .counter-box
+                      div
+                        .count-number
+                          h3 178
+                        .count-detail
+                          h4 pages
+                          p Enzo theme is comes with 178+ different inner pages                        
+            // counter-section end
+
+            //footer start
+            section#footer.landing-footer.section-py-space
+              .custom-container
+                .row
+                  .col-12
+                    .footer-contain
+                      img.img-fluid(src="../assets/images/logo/footer-logo.png" alt="")
+                      h2 if you like our products Please Rate Us                     
+                      ul.star-rate
+                        li
+                          i.fa.fa-star.font-warning
+                        li
+                          i.fa.fa-star.font-warning
+                        li
+                          i.fa.fa-star.font-warning
+                        li
+                          i.fa.fa-star.font-warning
+                        li
+                          i.fa.fa-star.font-warning
+                      .btn-footer
+                        a(class="btn btn-lg btn-primary" target="_blank" href="index.html" data-bs-original-title="" title="") Check Now
+                        a(class="btn btn-lg btn-secondary" target="_blank" href="https://themeforest.net/user/pixelstrap/portfolio" data-bs-original-title="" title="") Buy Now
+                        a(class="btn btn-lg btn-success" target="_blank" href="https://themeforest.net/search/pixelstrap" data-bs-original-title="" title="") Our Portfolio
+            //footer end
+            
+        include ../../components/footer-files

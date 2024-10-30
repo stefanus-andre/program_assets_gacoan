@@ -1,0 +1,203 @@
+- var theme_customizer      = true;
+- var owlcarousel           = true;
+- var rating                = true;
+- var datatable             = true;
+- var ecommerce             = true;
+- var product_list          = true;
+- var sidebar               = true;
+- var scrollbar             = true;
+
+doctype html
+html(lang='en')
+  include ../../components/header-files
+  body
+    include ../../components/taptop
+    include ../../components/loader
+    // page-wrapper Start
+    #pageWrapper.page-wrapper.compact-wrapper
+      include ../../components/header
+      // Page Body Start
+      .page-body-wrapper
+        include ../../components/sidebar
+        .page-body
+          .container-fluid
+            .page-title
+              .row
+                .col-sm-6
+                  h3
+                    | Product list
+
+                .col-sm-6
+                  ol.breadcrumb
+                    li.breadcrumb-item
+                      a(href='index.html')                                        
+                        i(data-feather="home")
+                    li.breadcrumb-item Ecommerce
+                    li.breadcrumb-item.active Product list
+          // Container-fluid starts
+          .container-fluid.list-products
+            .row
+              // Individual column searching (text inputs) Starts
+              .col-sm-12
+                .card
+                  .card-header.pb-0
+                    h5 Individual column searching (text inputs) 
+                    span
+                      | The searching functionality provided by DataTables is useful for quickly search through the information in the table - however the search is global, and you may wish to present controls that search on specific columns.
+                  .card-body
+                    .table-responsive.product-table
+                      table#basic-1.display
+                        thead
+                          tr
+                            th.text-center Image
+                            th Details
+                            th Amount
+                            th Stock
+                            th Start date
+                            th Action
+                        tbody
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-1.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Black Jacket
+                              p Men's Black Jacket
+                            td $10
+                            td.font-success In Stock
+                            td 2023/02/25
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-2.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Women's Shirt
+                              p Women's Shirt Brown Shirt
+                            td $10
+                            td.font-danger out of stock
+                            td 2023/08/25
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-3.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Men's T-shirt
+                              p Men's Blue T-shirt
+                            td $10
+                            td.font-danger out of stock
+                            td 2023/03/12
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-4.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Women's Dress
+                              p Blue Women's Dress
+                            td $10
+                            td.font-danger out of stock
+                            td 2023/08/23
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-5.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Men's T-shirt
+                              p Men's White T-shirt
+                            td $10
+                            td.font-success In Stock
+                            td 2023/09/13
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-6.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Women's Jacket
+                              p Women's Red Jacket
+                            td $10
+                            td.font-primary Low Stock
+                            td 2023/07/05
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-1.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Black Jacket
+                              p Men's Black Jacket
+                            td $10
+                            td.font-success In Stock
+                            td 2023/02/25
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-2.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Women's Shirt
+                              p Women's Shirt Brown Shirt
+                            td $10
+                            td.font-danger out of stock
+                            td 2023/08/25
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-3.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Men's T-shirt
+                              p Men's Blue T-shirt
+                            td $10
+                            td.font-danger out of stock
+                            td 2023/03/18
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img(src='../assets/images/ecommerce/product-table-4.png', alt='')
+                            td
+                              a(href="product-page.html")
+                                h6  Women's Dress
+                              p Blue Women's Dress
+                            td $10
+                            td.font-danger out of stock
+                            td 2023/08/23
+                            td
+                              button.btn.btn-danger.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Delete
+                              button.btn.btn-primary.btn-xs(type='button', data-original-title='btn btn-danger btn-xs', title='') Edit
+              // Individual column searching (text inputs) Ends
+         
+          // Container-fluid Ends
+        include ../../components/footer
+    include ../../components/footer-files

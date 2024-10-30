@@ -1,0 +1,2762 @@
+/**=====================
+51. Dashboard CSS Start
+==========================**/
+//index dashboard css start
+.texts-light {
+  color: $theme-body-sub-title-color;
+}
+.table {
+  thead {
+    th {
+      border-bottom: 2px solid $light-gray;
+    }
+  }
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-default {
+  .d-flex-dashboard {
+    align-items: center;
+    .icon-box {
+      width: 50px;
+      height: 32px;
+      background-color: rgba($primary-color, 0.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      i {
+        color: var(--theme-default);
+        font-size: 22px;
+      }
+    }
+  }
+  .card-body {
+    padding-top: 0;
+    &.chat-box {
+      .left-side-chat {
+        .flex-grow-1 {
+          .img-profile {
+            width: 40px;
+            height: 40px;
+            img {
+              border-radius: 100%;
+            }
+          }
+          .main-chat {
+            margin-left: 15px;
+            .message-main {
+              span {
+                background-color: var(--theme-default);
+                border-radius: 30px;
+                border-bottom-left-radius: 0;
+                color: $white;
+              }
+            }
+            .sub-message {
+              margin-top: 10px;
+              span {
+                border-bottom-left-radius: 30px;
+                border-top-left-radius: 0;
+              }
+            }
+            &:last-child {
+              .sub-message {
+                span {
+                  border-top-left-radius: 30px;
+                  border-bottom-left-radius: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+      .right-side-chat {
+        margin: 15px 0;
+        .flex-grow-1 {
+          .message-main {
+            span {
+              background-color: $white;
+              box-shadow: 0px 0px 20px rgba(25, 124, 207, 0.1);
+              border-radius: 30px;
+              color: var(--theme-default);
+              opacity: 100%;
+              border-bottom-right-radius: 0;
+              text-align: center;
+              &.loader-span {
+                .dot {
+                  display: inline-block;
+                  width: 5px;
+                  height: 5px;
+                  border-radius: 50%;
+                  margin-right: 4px;
+                  background: var(--theme-default);
+                  animation: wave 1.3s linear infinite;
+                  padding: 0;
+                  &:nth-child(2) {
+                    animation-delay: -1.1s;
+                  }
+                  &:nth-child(3) {
+                    animation-delay: -0.9s;
+                  }
+                }
+                @keyframes wave {
+                  0%,
+                  60%,
+                  100% {
+                    transform: initial;
+                  }
+                  30% {
+                    transform: translateY(-9px);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .d-flex {
+        .flex-grow-1 {
+          .message-main {
+            span {
+              display: inline-block;
+              padding: 12px 18px;
+              font-weight: 400;
+            }
+          }
+        }
+        p {
+          font-size: 10px;
+          margin-top: 14px;
+          color: var(--theme-default);
+        }
+      }
+      .input-group {
+        margin: 30px 0;
+        margin-bottom: 0;
+        align-items: center;
+        .form-control {
+          border: none;
+          border-radius: 0;
+          border-left: 1px solid var(--theme-default);
+          font-size: 16px;
+          &::placeholder {
+            color: $dark-editor-document;
+            font-weight: 500;
+            font-size: 16px;
+          }
+          &:focus {
+            box-shadow: none;
+          }
+        }
+        .send-msg {
+          width: 50px;
+          height: 45px;
+          background-color: rgba($primary-color, 0.1);
+          border-radius: 25% !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          svg {
+            width: 20px;
+            color: var(--theme-default);
+            vertical-align: middle;
+            transform: rotate(45deg);
+            margin-left: -3px;
+          }
+        }
+      }
+    }
+  }
+}
+.date-picker-setting {
+  background-color: rgba($primary-color, 0.1);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  i {
+    color: var(--theme-default);
+  }
+}
+.default-datepicker {
+  .datepicker-inline {
+    .datepicker {
+      width: auto;
+      background: $white;
+      box-shadow: none;
+      padding: 0;
+      .datepicker--content {
+        .datepicker--days {
+          .datepicker--days-names {
+            margin: 60px 0 0;
+            padding: 15px 0;
+
+            .datepicker--day-name {
+              color: $dark-editor-document;
+              font-size: 14px;
+            }
+          }
+
+          .datepicker--cells {
+            .datepicker--cell-day {
+              height: 55px;
+              border-radius: 0;
+              color: $dark-editor-document;
+
+              &.-other-month- {
+                color: $dark-editor-document;
+                opacity: 20%;
+              }
+            }
+
+            .datepicker--cell {
+              font-weight: 500;
+              font-size: 16px;
+              border-radius: 0;
+              z-index: 0;
+
+              &.-selected- {
+                background: var(--theme-default);
+                color: $white;
+                position: relative;
+                box-shadow: 0px 0px 13px 0 rgba($primary-color, 0.5);
+              }
+
+              &.-current- {
+                box-shadow: 0px 0px 15px -5px rgba($primary-color, 0.5);
+              }
+
+              &.-focus- {
+                color: $white;
+                box-shadow: 0px 0px 13px 0 rgba($primary-color, 0.5);
+              }
+            }
+          }
+        }
+
+        .datepicker-cell {
+          .datepicker--cell-month {
+            &.-current- {
+              &.-selected- {
+                background-color: var(--theme-default);
+              }
+            }
+          }
+        }
+      }
+
+      .datepicker--nav {
+        border-bottom: none;
+        padding: 0;
+        text-transform: capitalize;
+        margin-top: 0;
+
+        .datepicker--nav-action {
+          display: none;
+        }
+      }
+
+      .datepicker--nav-title {
+        color: $dark-editor-document;
+        font-size: 22px;
+        font-weight: 600;
+
+        i {
+          margin-left: 10px;
+          font-weight: 400;
+          font-size: 22px;
+          color: $dark-editor-document;
+        }
+      }
+    }
+  }
+}
+
+.default-dash {
+  p {
+    color: $light-text;
+  }
+}
+
+// profile greeting
+.profile-greeting {
+  background-size: cover !important;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+
+  .card-body {
+    padding: 45px;
+    display: flex !important;
+    align-items: center;
+    z-index: 1;
+
+    h3 {
+      font-size: 28px;
+    }
+
+    h4 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    h5 {
+      font-size: 16px;
+      color: $primary-color;
+    }
+
+    p {
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      font-weight: 600;
+    }
+  }
+
+  .shap-block {
+    .rounded-shap i {
+      background-color: $primary-color;
+      box-shadow: 0 15px 30px 0 $white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      opacity: 0.3;
+      transform: scale(1.3);
+      animation: ripple1 3s linear infinite;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      right: 0;
+
+      &:nth-child(2) {
+        animation: ripple2 3s linear infinite;
+      }
+
+      &:nth-child(3) {
+        animation: ripple3 3s linear infinite;
+      }
+    }
+  }
+}
+
+// company view
+.company-view {
+  .apexcharts-legend {
+    opacity: 0;
+  }
+  .card-header{
+    .center-content{
+      p{
+        color: #5d5d5d;
+      }
+    }
+  }
+  .card-body {
+    padding-top: unset !important;
+    padding-left: 10px !important;
+    padding-bottom: 10px !important;
+  }
+}
+
+// Investment Card Slick Slider Styling
+
+.items-slider {
+  .slick-list {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+  .slick-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    opacity: 0;
+    transition: all 0.5s ease;
+    background-color: $secondary-color;
+    border-radius: 50%;
+    margin-top: -10px;
+  }
+  .slick-next,
+  .slick-prev {
+    z-index: 2;
+    &:before {
+      opacity: 1;
+      font-family: $font-awesome;
+      font-size: 20px;
+      color: $theme-font-color;
+    }
+  }
+  .slick-prev {
+    &::before {
+      content: "\f104";
+    }
+  }
+  .slick-next {
+    &::before {
+      content: "\f105";
+    }
+  }
+  &:hover {
+    .slick-prev {
+      position: absolute;
+      left: 2px;
+      opacity: 1;
+    }
+    .slick-next {
+      position: absolute;
+      right: 2px;
+      opacity: 1;
+    }
+  }
+}
+
+// Investment Card Slick Slider Styling
+
+.investment-sec {
+  text-align: center;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  margin-left: 10px;
+  overflow: hidden;
+  .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: rgba($primary-color, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+
+    svg {
+      color: $primary-color;
+    }
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  h3 {
+    margin-bottom: unset;
+    font-size: 22px;
+  }
+
+  &:hover {
+    background-color: $primary-color;
+
+    .icon {
+      background-color: $white;
+    }
+
+    p {
+      color: $white;
+    }
+
+    h3 {
+      color: $white;
+    }
+  }
+
+  .card-body {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    z-index: 1;
+  }
+}
+
+.animated-bg i {
+  background-color: $white;
+  box-shadow: 0 15px 30px 0 $white;
+  position: absolute;
+  height: 15%;
+  width: 15%;
+  border-radius: 50%;
+  opacity: 0.3;
+  transform: scale(1.3);
+  animation: ripple1 3s linear infinite;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  &:nth-child(2) {
+    animation: ripple2 3s linear infinite;
+  }
+
+  &:nth-child(3) {
+    animation: ripple3 3s linear infinite;
+  }
+}
+
+@keyframes ripple1 {
+  0% {
+    transform: scale(5.5);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(8.5);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple2 {
+  0% {
+    transform: scale(3.5);
+  }
+
+  100% {
+    transform: scale(5.5);
+  }
+}
+
+@keyframes ripple3 {
+  0% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(3.5);
+  }
+}
+
+// sellview sec
+.sellview-sec {
+  .card-body {
+    padding-bottom: unset;
+  }
+}
+
+// administarator table
+.administrator-table {
+  table {
+    tr {
+      td {
+        position: relative;
+        padding: 0;
+
+        .d-flex {
+          .flex-grow-1 {
+            margin-left: 20px;
+
+            h6 {
+              font-size: 18px;
+              margin-bottom: 5px;
+            }
+          }
+          .status-circle {
+            left: 40px;
+          }
+        }
+
+        .admini-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 10px;
+          background-color: rgba($primary-color, 0.08);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: auto;
+          transition: all 0.5s ease;
+
+          i {
+            color: $primary-color;
+            font-size: 18px;
+            transition: all 0.5s ease;
+          }
+        }
+
+        ul {
+          li {
+            display: inline-block;
+
+            &:nth-child(n + 2) {
+              margin-left: 20px;
+            }
+          }
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+
+      &:hover {
+        td {
+          .admini-icon {
+            background-color: $primary-color;
+
+            i {
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.administrator-sec {
+  .card-body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+// browser-status
+.browser-status {
+  ul.browser-used {
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      .brow-lable {
+        font-size: 12px;
+        color: $primary-color;
+        font-weight: 500;
+        margin-bottom: 10px;
+        line-height: 1;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+
+        i {
+          display: block;
+        }
+
+        text-align: center;
+      }
+
+      .browser-box {
+        display: inline-block;
+        width: 68px;
+        height: 68px;
+        border-radius: 10px;
+        padding: 10px;
+        border: 1px solid rgba($primary-color, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      &.active {
+        .brow-lable {
+          visibility: visible;
+          opacity: 1;
+        }
+
+        .browser-box {
+          box-shadow: 0px 5px 22.5px rgba($primary-color, 0.18);
+          border-color: $white;
+        }
+      }
+    }
+  }
+
+  .card-body {
+    padding-top: 30px;
+  }
+}
+
+//bestselling-table
+.bestselling-sec {
+  .card-header {
+    border-bottom: 1px solid $light-color;
+  }
+  .card-body {
+    padding-top: 15px;
+  }
+  ul.selling-list {
+    padding-top: 31px;
+    padding-bottom: 31px;
+    display: flex;
+    justify-content: space-between;
+    li {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background-color: rgba($primary-color, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        transition: all 0.5s ease;
+
+        i {
+          font-size: 20px;
+          color: $primary-color;
+          transition: all 0.5s ease;
+        }
+      }
+
+      &:hover {
+        .icon {
+          background-color: $primary-color;
+
+          i {
+            color: $white;
+          }
+        }
+      }
+
+      p {
+        margin-bottom: 5px;
+        line-height: 1;
+        font-size: 13px;
+      }
+
+      h6 {
+        margin-bottom: 0;
+
+        span {
+          font-size: 12px;
+          color: $light-text;
+          margin-left: 5px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+  .bestselling-table {
+    table {
+      tbody {
+        tr {
+          td {
+            vertical-align: baseline;
+            font-weight: 400;
+            padding-top: 10px;
+            padding-bottom: 17px;
+            &:first-child {
+              display: flex;
+              align-items: center;
+              > span {
+                font-family: $font-sfpro;
+                font-weight: 600;
+              }
+              .t-title {
+                display: flex;
+                align-items: center;
+                span {
+                  font-weight: 500;
+                }
+              }
+            }
+            &:first-child {
+              padding-left: 0;
+            }
+            &:last-child {
+              padding-right: 0;
+              text-align: right;
+            }
+          }
+          &:last-child {
+            td {
+              padding-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// city-weather
+.weather-sec {
+  background-size: contain !important;
+  background-position: bottom !important;
+  background-repeat: no-repeat !important;
+  overflow: hidden;
+  .city-weather {
+    .weather-wrraper {
+      margin-top: 15px;
+      li {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+
+        h3 {
+          font-size: 36px;
+          font-weight: 400;
+          margin-bottom: unset;
+          display: inline-block;
+        }
+
+        .icon-moon {
+          width: 36px;
+          height: 36px;
+          border-radius: 18px;
+          background-color: rgba($primary-color, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            height: 18px;
+            color: $primary-color;
+          }
+
+          &:hover {
+            background-color: $primary-color;
+
+            svg {
+              color: $white;
+            }
+          }
+        }
+
+        &:first-child {
+          span {
+            width: 1px;
+            height: 11px;
+            background-color: rgba($primary-color, 0.5);
+            margin-left: 15px;
+            display: inline-block;
+            vertical-align: super;
+          }
+        }
+
+        &:nth-child(n + 2) {
+          margin-left: 15px;
+        }
+      }
+    }
+
+    span {
+      color: $primary-color;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    p {
+      font-weight: 400;
+      color: $light-text;
+      margin-bottom: unset;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+    }
+  }
+  .weather-img {
+    background-size: cover !important;
+    background-position: bottom !important;
+    background-repeat: no-repeat !important;
+    height: 297px;
+    margin-top: 20px;
+    position: relative;
+  }
+  .ag-snow {
+    &:before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      background-image: url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/animation-snow-img/images/snow.png),
+        url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/animation-snow-img/images/snow2.png),
+        url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/animation-snow-img/images/snow3.png);
+      background-repeat: repeat;
+      position: absolute;
+      left: 0;
+      top: 0;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      will-change: background-position;
+      animation: an-snow 20s linear infinite;
+    }
+  }
+
+  @-webkit-keyframes an-snow {
+    100% {
+      background-position: 500px 1000px, 300px 300px, -400px 400px;
+    }
+  }
+
+  @-moz-keyframes an-snow {
+    100% {
+      background-position: 500px 1000px, 300px 300px, -400px 400px;
+    }
+  }
+
+  @-o-keyframes an-snow {
+    100% {
+      background-position: 500px 1000px, 300px 300px, -400px 400px;
+    }
+  }
+
+  @keyframes an-snow {
+    100% {
+      background-position: 500px 1000px, 300px 300px, -400px 400px;
+    }
+  }
+}
+
+// recent-activi
+.recent-activi {
+  .card-body {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  table {
+    tbody {
+      tr {
+        td {
+          padding: 17px 15px;
+          .d-flex {
+            svg {
+              width: auto;
+              height: 25px;
+              transition: all 0.4s ease;
+            }
+            .flex-grow-1 {
+              margin-left: 20px;
+              span {
+                font-family: $font-Montserrat;
+                font-size: 14px;
+                font-weight: 600;
+                transition: all 0.4s ease;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          background-color: $body-color;
+
+          td {
+            .d-flex {
+              svg {
+                fill: $primary-color;
+              }
+
+              .flex-grow-1 {
+                span {
+                  color: $primary-color;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// calender page
+#menu {
+  .dropdown {
+    .btn-default {
+      border: 1px solid $light-gray;
+      color: $primary-color;
+    }
+  }
+
+  .move-today {
+    border-color: $light-gray;
+  }
+
+  .move-day {
+    border-color: $light-gray;
+  }
+}
+
+// clock picker //
+.clockpicker-popover {
+  .popover-title {
+    border-color: $light-gray;
+  }
+}
+
+.clockpicker-plate {
+  border-color: $light-gray;
+}
+
+.btn-light-secondary {
+  background-color: rgba(var(--theme-secondary), 0.1);
+  font-size: 12px;
+  padding: 6px 12px;
+  font-weight: 600;
+}
+
+//index dashboard css ends
+
+//general widget css start
+.ecommerce-widget {
+  box-shadow: none;
+  border: 1px solid #f1f3ff !important;
+  border-radius: 5px;
+
+  .total-num {
+    color: $theme-body-font-color;
+    margin: 0;
+    letter-spacing: 1px;
+
+    span {
+      color: $black;
+    }
+  }
+
+  .row {
+    align-items: center;
+  }
+
+  .progress-showcase {
+    margin-top: 30px;
+  }
+
+  span {
+    color: $theme-body-sub-title-color;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .icon {
+    color: $light-semi-gray;
+    font-size: 40px;
+  }
+
+  .flot-chart-container {
+    height: 100px;
+    padding: 0;
+    margin: 0;
+    border: transparent;
+  }
+
+  .morris-default-style {
+    display: none !important;
+  }
+
+  svg {
+    -webkit-filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.3));
+  }
+}
+
+//general widget css start
+.flot-chart-container {
+  height: 250px;
+}
+
+//chart widget css
+.chart-widget-top {
+  #chart-widget1,
+  #chart-widget2,
+  #chart-widget3 {
+    margin-bottom: -14px;
+
+    .apexcharts-xaxistooltip {
+      display: none;
+    }
+  }
+}
+
+.bar-chart-widget {
+  .top-content {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .earning-details {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    letter-spacing: 1px;
+
+    i {
+      font-size: 230px;
+      position: absolute;
+      opacity: 0.1;
+      right: -30px;
+      top: 0;
+
+      &:hover {
+        transform: rotate(-5deg) scale(1.1);
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  .num {
+    font-weight: 600;
+
+    .color-bottom {
+      color: $black;
+    }
+  }
+}
+
+.bottom-content {
+  span {
+    color: $theme-body-sub-title-color;
+  }
+
+  .block-bottom {
+    display: block;
+  }
+}
+
+@keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -30px;
+  }
+}
+
+@-webkit-keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0;
+  }
+
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 50px;
+  }
+}
+
+@keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0;
+  }
+
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 50px;
+  }
+}
+
+@-webkit-keyframes am-draw {
+  0% {
+    stroke-dashoffset: 500%;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes am-draw {
+  0% {
+    stroke-dashoffset: 500%;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.serial-chart .chart-container {
+  width: 100%;
+  height: 500px;
+
+  .lastBullet {
+    animation: am-pulsating 1s ease-out infinite;
+  }
+
+  .amcharts-graph-column-front {
+    transition: all 0.3s 0.3s ease-out;
+
+    &:hover {
+      fill: var(--theme-secondary);
+      stroke: var(--theme-secondary);
+      transition: all 0.3s ease-out;
+    }
+  }
+
+  .amcharts-graph-g3 {
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+    animation: am-draw 40s;
+  }
+
+  .amcharts-graph-g2 .amcharts-graph-stroke {
+    stroke-dasharray: 3px 3px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    animation: am-moving-dashes 1s linear infinite;
+  }
+}
+
+.speed-chart {
+  .chart-container {
+    width: 100%;
+    height: 530px;
+  }
+
+  .content {
+    margin-top: -200px;
+    margin-bottom: 20px;
+
+    h4 {
+      font-weight: 600;
+      padding-top: 2px;
+    }
+  }
+}
+
+.status-widget {
+  svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: text-top;
+  }
+
+  .card {
+    .card-header {
+      h5 {
+        line-height: 1.38;
+      }
+    }
+  }
+
+  .status-chart {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow: hidden;
+  }
+}
+
+.small-chart-widget .chart-container {
+  height: 311px;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.small-chart-widget {
+  .card {
+    .card-body {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+  }
+}
+
+.donut-chart-widget .chart-container {
+  height: 300px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.status-details {
+  h4 {
+    font-weight: 600;
+
+    span {
+      color: inherit;
+    }
+  }
+
+  span {
+    color: $theme-body-sub-title-color;
+  }
+}
+
+.status-chart .chart-container {
+  height: 200px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.map-chart .chart-container {
+  width: 100%;
+  height: 500px;
+}
+
+.serial-chart {
+  width: 100%;
+}
+
+.live-products,
+.turnover,
+.uses,
+.monthly {
+  height: 300px;
+}
+
+.live-products {
+  .ct-series-a {
+    .ct-area,
+    .ct-point,
+    .ct-line,
+    .ct-bar,
+    .ct-slice-donut {
+      stroke: rgba(255, 255, 255, 0.77);
+    }
+  }
+
+  .ct-label {
+    fill: $white;
+    color: $white;
+  }
+
+  .ct-grid {
+    stroke: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.turnover,
+.uses,
+.monthly {
+  .ct-series-a {
+    .ct-area,
+    .ct-point,
+    .ct-line,
+    .ct-bar,
+    .ct-slice-donut {
+      stroke: rgba(255, 255, 255, 1);
+      fill: transparent;
+    }
+  }
+
+  .ct-series-b {
+    .ct-area,
+    .ct-point,
+    .ct-line,
+    .ct-bar,
+    .ct-slice-donut {
+      stroke: rgba(255, 255, 255, 0.7);
+      fill: transparent;
+    }
+  }
+
+  .ct-series-c {
+    .ct-area,
+    .ct-point,
+    .ct-line,
+    .ct-bar,
+    .ct-slice-donut {
+      stroke: rgba(255, 255, 255, 0.4);
+      fill: transparent;
+    }
+  }
+
+  .ct-label {
+    fill: $white;
+    color: $white;
+  }
+
+  .ct-grid {
+    stroke: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// draggable card
+#draggableMultiple {
+  .ui-sortable-handle {
+    .card {
+      cursor: move;
+    }
+  }
+}
+
+// tilt page
+.tilt-showcase {
+  ul {
+    li {
+      .line {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  .pre-mt {
+    margin-top: 5px;
+  }
+}
+
+// wow page
+.wow-title {
+  h5 {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+
+    .badge {
+      -webkit-text-fill-color: $white;
+    }
+  }
+}
+
+// alert page
+.alert-center {
+  display: flex !important;
+  align-items: center;
+}
+
+// box-shadow
+.box-shadow-title {
+  .sub-title {
+    margin: 30px 0;
+  }
+}
+
+// tour page
+.hovercard {
+  .info {
+    .social-media {
+      ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        li {
+          padding-top: 3px;
+
+          a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba($primary-color, 0.05);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          &:hover {
+            a {
+              background-color: $primary-color;
+
+              i {
+                color: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .cardheader {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+}
+
+// sticky page
+.sticky-header-main {
+  .card {
+    .card-header {
+      h5 {
+        line-height: 35px;
+
+        a {
+          color: $white;
+          -webkit-text-fill-color: $white;
+        }
+      }
+    }
+  }
+}
+
+// radio-checkbox-control page
+.custom-radio-ml {
+  margin-left: 3px;
+}
+
+// date range picker page
+.daterangepicker {
+  .ltr {
+    tr {
+      td {
+        &.active {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+// typeahead page
+// typeahead page
+.twitter-typeahead {
+  display: block !important;
+}
+
+span.twitter-typeahead {
+  .league-name {
+    font-size: 16px;
+    padding: 6px 10px 0;
+  }
+
+  .tt-menu {
+    float: left;
+    width: 100%;
+    min-width: 10rem;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: $white;
+    background-clip: padding-box;
+    border-radius: 0.25rem;
+    -webkit-box-shadow: 0 0 20px rgba(89, 102, 122, 0.1);
+    box-shadow: 0 0 20px rgba(89, 102, 122, 0.1);
+    border: none;
+    padding: 0;
+  }
+
+  .tt-suggestion {
+    color: $dark-editor-document;
+    opacity: 0.6;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-top: 1px solid $light-semi-gray;
+    background: $white;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: $white;
+    }
+
+    &.active,
+    &:active {
+      color: $white;
+      background-color: var(--theme-default);
+    }
+  }
+}
+
+#scrollable-dropdown-menu {
+  .twitter-typeahead {
+    .tt-menu {
+      .tt-dataset {
+        max-height: 100px;
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
+.current-sale-container {
+  .apexcharts-xaxistooltip {
+    color: var(--theme-default);
+    background: rgba($primary-color, 0.1);
+    border: 1px solid var(--theme-default);
+  }
+
+  .apexcharts-xaxistooltip-bottom:before {
+    border-bottom-color: var(--theme-default);
+  }
+
+  .apexcharts-tooltip.light .apexcharts-tooltip-title {
+    background: rgba($primary-color, 0.1);
+    color: var(--theme-default);
+  }
+}
+
+// bootstrap basic table page
+.card-block {
+  .table-responsive {
+    .table {
+      caption {
+        padding-left: 10px;
+      }
+    }
+
+    .table-bordered {
+      td {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .table-border-radius {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .default-checkbox-align {
+    #checkbox1 {
+      margin-right: 10px;
+    }
+
+    #radio {
+      margin-right: 5px;
+    }
+  }
+}
+
+// datatable styling page
+#example-style-3_wrapper {
+  #example-style-3 {
+    tfoot {
+      border-top: 2px solid $light-semi-gray;
+    }
+  }
+}
+
+// chartjs page
+.chart-vertical-center {
+  display: flex;
+  justify-content: center;
+
+  #myDoughnutGraph,
+  #myPolarGraph {
+    width: auto !important;
+  }
+}
+
+// ckeditor page
+.cke_focus {
+  padding: 15px;
+  margin-top: 13px;
+}
+
+// ace-code-editor page
+#editor {
+  .ace_scroller {
+    .ace_content {
+      .ace_layer {
+        .ace_print-margin {
+          visibility: hidden !important;
+        }
+      }
+    }
+  }
+}
+
+// Helper classes page css
+.helper-classes {
+  padding: 30px;
+  margin-bottom: 0;
+  white-space: pre-line;
+}
+
+// starter kit page css
+.starter-kit-fix {
+  .page-body {
+    margin-bottom: 52px;
+  }
+}
+
+.starter-main {
+  .card-body {
+    p {
+      font-size: 14px;
+    }
+
+    ul {
+      padding-left: 30px;
+      list-style-type: disc;
+      margin-bottom: 15px;
+    }
+
+    h5 {
+      font-size: 18px;
+    }
+
+    pre {
+      white-space: pre-line;
+      padding: 30px;
+    }
+
+    .alert-primary {
+      &.inverse {
+        &:before {
+          top: 32px;
+        }
+      }
+    }
+  }
+
+  .alert {
+    background-color: rgba(68, 102, 242, 0.2) !important;
+
+    i {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+// index responsive css
+@media screen and (max-width: 1880px) {
+  .weather-sec {
+    .city-weather {
+      .weather-wrraper {
+        li {
+          h3 {
+            font-size: 30px;
+          }
+
+          .icon-moon {
+            width: 30px;
+            height: 30px;
+
+            svg {
+              height: 16px;
+            }
+          }
+        }
+      }
+
+      .btn {
+        padding: 7px 12px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1740px) {
+  .default-dash,
+  .default-dash2 {
+    .card {
+      .card-header {
+        padding: 25px;
+      }
+
+      .card-body {
+        padding: 25px;
+      }
+
+      .card-footer {
+        padding: 25px;
+      }
+    }
+  }
+
+  .profile-greeting {
+    height: 295px;
+
+    .card-body {
+      padding: 30px;
+      h3 {
+        font-size: 26px;
+      }
+      h4 {
+        font-size: 24px;
+      }
+    }
+  }
+  .investment-sec {
+    .icon {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 15px;
+      svg {
+        width: auto;
+        height: 20px;
+      }
+    }
+    p {
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 20px;
+    }
+  }
+  .administrator-table {
+    table {
+      tr {
+        td {
+          .admini-icon {
+            width: 40px;
+            height: 40px;
+
+            i {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .browser-status {
+    ul {
+      &.browser-used {
+        li {
+          .browser-box {
+            width: 60px;
+            height: 60px;
+          }
+        }
+      }
+    }
+  }
+  .bestselling-sec {
+    ul {
+      &.selling-list {
+        li {
+          .icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            i {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .recent-activi {
+    table {
+      tbody {
+        tr {
+          td {
+            .d-flex {
+              svg {
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .weather-sec {
+    .city-weather {
+      .weather-wrraper {
+        li {
+          &:nth-child(n + 2) {
+            margin-left: 6px;
+          }
+
+          &:first-child {
+            span {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1770px) and (min-width: 1661px) {
+  .weather-sec{
+    .weather-img{
+      height: 303px;
+    }
+  } 
+  .recent-activi{
+    table{
+      tbody{
+        tr{
+          td{
+            padding: 14px 26px;
+          }
+        }
+      }
+    }
+  }
+  .administrator-table{
+    table{
+      tr{
+        td{
+          ul{
+            li{
+              &:nth-child(n+2){
+                margin-left: 12px;
+              }
+            }
+          }
+          .d-flex{
+            .flex-grow-1{
+              h6{
+                span.ms-4{
+                  margin-left: 8px !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1660px) and (min-width: 1470px) {
+  .bestselling-sec{
+    ul.selling-list{
+      li{
+        .icon{
+          margin-right: 10px;
+          width: 34px;
+          height: 34px;
+        }
+      }
+    }
+    .bestselling-table{
+      table{
+        tbody{
+          tr{
+            td{
+              padding-top: 12px;
+              padding-bottom: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .administrator-table{
+    table{
+      tr{
+        td{
+          .admini-icon{
+            width: 34px;
+            height: 34px;
+          }
+          ul{
+            li{
+              &:nth-child(n+2){
+                margin-left: 6px;
+              }
+            }
+          }
+          .d-flex{
+            .flex-grow-1{
+              margin-left: 12px;
+              h6{
+                font-size: 16px;
+              }
+            }
+            h6{
+              span.ms-4{
+                margin-left: 8px !important;
+                padding: 3px 4px 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1280px) and (min-width: 1200px) {
+  .default-dash {
+    .sellview-sec {
+      .card-body {
+        padding: 0px !important;
+      }
+    }
+  }
+  .browser-status {
+    ul {
+      &.browser-used {
+        li {
+          .browser-box {
+            width: 45px;
+            height: 45px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1470px) and (min-width: 1200px) {
+  .weather-sec{
+    .city-weather{
+      .weather-wrraper{
+        li{
+          &:nth-child(n+2){
+            margin-left: 3px;
+          }
+        }
+      }
+    }
+  }
+  .administrator-table{
+    table{
+      tr{
+        td{
+          .admini-icon{
+            width: 30px;
+            height: 30px;
+          }
+          ul{
+            li{
+              &:nth-child(n+2){
+                margin-left: 4px;
+                margin-top: 5px;
+              }
+            }
+          }
+          .d-flex{
+            .flex-grow-1{
+              margin-left: 8px;
+              h6{
+                font-size: 16px;
+              }
+            }
+            h6{
+              span.ms-4{
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .administrator-table {
+    table {
+      tr {
+        td {
+          .d-flex {
+            .flex-grow-1 {
+              span {
+                padding: 2px 4px 3px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1660px) and (min-width: 1200px) {
+  .xl-none {
+    display: none;
+  }
+  .xl-20 {
+    max-width: 20%;
+    flex: 0 0 20%;
+  }
+  .xl-30 {
+    max-width: 30%;
+    flex: 0 0 30%;
+  }
+  .xl-33 {
+    max-width: 33%;
+    flex: 0 0 33%;
+  }
+  .xl-33-33 {
+    max-width: 33.333%;
+    flex: 0 0 33.333%;
+  }
+  .xl-35 {
+    max-width: 35%;
+    flex: 0 0 35%;
+  }
+  .xl-40 {
+    max-width: 40%;
+    flex: 0 0 40%;
+  }
+  .xl-45 {
+    max-width: 45%;
+    flex: 0 0 45%;
+  }
+  .xl-55 {
+    max-width: 55%;
+    flex: 0 0 55%;
+  }
+  .xl-60 {
+    max-width: 60%;
+    flex: 0 0 60%;
+  }
+  .xl-65 {
+    max-width: 65%;
+    flex: 0 0 65%;
+  }
+  .xl-50 {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+  .xl-70 {
+    max-width: 70%;
+    flex: 0 0 70%;
+  }
+  .xl-80 {
+    max-width: 80%;
+    flex: 0 0 80%;
+  }
+  .xl-100 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  .xl-23 {
+    max-width: 23%;
+    flex: 0 0 23%;
+  }
+  .xl-25 {
+    max-width: 25%;
+    flex: 0 0 25%;
+  }
+  .xl-40 {
+    max-width: 40%;
+    flex: 0 0 40%;
+  }
+  .xl-4 {
+    max-width: 33.33%;
+    flex: 0 0 33.33%;
+  }
+}
+
+@media screen and (max-width: 1660px) and (min-width: 1366px) {
+  .default-dash,
+  .default-dash2 {
+    .card {
+      .card-header {
+        padding: 20px;
+        h5 {
+          font-size: 16px;
+        }
+        .card-header-right {
+          top: 25px;
+          right: 25px;
+        }
+      }
+      .card-body {
+        padding: 20px;
+      }
+    }
+  }
+  .default-dash {
+    .recent-activi {
+      &.card {
+        .card-body {
+          padding: 8px !important;
+        }
+      }
+    }
+  }
+  .profile-greeting {
+    .card-body {
+      h3 {
+        font-size: 20px;
+      }
+
+      h4 {
+        font-size: 20px;
+      }
+
+      h5 {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .investment-sec {
+    .icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+
+      svg {
+        height: 16px;
+      }
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      margin-bottom: 5px;
+    }
+  }
+
+  .administrator-table {
+    table {
+      tr {
+        td {
+          h6 {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  .weather-sec {
+    .city-weather {
+      .btn {
+        font-size: 12px;
+      }
+
+      .weather-wrraper {
+        li {
+          .icon-moon {
+            width: 25px;
+            height: 25px;
+
+            svg {
+              height: 14px;
+            }
+          }
+
+          h3 {
+            font-size: 22px;
+          }
+        }
+      }
+    }
+    .weather-img {
+      height: 285px;
+      margin-top: 20px;
+    }
+  }
+  .recent-activi {
+    table {
+      tbody {
+        tr {
+          td {
+            padding: 12px 20px 13px 20px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1387px) and (min-width: 1366px) {
+  .recent-activi {
+    table {
+      tbody {
+        tr {
+          td {
+            padding: 6px 20px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1365px) and (min-width: 768px) {
+  .default-dash,
+  .default-dash2 {
+    .card {
+      .card-header {
+        &.dflex {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1365px) and (min-width: 1200px) {
+  .des-xl-25 {
+    max-width: 25%;
+    flex: 0 0 25%;
+  }
+
+  .des-xl-33 {
+    max-width: 33.333%;
+    flex: 0 0 33.333%;
+  }
+
+  .des-xl-50 {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+
+  .des-xl-40 {
+    max-width: 40%;
+    flex: 0 0 40%;
+  }
+
+  .des-xl-45 {
+    max-width: 45%;
+    flex: 0 0 45%;
+  }
+
+  .des-xl-55 {
+    max-width: 55%;
+    flex: 0 0 55%;
+  }
+
+  .des-xl-60 {
+    max-width: 60%;
+    flex: 0 0 60%;
+  }
+
+  .des-xl-100 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  .das-order-1{
+    order: 1;
+  }
+  .default-dash {
+    .best-selling {
+      order: 1;
+      flex: 100%;
+    }
+    .our-city {
+      flex: 50%;
+    }
+  }
+  .default-dash,
+  .default-dash2 {
+    .card {
+      .card-header {
+        padding: 20px;
+        .card-header-right {
+          top: 22px;
+          right: 25px;
+        }
+      }
+      .card-body {
+        padding: 20px;
+      }
+    }
+  }
+  .investment-sec{
+    h3{
+      font-size: 18px;
+    }
+    p{
+      font-size: 13px;
+    }
+  }
+
+  .profile-greeting {
+    height: 310px;
+    .card-body {
+      h3,
+      h4 {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .weather-sec {
+    .card-header{
+      padding: 16px;
+    }
+    .weather-img {
+      height: 260px;
+    }
+  }
+  .bestselling-sec{
+    ul.selling-list{
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  } 
+  .recent-activi {
+    table {
+      tbody {
+        tr {
+          td {
+            padding: 10px 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .weather-sec {
+    .city-weather {
+      .weather-wrraper {
+        li {
+          h3 {
+            font-size: 20px;
+          }
+          &:nth-child(n + 2) {
+            margin-left: 4px;
+          }
+        }
+      }
+      .btn {
+        font-size: 12px;
+        padding: 5px 12px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .profile-greeting {
+    height: 310px;
+
+    .card-body {
+      h3 {
+        font-size: 22px;
+      }
+
+      h4 {
+        font-size: 22px;
+      }
+    }
+  }
+  .weather-sec {
+    .weather-img {
+      height: 325px;
+    }
+    .city-weather {
+      .weather-wrraper {
+        li {
+          h3 {
+            font-size: 24px;
+          }
+          .icon-moon {
+            width: 27px;
+            height: 27px;
+            svg {
+              height: 14px;
+            }
+          }
+        }
+      }
+      .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .administrator-table {
+    table {
+      tr {
+        td {
+          min-width: 120px;
+          &:first-child {
+            min-width: 250px;
+          }
+          ul {
+            li:nth-child(n + 2) {
+              margin-left: 10px;
+            }
+          }
+          .d-flex {
+            .flex-grow-1 {
+              h6 {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .profile-greeting {
+    height: 305px;
+  }
+  .weather-sec {
+    .weather-img {
+      height: 300px;
+    }
+  }
+  .recent-activi {
+    table {
+      tbody {
+        tr {
+          td {
+            padding-top: 15px;
+            padding-bottom: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .bestselling-sec{
+    ul.selling-list{
+      li{
+        .icon{
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+  .browser-status {
+    ul {
+      &.browser-used {
+        li {
+          .browser-box {
+            width: 42px;
+            height: 42px;
+            padding: 10px;
+          }
+          .brow-lable {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .investment-sec {
+    h3 {
+      font-size: 16px;
+    }
+    .icon {
+      width: 45px;
+      height: 45px;
+      margin-bottom: 10px;
+      svg {
+        height: 18px;
+      }
+    }
+    p {
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .recent-activi {
+    table {
+      tbody {
+        tr {
+          td {
+            padding-left: 20px;
+            padding-right: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .weather-sec {
+    .city-weather {
+      .weather-wrraper {
+        li {
+          h3 {
+            font-size: 20px;
+          }
+          &:nth-child(n + 2) {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .bestselling-sec {
+    ul.selling-list {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .des-xsm-50 {
+    max-width: 50%;
+    flex: 0 0 50%;
+  }
+
+  .bestselling-sec {
+    ul {
+      &.selling-list {
+        li {
+          display: block;
+          text-align: center;
+
+          .icon {
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+  .bestselling-table {
+    table {
+      tbody {
+        tr {
+          td {
+            &:first-child {
+              min-width: 266px;
+            }
+            min-width: 122px;
+          }
+        }
+      }
+    }
+  }
+  .default-dash,
+  .default-dash2 {
+    .card {
+      .card-header {
+        &.dflex {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .recent-activi{
+    table{
+      tbody{
+        tr{
+          td{
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+  .bestselling-sec{
+    .bestselling-table{
+      table{
+        tbody{
+          tr{
+            td{
+              padding-top: 10px;
+              padding-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .investment-sec {
+    .icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 5px;
+
+      svg {
+        width: 16px;
+      }
+    }
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .bestselling-sec {
+    ul {
+      &.selling-list {
+        display: block;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        li {
+          display: flex;
+          text-align: left;
+
+          .icon {
+            margin-left: unset;
+            margin-right: 15px;
+            margin-bottom: unset;
+            width: 35px;
+            height: 35px;
+
+            svg {
+              height: 16px;
+            }
+          }
+
+          &:nth-child(n + 2) {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid $light-gray;
+          }
+        }
+      }
+    }
+  }
+
+  .profile-greeting {
+    .card-body {
+      background-position: 15% !important;
+      h3 {
+        font-size: 20px;
+      }
+
+      h4 {
+        font-size: 18px;
+      }
+
+      h5 {
+        font-size: 14px;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+    }
+    .shap-block {
+      .rounded-shap {
+        i {
+          right: -10%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .des-xsm-50 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .weather-sec {
+    height: 400px;
+  }
+
+  .default-datepicker {
+    .datepicker-inline {
+      .datepicker {
+        .datepicker--content {
+          .datepicker--days {
+            .datepicker--cells {
+              .datepicker--cell {
+                &.-selected- {
+                  &:before {
+                    height: 36px;
+                  }
+                }
+              }
+              .datepicker--cell-day {
+                height: 36px;
+              }
+            }
+            .datepicker--days-names {
+              margin: 13px 0 13px;
+              .datepicker--day-name {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+        .datepicker--nav-title {
+          i {
+            margin-left: 15px;
+            font-size: 25px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**=====================
+51. Dashboard CSS Ends
+==========================**/
