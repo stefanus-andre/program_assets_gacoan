@@ -214,13 +214,13 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3>Movement Out Name List</h3>
+                  <h3>Disposal Name List</h3>
                 </div>
                 <div class="col-sm-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                     <li class="breadcrumb-item">ASMI</li>
-                    <li class="breadcrumb-item active">Movement Out Name List</li>
+                    <li class="breadcrumb-item active">Disposal Name List</li>
                   </ol>
                 </div>
               </div>
@@ -234,13 +234,13 @@
               <div class="col-sm-12">
                 <div class="card">
                   <div class="card-header pb-0">
-                    <h5>Movement Out Name List</h5>
+                    <h5>Disposal Name List</h5>
                     <span>adalah daftar atau kumpulan aset yang dimiliki oleh seseorang, organisasi, atau perusahaan. Daftar ini biasanya mencakup rincian tentang setiap aset, seperti jenis aset, nilai, lokasi, dan informasi relevan lainnya.</span>
                   </div>
 					<div class="card-body"> 
 						<div class="btn-showcase">
                             <div class="button_between">
-                                <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveOut">+ Add Data moveout</button>
+                                {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveOut">+ Add Data moveout</button> --}}
                                 {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
                                 <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 Download PDF Data</button> --}}
@@ -268,7 +268,7 @@
                         <div class="modal-dialog modal-md">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Add Data Movement Out</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Add Data Disposal</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -459,7 +459,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="brandModalLabel">Detail Movement Out</h5>
+                                        <h5 class="modal-title" id="brandModalLabel">Detail Movement</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -517,7 +517,7 @@
                     <div class="card-body">
                       <div class="table-responsive product-table" style="max-width: 100%; overflow-x: auto;">
                         <div class="d-flex justify-content-between mb-3 mt-3">
-                            <h5>Movement Out Data</h5> <!-- Add a heading for the table if needed -->
+                            <h5>Disposal Data</h5> <!-- Add a heading for the table if needed -->
                             <!-- Search Input Field aligned to the right -->
                             <div class="input-group" style="width: 250px;">
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search for assets..." />
@@ -534,7 +534,7 @@
                                     <th>Deskripsi</th>
                                     <th>Alasan</th>
                                     <th>Status Movement</th>
-                                    <th>Actions</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -549,20 +549,6 @@
                                         <td>{{ $moveout->reason_name }}</td>
                                         <td>{{ $moveout->approval_name }}</td>
                                         <td class="text-center">
-                                            @if($moveout->appr_1 != 2)
-                                            <a href="javascript:void(0);" class="edit-button" 
-                                            data-id="{{ $moveout->out_id }}" 
-                                            title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form class="delete-form" action="{{ url('admin/moveouts/delete', $moveout->out_id) }}" method="POST" style="display:inline;">
-                                              @csrf
-                                              @method('DELETE')
-                                              <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;" onclick="confirmDelete(event, this)">
-                                                  <i class="fas fa-trash-alt" style="color: red;"></i>
-                                              </button>
-                                          </form>
-                                            @endif
                                             <a href="javascript:void(0);" class="detail-button" 
                                             data-id="{{ $moveout->out_id }}" 
                                             data-no="{{ $moveout->out_no }}" 

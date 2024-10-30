@@ -74,7 +74,7 @@ Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController
 Route::put('/admin/registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
 Route::post('admin/registrasi_asset/approve', [RegistrasiAssetController::class, 'approve']);
 Route::get('/assets/details/{register_code}', [RegistrasiAssetController::class, 'TampilDataQR'])->name('assets.details');
-
+Route::post('/assets/import', [RegistrasiAssetController::class, 'importExcel'])->name('assets.import');
 
 Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index']);

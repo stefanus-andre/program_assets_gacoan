@@ -10,6 +10,27 @@ use Illuminate\Support\Facades\DB;
 
 class MovementController extends Controller
 {
+    public function Index()
+    {
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $moveouts = DB::table('t_out')
+        ->join('mc_approval', 't_out.appr_1', '=', 'mc_approval.approval_id')
+        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->paginate(10);
+
+        return view("Admin.movement", [
+            'reasons' => $reasons,
+            'approvals' => $approvals,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'moveouts' => $moveouts
+        ]);
+    }
+
     public function Index1()
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
@@ -24,6 +45,27 @@ class MovementController extends Controller
         ->paginate(10);
 
         return view("Admin.apprmoveout-am", [
+            'reasons' => $reasons,
+            'approvals' => $approvals,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'moveouts' => $moveouts
+        ]);
+    }
+
+    public function HalamanMove() 
+    {
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $moveouts = DB::table('t_out')
+        ->join('mc_approval', 't_out.appr_1', '=', 'mc_approval.approval_id')
+        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->paginate(10);
+
+        return view("Admin.movement", [
             'reasons' => $reasons,
             'approvals' => $approvals,
             'assets' => $assets,

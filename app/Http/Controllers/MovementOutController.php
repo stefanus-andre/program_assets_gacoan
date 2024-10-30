@@ -19,6 +19,7 @@ class MovementOutController extends Controller
         $moveouts = DB::table('t_out')
         ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
         ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->where('t_out.is_active', 1) // Only include active records
         ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
         ->paginate(10);
 
@@ -39,6 +40,7 @@ class MovementOutController extends Controller
         $moveouts = DB::table('t_out')
         ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
         ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->where('t_out.is_active', 1) // Only include active records
         ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
         ->paginate(10);
 
@@ -267,14 +269,17 @@ public function AddDataMoveOut(Request $request)
         $moveout = MasterMoveOut::find($id);
 
         if ($moveout) {
-            $moveout->delete();
+            // Set is_active to 0 instead of deleting the record
+            $moveout->is_active = 0;
+            $moveout->save(); // Save the changes to the database
+
             return response()->json([
                 'status' => 'success', 
-                'message' => 'move$moveout deleted successfully.',
+                'message' => 'MoveOut deactivated successfully.', // Updated message for clarity
                 'redirect_url' => route('Admin.moveout')
             ]);
         } else {
-            return response()->json(['status' => 'Error', 'message' => 'Data move$moveout Gagal Terhapus'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Data MoveOut not found.'], 404);
         }
     }
 

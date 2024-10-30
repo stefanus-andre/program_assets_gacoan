@@ -44,6 +44,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
       .btn-link {
           color: #007bff;
@@ -559,12 +560,12 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <form class="delete-form" action="{{ url('admin/moveouts/delete', $moveout->out_id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;">
-                                                    <i class="fas fa-trash-alt" style="color: red;"></i>
-                                                </button>
-                                            </form>
+                                              @csrf
+                                              @method('DELETE')
+                                              <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;" onclick="confirmDelete(event, this)">
+                                                  <i class="fas fa-trash-alt" style="color: red;"></i>
+                                              </button>
+                                          </form>
                                             @endif
                                             <a href="javascript:void(0);" class="detail-button" 
                                             data-id="{{ $moveout->out_id }}" 
@@ -909,31 +910,41 @@ $('#updateForm').on('submit', function(e) {
     {{-- Delete data moveout --}}
     <script>
         $(document).on('click', '.delete-button', function(e) {
-        e.preventDefault(); // Mencegah submit form default
-        const form = $(this).closest('form'); // Ambil form yang terdekat dari tombol
-
-        // Tampilkan dialog konfirmasi
-        if (confirm('Apakah Anda yakin ingin menghapus moveout ini?')) {
-            // Ambil URL dari action form
-            const actionUrl = form.attr('action');
-            
-            $.ajax({
-                url: actionUrl, // URL dari form
-                method: 'DELETE', // Method untuk delete
-                data: form.serialize(), // Kirim data form
-                success: function(response) {
-                    if (response.status === 'success') {
-                        window.location.href = response.redirect_url; // Redirect ke Admin.moveout
-                    } else {
-                        alert(response.message); // Tampilkan pesan error jika gagal
-                    }
-                },
-                error: function(jqXHR) {
-                    alert('Gagal menghapus data. Coba lagi.');
+            e.preventDefault(); // Prevent default form submission
+            const form = $(this).closest('form'); // Get the closest form to the button
+    
+            // Display confirmation dialog
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Tindakan ini tidak dapat dibatalkan.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, simpan'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Get the action URL from the form
+                    const actionUrl = form.attr('action');
+                    
+                    // Perform AJAX DELETE request
+                    $.ajax({
+                        url: actionUrl, // Form action URL
+                        method: 'DELETE', // HTTP method
+                        data: form.serialize(), // Serialize form data
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                window.location.href = response.redirect_url; // Redirect on success
+                            } else {
+                                Swal.fire('Error!', response.message, 'error'); // Show error message
+                            }
+                        },
+                        error: function(jqXHR) {
+                            Swal.fire('Gagal!', 'Gagal menghapus data. Coba lagi.', 'error'); // Error message
+                        }
+                    });
                 }
             });
-        }
-    });
+        });
     </script>
     
     <script>

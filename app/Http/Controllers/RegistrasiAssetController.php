@@ -126,17 +126,21 @@ public function AddDataRegistrasiAsset(Request $request) {
     imagefilledrectangle($qrImage, $xPosition, $yPosition, $xPosition + $squareSize, $yPosition + $squareSize, $squareColor);
 
     // Define the file path for the QR code
-    $filePath = public_path('qrcodes');
+    $filePath = base_path('qrcodes');
     $fileName = $register_code . '.png';
 
     // Create the directory if it doesn't exist
     if (!File::exists($filePath)) {
         File::makeDirectory($filePath, 0755, true);
     }
+    
+    if (!File::exists($filePath)) {
+    File::makeDirectory($filePath, 0755, true);
+}
 
     // Save the modified QR code image
-    imagepng($qrImage, $filePath . '/' . $fileName);
-    imagedestroy($qrImage); // Free up memory
+  imagepng($qrImage, $filePath . '/' . $fileName);
+imagedestroy($qrImage); // Free
 
     // Store asset data in the database
     $asset = new MasterRegistrasiModel();
