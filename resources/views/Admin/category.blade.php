@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="cat_code">Category Code : </label>
-                                                    <input type="text" name="cat_code" id="cat_code" class="form-control" required>
+                                                    <input type="text" name="cat_code" id="edit_cat_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="cat_name">Category Name : </label>
-                                                      <input type="text" name="cat_name" id="cat_name" class="form-control" required>
+                                                      <input type="text" name="cat_name" id="edit_cat_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="cat_id" id="cat_id">
                                               </div>
@@ -608,8 +608,8 @@
 
             // Isi input dengan data
             $('#cat_id').val(categoryId);
-            $('#cat_name').val(categoryName);
-            $('#cat_code').val(categoryCode);
+            $('#edit_cat_name').val(categoryName);
+            $('#edit_cat_code').val(categoryCode);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

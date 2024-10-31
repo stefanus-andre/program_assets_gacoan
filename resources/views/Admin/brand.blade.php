@@ -308,8 +308,8 @@
                                   <div class="modal-body">
                                       <div class="row">
                                           <div class="col-sm-12">
-                                              <label for="brand_name">Brand Name : </label>
-                                              <input type="text" name="brand_name" id="brand_name" class="form-control" required>
+                                              <label for="edit-brand_name">Brand Name : </label>
+                                              <input type="text" name="brand_name" id="edit_brand_name" class="form-control" required>
                                           </div>
                                           <input type="hidden" name="brand_id" id="brand_id">
                                       </div>
@@ -524,7 +524,7 @@
     <!-- Theme js-->
     <script src="{{asset('assets/js/script.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/js/data-asset.js')}}"></script>
+    <!-- <script src="{{asset('assets/js/data-asset.js')}}"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
@@ -612,12 +612,12 @@
     {{-- Update Data Brand --}}
     <script>
         $(document).on('click', '.edit-button', function() {
-            const brandId = $(this).data('id'); // Ambil brand_id dari atribut data
-            const brandName = $(this).data('name'); // Ambil brand_name dari atribut data
-
-            // Isi input dengan data
-            $('#brand_id').val(brandId);
-            $('#brand_name').val(brandName);
+            var brandId = $(this).data('id');
+              var brandName = $(this).data('name');
+              
+              // Set the data into the modal
+              $('#brand_id').val(brandId);
+              $('#edit_brand_name').val(brandName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');
