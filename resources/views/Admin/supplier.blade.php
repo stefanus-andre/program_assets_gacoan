@@ -316,15 +316,15 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="supplier_code">Supplier Code : </label>
-                                                      <input type="text" name="supplier_code" id="supplier_code" class="form-control" required>
+                                                      <input type="text" name="supplier_code" id="edit_supplier_code" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="supplier_name">Supplier Name : </label>
-                                                      <input type="text" name="supplier_name" id="supplier_name" class="form-control" required>
+                                                      <input type="text" name="supplier_name" id="edit_supplier_name" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="supplier_address">Supplier Address : </label>
-                                                      <input type="text" name="supplier_address" id="supplier_address" class="form-control" required>
+                                                      <input type="text" name="supplier_address" id="edit_supplier_address" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="supplier_id" id="supplier_id">
                                               </div>
@@ -631,9 +631,9 @@
 
             // Isi input dengan data
             $('#supplier_id').val(supplierId);
-            $('#supplier_code').val(supplierCode);
-            $('#supplier_name').val(supplierName);
-            $('#supplier_address').val(supplierAddress);
+            $('#edit_supplier_code').val(supplierCode);
+            $('#edit_supplier_name').val(supplierName);
+            $('#edit_supplier_address').val(supplierAddress);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

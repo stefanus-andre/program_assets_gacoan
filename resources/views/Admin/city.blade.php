@@ -331,11 +331,11 @@
                                                 </div> --}}
                                                 <div class="col-sm-12">
                                                     <label for="provinsi">Provinsi : </label>
-                                                    <input type="text" name="provinsi" id="provinsi" class="form-control" placeholder="Enter provinsi" required>
+                                                    <input type="text" name="provinsi" id="edit_provinsi" class="form-control" placeholder="Enter provinsi" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="city">City : </label>
-                                                      <input type="text" name="city" id="city" class="form-control" required>
+                                                      <input type="text" name="city" id="edit_city" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="city_id" id="city_id">
                                               </div>
@@ -628,8 +628,8 @@
 
             // Isi input dengan data
             $('#city_id').val(cityId);
-            $('#provinsi').val(provinsiName);
-            $('#city').val(cityName);
+            $('#edit_provinsi').val(provinsiName);
+            $('#edit_city').val(cityName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

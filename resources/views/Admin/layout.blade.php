@@ -278,11 +278,11 @@
                                     <div class="row">
                                       <div class="col-sm-12">
                                       <label for="layout_code">Layout Code : </label>
-                                      <input type="text" name="layout_code" id="layout_code" class="form-control" placeholder="Enter Layout Code" required>
+                                      <input type="text" name="layout_code" id="edit_layout_code" class="form-control" placeholder="Enter Layout Code" required>
                                       </div>
                                         <div class="col-sm-12">
                                         <label for="layout_name">Layout Name : </label>
-                                        <input type="text" name="layout_name" id="layout_name" class="form-control" placeholder="Enter Layout Name" required>
+                                        <input type="text" name="layout_name" id="edit_layout_name" class="form-control" placeholder="Enter Layout Name" required>
                                         </div>
                                     </div>
                                 </form>
@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="layout_code">Layout Code : </label>
-                                                    <input type="text" name="layout_code" id="layout_code" class="form-control" required>
+                                                    <input type="text" name="layout_code" id="edit_layout_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="layout_name">Layout Name : </label>
-                                                      <input type="text" name="layout_name" id="layout_name" class="form-control" required>
+                                                      <input type="text" name="layout_name" id="edit_layout_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="layout_id" id="layout_id">
                                               </div>
@@ -606,8 +606,8 @@
 
             // Isi input dengan data
             $('#layout_id').val(layoutId);
-            $('#layout_name').val(layoutName);
-            $('#layout_code').val(layoutCode);
+            $('#edit_layout_code').val(layoutCode);
+            $('#edit_layout_name').val(layoutName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

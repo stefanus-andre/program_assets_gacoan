@@ -15,18 +15,18 @@ use Illuminate\Support\Facades\File;
 
 class LocationController extends Controller
 {
-    public function Index()
-    {
-        $layouts = DB::table('m_layout')->select('m_layout.*')->paginate(10);
+    // public function Index()
+    // {
+    //     $location = DB::table('m_location')->select('m_location.*')->paginate(10);
 
-        return view("Admin.layout", ['layouts' => $layouts]);
-    }
+    //     return view("Admin.location", ['location' => $location]);
+    // }
 
     public function HalamanLocation() 
     {
-        $layouts = DB::table('m_layout')->select('m_layout.*')->paginate(10);
+        $location = DB::table('m_location')->select('m_location.*')->paginate(10);
 
-        return view("Admin.layout", ['layouts' => $layouts]);
+        return view("Admin.location", ['location' => $location]);
     }
 
     public function getLocation()

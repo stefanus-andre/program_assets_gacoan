@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="type_code">Type Code : </label>
-                                                    <input type="text" name="type_code" id="type_code" class="form-control" required>
+                                                    <input type="text" name="type_code" id="edit_type_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="type_name">Type Name : </label>
-                                                      <input type="text" name="type_name" id="type_name" class="form-control" required>
+                                                      <input type="text" name="type_name" id="edit_type_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="type_id" id="type_id">
                                               </div>
@@ -612,8 +612,8 @@
 
             // Isi input dengan data
             $('#type_id').val(TypeId);
-            $('#type_code').val(typeCode);
-            $('#type_name').val(typeName);
+            $('#edit_type_code').val(typeCode);
+            $('#edit_type_name').val(typeName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

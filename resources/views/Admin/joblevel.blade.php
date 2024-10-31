@@ -308,7 +308,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="joblevel_name">Job Level Name : </label>
-                                                      <input type="text" name="joblevel_name" id="joblevel_name" class="form-control" required>
+                                                      <input type="text" name="joblevel_name" id="edit_joblevel_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="joblevel_id" id="joblevel_id">
                                               </div>
@@ -591,7 +591,7 @@
 
             // Isi input dengan data
             $('#joblevel_id').val(joblevelId);
-            $('#joblevel_name').val(joblevelName);
+            $('#edit_joblevel_name').val(joblevelName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

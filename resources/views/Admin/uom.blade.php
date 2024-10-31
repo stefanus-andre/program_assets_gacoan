@@ -308,7 +308,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="uom_name">Uom Name : </label>
-                                                      <input type="text" name="uom_name" id="uom_name" class="form-control" required>
+                                                      <input type="text" name="uom_name" id="edit_uom_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="uom_id" id="uom_id">
                                               </div>
@@ -591,7 +591,7 @@
 
             // Isi input dengan data
             $('#uom_id').val(uomId);
-            $('#uom_name').val(uomName);
+            $('#edit_uom_name').val(uomName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

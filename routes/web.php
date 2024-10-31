@@ -238,10 +238,8 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::delete('/admin/layouts/delete/{id}', [LayoutController::class, 'deleteDataLayout'])->name('delete.layout');
     // Location
     Route::get('/admin/location', [LocationController::class, 'HalamanLocation']);
-    Route::get('/admin/location', [LocationController::class, 'HalamanLocation'])->name('Admin.location');
     Route::post('/add-location', [LocationController::class, 'AddDataLocation'])->name('add.location');
     Route::get('/get-location', [LocationController::class, 'GetLocation'])->name('get.location');
-    Route::get('/admin/locations', [LocationController::class, 'Index'])->name('Admin.location');
     Route::get('/admin/locations/edit/{id}', [LocationController::class, 'showEditForm'])->name('edit.location');
     Route::put('/admin/locations/edit/{id}', [LocationController::class, 'updateDataLocation'])->name('update.location');
     Route::delete('/admin/locations/delete/{id}', [LocationController::class, 'deleteDataLocation'])->name('delete.location');

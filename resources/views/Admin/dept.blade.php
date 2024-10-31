@@ -308,7 +308,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="dept_name">Departement Name : </label>
-                                                      <input type="text" name="dept_name" id="dept_name" class="form-control" required>
+                                                      <input type="text" name="dept_name" id="edit_dept_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="dept_id" id="dept_id">
                                               </div>
@@ -591,7 +591,7 @@
 
             // Isi input dengan data
             $('#dept_id').val(deptId);
-            $('#dept_name').val(deptName);
+            $('#edit_dept_name').val(deptName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');
