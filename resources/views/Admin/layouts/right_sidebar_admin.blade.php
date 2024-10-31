@@ -29,7 +29,7 @@
                   <li class="menu-box"> 
                     <ul>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/dashboard"><i data-feather="pie-chart"></i><span>Dashboard</span></a></li>
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li>
+                        <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li> -->
                         {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/halaman_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="#"><i data-feather="arrow-right"></i><span>Assets Movement</span></a></li> --}}
                         <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="cast"></i><span>Schedule Maintenance</span></a></li> -->
@@ -56,7 +56,7 @@
                               <li><a href="datatable-data-source.html">Data Sources</a></li>
                             </ul>
                           </li> --}}
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/regist"><span>Assets Regist</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li>
                           <li><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-reg"><span>Approval OPS SM</span></a></li>
                           <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li>
                         </ul>

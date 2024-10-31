@@ -361,29 +361,29 @@
                                           <div class="modal-body">
                                               <div class="row">
                                                   <div class="col-sm-12">
-                                                      <label for="asset_code">Assets Code : </label>
-                                                      <input type="text" name="asset_code" id="asset_code" class="form-control" required readonly>
+                                                      <label for="edit-asset_code">Assets Code : </label>
+                                                      <input type="text" name="asset_code" id="edit-asset_code" class="form-control" required readonly>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="asset_model">Assets Model : </label>
-                                                      <input type="text" name="asset_model" id="asset_model" class="form-control" required>
+                                                      <label for="edit-asset_model">Assets Model : </label>
+                                                      <input type="text" name="asset_model" id="edit-asset_model" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="asset_status">Assets Status : </label>
-                                                      <input type="text" name="asset_status" id="asset_status" class="form-control" required>
+                                                      <label for="edit-asset_status">Assets Status : </label>
+                                                      <input type="text" name="asset_status" id="edit-asset_status" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="asset_quantity">Assets Quantity : </label>
-                                                      <input type="text" name="asset_quantity" id="asset_quantity" class="form-control" required>
+                                                      <label for="edit-asset_quantity">Assets Quantity : </label>
+                                                      <input type="text" name="asset_quantity" id="edit-asset_quantity" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                    <label for="asset_image">Asset Image: </label>
-                                                    <input type="file" name="asset_image" id="asset_image" class="form-control" accept="image/*">
+                                                    <label for="edit-asset_image">Asset Image: </label>
+                                                    <input type="file" name="asset_image" id="edit-asset_image" class="form-control" accept="image/*">
                                                     <small class="form-text text-muted">Leave empty to keep the current image.</small>
                                                 </div>
                                                   <div class="col-sm-12">
-                                                    <label for="priority_id">Priority: </label>
-                                                    <select name="priority_id" id="priority_id" class="form-control" required>
+                                                    <label for="edit-priority_id">Priority: </label>
+                                                    <select name="priority_id" id="edit-priority_id" class="form-control" required>
                                                         <option value="">Select Priority</option>
                                                         @foreach($priorities as $priority)
                                                             <option value="{{ $priority->priority_id }}">{{ $priority->priority_name }}</option>
@@ -391,8 +391,8 @@
                                                     </select>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="cat_id">Category : </label>
-                                                      <select name="cat_id" id="cat_id" class="form-control" required>
+                                                      <label for="edit-cat_id">Category : </label>
+                                                      <select name="cat_id" id="edit-cat_id" class="form-control" required>
                                                           <option value="">Select Category</option>
                                                           @foreach($categories as $category)
                                                               <option value="{{ $category->cat_id }}">{{ $category->cat_name }}</option>
@@ -400,8 +400,8 @@
                                                       </select>
                                                     </div>
                                                   <div class="col-sm-12">
-                                                      <label for="type_id">Type : </label>
-                                                      <select name="type_id" id="type_id" class="form-control" required>
+                                                      <label for="edit-type_id">Type : </label>
+                                                      <select name="type_id" id="edit-type_id" class="form-control" required>
                                                           <option value="">Select Type</option>
                                                           @foreach($tipies as $type)
                                                               <option value="{{ $type->type_id }}">{{ $type->type_name }}</option>
@@ -409,8 +409,8 @@
                                                       </select>
                                                     </div>
                                                   <div class="col-sm-12">
-                                                      <label for="uom_id">Uom : </label>
-                                                      <select name="uom_id" id="uom_id" class="form-control" required>
+                                                      <label for="edit-uom_id">Uom : </label>
+                                                      <select name="uom_id" id="edit-uom_id" class="form-control" required>
                                                           <option value="">Select Uom</option>
                                                           @foreach($uomies as $uom)
                                                               <option value="{{ $uom->uom_id }}">{{ $uom->uom_name }}</option>
@@ -499,7 +499,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="coba-tbody">
                                         @foreach($assets as $asset)
                                             <tr>
                                                 <td>{{ $asset->asset_code }}</td>
@@ -646,26 +646,47 @@
     <script src="{{asset('assets/js/typeahead-search/handlebars.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script src="{{asset('assets/js/script.js')}}"></script>
+   
+    <!-- <script src="{{asset('assets/js/data-asset.js')}}"></script> -->
+
+    
+    {{-- Get Data asset --}}
     <script>
-      $(document).ready(function() {
+
+      
+    function generateRandomCode(length) {
+          return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length - 1));
+        }
+    
+        function generateAssetCode() {
+          const date = new Date();
+          const day = String(date.getDate()).padStart(2, '0');
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const year = date.getFullYear();
+          const randomCode = generateRandomCode(4);
+    
+          const assetCode = `AST-${day}-${month}-${year}-${randomCode}`;
+          return assetCode;
+        }
+    
+        function newSetAssetCode() {
+          document.getElementById('asset_code').value =generateAssetCode();
+        }
+    
+        newSetAssetCode();
+
+
+       $(document).ready(function() {
         $('#coba').DataTable({
           paging: true, // Enable pagination
           searching: true, // Enable searching
           ordering: true // Enable sorting
         });
       });
-    </script>
-    <!-- Plugins JS Ends-->
-    <!-- Theme js-->
-    <script src="{{asset('assets/js/script.js')}}"></script>
-    <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/js/data-asset.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
-    {{-- Get Data asset --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
         $(document).ready(function() {
             // Mengambil data asset menggunakan Ajax
             $.ajax({
@@ -701,7 +722,7 @@
                             </tr>
                         `;
                     });
-                    $('#assetTableBody').html(rows); // Memasukkan baris ke dalam tbody
+                    $('#coba-tbody').html(rows); // Memasukkan baris ke dalam tbody
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('Error fetching data:', textStatus, errorThrown);
@@ -720,7 +741,7 @@
           var formData = new FormData($('#addAssetForm')[0]);
   
           $.ajax({
-              url: '{{ route('add-regist') }}', // Correct URL
+              url: "{{ route('add-regist') }}", // Correct URL
               method: 'POST',
               data: formData,
               contentType: false, // Important: Prevent jQuery from setting the content type
@@ -753,42 +774,44 @@
               const assetModel = $(this).data('model');
               const assetQuantity = $(this).data('quantity');
               const assetStatus = $(this).data('status');
-              const assetImage = $(this).data('image');
+              // const assetImage = $(this).data('image');
               const priorityId = $(this).data('priority');
               const catId = $(this).data('cat');
               const typeId = $(this).data('type');
+              const uomId = $(this).data('uom');
   
-              $('#asset_id').val(assetId);
-              $('#asset_code').val(assetCode);
-              $('#asset_model').val(assetModel);
-              $('#asset_quantity').val(assetQuantity);
-              $('#asset_status').val(assetStatus);
-              $('#asset_image').val(assetImage);
-              $('#priority_id').val(priorityId);
-              $('#cat_id').val(catId);
-              $('#type_id').val(typeId);
+              $('#edit-asset_id').val(assetId);
+              $('#edit-asset_code').val(assetCode);
+              $('#edit-asset_model').val(assetModel);
+              $('#edit-asset_quantity').val(assetQuantity);
+              $('#edit-asset_status').val(assetStatus);
+              // $('#edit-asset_image').val(assetImage);
+              $('#edit-priority_id').val(priorityId).change();
+              $('#edit-cat_id').val(catId).change();
+              $('#edit-type_id').val(typeId).change();
+              $('#edit-uom_id').val(uomId).change();
   
               $('#updateModal').modal('show');
           });
   
-          $('#updateForm').on('submit', function(e) {
-              e.preventDefault();
+          // $('#updateForm').on('submit', function(e) {
+          //     e.preventDefault();
   
-              $.ajax({
-                  url: '/admin/regists/edit/' + $('#asset_id').val(),
-                  method: 'PUT',
-                  data: $(this).serialize(),
-                  success: function(response) {
-                      if (response.status === 'success') {
-                          window.location.href = response.redirect_url;
-                      }
-                  },
-                  error: function(jqXHR) {
-                      const message = jqXHR.responseJSON?.message || 'Failed to update Asset.';
-                      alert(message);
-                  }
-              });
-          });
+          //     $.ajax({
+          //         url: '/admin/regists/edit/' + $('#asset_id').val(),
+          //         method: 'PUT',
+          //         data: $(this).serialize(),
+          //         success: function(response) {
+          //             if (response.status === 'success') {
+          //                 window.location.href = response.redirect_url;
+          //             }
+          //         },
+          //         error: function(jqXHR) {
+          //             const message = jqXHR.responseJSON?.message || 'Failed to update Asset.';
+          //             alert(message);
+          //         }
+          //     });
+          // });
       });
   </script>
 
@@ -892,6 +915,10 @@
         });
     });
   </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+   <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <!-- login js-->
     <!-- Plugin used-->
   </body>

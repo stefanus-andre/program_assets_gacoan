@@ -8,34 +8,34 @@ $(document).ready(function() {
 
 
 
-    // $('#downloadExcel').on('click', function(){
-    //   window.open('/admin/download_asset_excel', '_blank');
-    // });
+    $('#downloadExcel').on('click', function(){
+      window.open('/admin/download_asset_excel', '_blank');
+    });
   
-    // $('#downloadPDF').on('click', function(){
-    //   window.open('/admin/download_asset_pdf', '_blank');
-    // });
+    $('#downloadPDF').on('click', function(){
+      window.open('/admin/download_asset_pdf', '_blank');
+    });
   
-      // function generateRandomCode(length) {
-      //     return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length - 1));
-      //   }
+      function generateRandomCode(length) {
+          return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length - 1));
+        }
     
-      //   function generateAssetCode() {
-      //     const date = new Date();
-      //     const day = String(date.getDate()).padStart(2, '0');
-      //     const month = String(date.getMonth() + 1).padStart(2, '0');
-      //     const year = date.getFullYear();
-      //     const randomCode = generateRandomCode(4);
+        function generateAssetCode() {
+          const date = new Date();
+          const day = String(date.getDate()).padStart(2, '0');
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const year = date.getFullYear();
+          const randomCode = generateRandomCode(4);
     
-      //     const assetCode = `AST-${day}-${month}-${year}-${randomCode}`;
-      //     return assetCode;
-      //   }
+          const assetCode = `RG-${day}-${month}-${year}-${randomCode}`;
+          return assetCode;
+        }
     
-      //   function newSetAssetCode() {
-      //     document.getElementById('asset_code').value =generateAssetCode();
-      //   }
+        function newSetAssetCode() {
+          document.getElementById('register_code').value =generateAssetCode();
+        }
     
-      //   newSetAssetCode();
+        newSetAssetCode();
   
       var table = $('#coba').DataTable({
         scrollX: true,
@@ -634,7 +634,7 @@ $('#coba').on('click', '.delete-btn', function(){
                     var regionSelect = $('#warranty');
                     $.each(data, function(index, warranty) {
                         regionSelect.append($('<option>', {
-                            value: warranty.warranty_name + ' - ' + warranty.date, // Assuming 'id' is the unique identifier for the region
+                            value: warranty.warranty_name + ' - ' + warranty.warranty_day, // Assuming 'id' is the unique identifier for the region
                             text: warranty.warranty_name + ' - ' + warranty.warranty_day // Assuming 'name' is the display name of the region
                         }));
                     });

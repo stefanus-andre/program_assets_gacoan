@@ -526,16 +526,26 @@
                 </button>
             </div>
             <div class="modal-body">
-              <form action="{{route('import')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <label for="import-data">Import Data Excel : </label>
-                <input type="file" name="data_excel" id="data_excel" class="form-control" placeholder="Upload File Excel">
-              </div>
-              <div class="modal-footer">
+                <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                   {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="data_excel">Import Data Excel:</label>
+                        <input type="file" name="data_excel" id="data_excel" class="form-control" placeholder="Upload File Excel" required accept=".xlsx,.xls">
+                    </div>
+            </div>
+            <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-            </form>
+            </div>
+                </form>
+                @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
         </div>
     </div>
 </div>

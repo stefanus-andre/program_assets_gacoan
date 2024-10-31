@@ -63,13 +63,14 @@ Route::prefix('admin/registrasi_asset')->group(function(){
     Route::put('/admin/registrasi_asset/update_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
     Route::delete('/delete_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'DeleteDataRegistrasiAsset']);
     Route::get('/export_data_asset', [RegistrasiAssetController::class,'ExportToExcel']);
-    Route::post('/import', [MasterRegistrasiModel::class, 'import'])->name('import');
+    Route::post('/import', [RegistrasiAssetController::class, 'import'])->name('import');
+   
 }); 
 Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController::class, 'GetDetailDataRegistrasiAsset']);
 Route::put('/admin/registrasi_asset/update_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
 Route::post('admin/registrasi_asset/approve', [RegistrasiAssetController::class, 'approve']);
 Route::get('/assets/details/{register_code}', [RegistrasiAssetController::class, 'TampilDataQR'])->name('assets.details');
-
+Route::get('/get-location/{id}', [LocationController::class, 'GetLocation']);
 
 Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index']);

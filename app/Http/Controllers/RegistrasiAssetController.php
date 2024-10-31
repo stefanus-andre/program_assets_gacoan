@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use App\Exports\AssetExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MasterRegistrasiImport;
+use Illuminate\Support\Facades\Log;
 
 class RegistrasiAssetController extends Controller
 {
@@ -30,17 +31,17 @@ class RegistrasiAssetController extends Controller
         if (!empty($Asset->asset_code)) {
             // Define the file path for the QR code
             $qrCodeFileName = $Asset->asset_code . '.png';
-            $qrCodeFilePath = storage_path('qrcodes/' . $qrCodeFileName);
+            $qrCodeFilePath = storage_path('public/qrcodes/' . $qrCodeFileName);
 
             // Check if the QR code already exists
             if (file_exists($qrCodeFilePath)) {
                 // Assign the QR code path to the asset object
-                $Asset->qr_code_path = asset('qrcodes/' . $qrCodeFileName);
+                $Asset->qr_code_path = asset('public/qrcodes/' . $qrCodeFileName);
             } else {
                 // Generate the QR code and save it to the defined path if it doesn't exist
                 QrCode::format('png')->size(300)->generate($Asset->asset_code, $qrCodeFilePath);
                 // Assign the newly generated QR code path to the asset object
-                $Asset->qr_code_path = asset('qrcodes/' . $qrCodeFileName);
+                $Asset->qr_code_path = asset('public/qrcodes/' . $qrCodeFileName);
             }
         }
     }
@@ -126,7 +127,7 @@ public function AddDataRegistrasiAsset(Request $request) {
     imagefilledrectangle($qrImage, $xPosition, $yPosition, $xPosition + $squareSize, $yPosition + $squareSize, $squareColor);
 
     // Define the file path for the QR code
-    $filePath = base_path('qrcodes');
+    $filePath = base_path('public/qrcodes');
     $fileName = $register_code . '.png';
 
     // Create the directory if it doesn't exist
@@ -165,7 +166,7 @@ imagedestroy($qrImage); // Free
     $asset->approve_status = $approve_status;
 
     // Update the asset's qr_code_path before saving
-    $asset->qr_code_path = asset('qrcodes/' . $fileName);
+    $asset->qr_code_path = asset('public/qrcodes/' . $fileName);
 
     if ($asset->save()) {
         return response()->json([
@@ -310,17 +311,16 @@ imagedestroy($qrImage); // Free
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls',
-        ]);
-
+    
         try {
             Excel::import(new MasterRegistrasiImport, $request->file('file'));
             return back()->with('success', 'Excel data imported successfully.');
         } catch (\Exception $e) {
+            Log::error('Error importing Excel data: ' . $e->getMessage());
             return back()->with('error', 'Error importing Excel data: ' . $e->getMessage());
         }
     }
+    
 
 
     public function Trash() {
