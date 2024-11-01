@@ -34,6 +34,7 @@ class MovementOutController extends Controller
     public function HalamanMoveOut() 
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
@@ -48,7 +49,8 @@ class MovementOutController extends Controller
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
-            'moveouts' => $moveouts
+            'moveouts' => $moveouts,
+            'restos' => $restos
         ]);
     }
 
@@ -81,40 +83,52 @@ class MovementOutController extends Controller
         return response()->json($asset);
     }
 
+    public function getMoveoutDetails($id)
+    {
+        // Retrieve moveout and related details
+        $moveout = MasterMoveOut::find($id);
+        $details = $moveout ? $moveout->details : [];
+
+        return response()->json([
+            'moveout' => $moveout,
+            'details' => $details
+        ]);
+    }
+
     public function getDetails($id)
-{
-    // Fetch data from t_out and t_out_detail based on the out_id
-    $moveOut = DB::table('t_out')
-        ->where('out_id', $id)
-        ->first();
+    {
+        // Fetch data from t_out and t_out_detail based on the out_id
+        $moveOut = DB::table('t_out')
+            ->where('out_id', $id)
+            ->first();
 
-    $moveOutDetails = DB::table('t_out_detail')
-        ->where('out_id', $id)
-        ->get(); // Assuming you want to retrieve all details related to this out_id
+        $moveOutDetails = DB::table('t_out_detail')
+            ->where('out_id', $id)
+            ->get(); // Assuming you want to retrieve all details related to this out_id
 
-    // Combine the results (if necessary)
-    $response = [
-        'out_id' => $moveOut->out_id,
-        'out_no' => $moveOut->out_no,
-        'out_date' => $moveOut->out_date,
-        'from_loc' => $moveOut->from_loc,
-        'dest_loc' => $moveOut->dest_loc,
-        'in_id' => $moveOut->in_id,
-        'out_desc' => $moveOut->out_desc,
-        // Assuming there's a single asset, or you need to modify this to handle multiple assets
-        'asset_id' => $moveOutDetails->first()->asset_id ?? '',
-        'asset_name' => $moveOutDetails->first()->asset_name ?? '',
-        'asset_tag' => $moveOutDetails->first()->asset_tag ?? '',
-        'serial_number' => $moveOutDetails->first()->serial_number ?? '',
-        'brand' => $moveOutDetails->first()->brand ?? '',
-        'qty' => $moveOutDetails->first()->qty ?? '',
-        'uom' => $moveOutDetails->first()->uom ?? '',
-        'condition' => $moveOutDetails->first()->condition ?? '',
-        'image' => $moveOutDetails->first()->image ?? '',
-    ];
+        // Combine the results (if necessary)
+        $response = [
+            'out_id' => $moveOut->out_id,
+            'out_no' => $moveOut->out_no,
+            'out_date' => $moveOut->out_date,
+            'from_loc' => $moveOut->from_loc,
+            'dest_loc' => $moveOut->dest_loc,
+            'in_id' => $moveOut->in_id,
+            'out_desc' => $moveOut->out_desc,
+            // Assuming there's a single asset, or you need to modify this to handle multiple assets
+            'asset_id' => $moveOutDetails->first()->asset_id ?? '',
+            'asset_name' => $moveOutDetails->first()->asset_name ?? '',
+            'asset_tag' => $moveOutDetails->first()->asset_tag ?? '',
+            'serial_number' => $moveOutDetails->first()->serial_number ?? '',
+            'brand' => $moveOutDetails->first()->brand ?? '',
+            'qty' => $moveOutDetails->first()->qty ?? '',
+            'uom' => $moveOutDetails->first()->uom ?? '',
+            'condition' => $moveOutDetails->first()->condition ?? '',
+            'image' => $moveOutDetails->first()->image ?? '',
+        ];
 
-    return response()->json($response);
-}
+        return response()->json($response);
+    }
 
 public function getMoveOutById($id)
 {

@@ -94,16 +94,8 @@
 
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="archive"></i><span>Stock Opname</span></a>
                         <ul class="sidebar-submenu">
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/Halaman_stock_opname"><span>Data Stock Opname</span></a></li>
-                          <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-movement"><span>Data Movement</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/delivery-movement"><span>Doc Delivery Order</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-move-am"><span>Approval OPS AM</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-move-rm"><span>Approval OPS RM</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-move-sdgasset"><span>Approval SDG Assets</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirm-assets-move"><span>Confirm Movement OPS SM</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/review-move-head"><span>Review Ops Head</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/review-move-mnr"><span>Review MnR Area</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/review-move-taf"><span>Review TAF Accounting</span></a></li> -->
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/stockopname"><span>Data Stock Opname</span></a></li>
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/adjuststock"><span>Adjustment Stock</span></a></li>
                         </ul>
                       </li>
                     </ul>

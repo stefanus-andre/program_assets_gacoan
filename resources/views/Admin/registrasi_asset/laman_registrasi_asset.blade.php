@@ -382,7 +382,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateAssetForm">
+                <form id="updateAssetForm" >
                     @csrf
                     @method('PUT')
                     <input type="hidden" id="assetId" name="id">
@@ -482,7 +482,7 @@
                         <input type="text" id="edit-periodic_maintenance" name="periodic_maintenance" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update Asset</button>
+                    <button type="submit" class="btn btn-primary" id="submitUpdate">Update Asset</button>
                 </form>
             </div>
         </div>

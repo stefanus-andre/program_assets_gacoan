@@ -214,13 +214,13 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3>Movement Out Name List</h3>
+                  <h3>Adjustment Stock Name List</h3>
                 </div>
                 <div class="col-sm-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                     <li class="breadcrumb-item">ASMI</li>
-                    <li class="breadcrumb-item active">Movement Out Name List</li>
+                    <li class="breadcrumb-item active">Adjustment Stock Name List</li>
                   </ol>
                 </div>
               </div>
@@ -234,20 +234,19 @@
               <div class="col-sm-12">
                 <div class="card">
                   <div class="card-header pb-0">
-                    <h5>Movement Out Name List</h5>
+                    <h5>Adjustment Stock Name List</h5>
                     <span>adalah daftar atau kumpulan aset yang dimiliki oleh seseorang, organisasi, atau perusahaan. Daftar ini biasanya mencakup rincian tentang setiap aset, seperti jenis aset, nilai, lokasi, dan informasi relevan lainnya.</span>
                   </div>
 					<div class="card-body"> 
 						<div class="btn-showcase">
                             <div class="button_between">
-                                <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveOut">+ Add Data moveout</button>
+                                {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveOut">+ Add Data Adjustment Stock</button> --}}
                                 {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
                                 <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 Download PDF Data</button> --}}
                             </div>
 						  </div>
 						</div>
-
 
                     <!-- Button trigger modal -->
                     @if (session('success'))
@@ -268,7 +267,7 @@
                         <div class="modal-dialog modal-md">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Add Data Movement Out</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Add Data Stock Opname</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -277,46 +276,28 @@
                               <form id="addMoveOutForm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                  <!-- Tanggal, Lokasi, dan Deskripsi -->
-                                  <div class="col-sm-12">
-                                    <label for="out_date">Tanggal Movement Out:</label>
-                                    <input type="date" name="out_date" id="out_date" class="form-control" required>
-                                  </div>
-                                  <div class="col-sm-12">
-                                    <label for="form_loc">Lokasi Asal:</label>
-                                    <select name="form_loc" id="form_loc" class="form-control" required>
-                                      <option value="">Pilih Asal</option>
-                                      @foreach($restos as $masterresto)
-                                        <option value="{{ $masterresto->store_code }}">{{ $masterresto->resto }}</option>
-                                      @endforeach
-                                    </select>
-                                  </div>
-                                  <div class="col-sm-12">
-                                    <label for="dest_loc">Lokasi Tujuan:</label>
-                                    <select name="dest_loc" id="dest_loc" class="form-control" required>
-                                      <option value="">Pilih Tujuan</option>
-                                      @foreach($restos as $masterresto)
-                                        <option value="{{ $masterresto->store_code }}">{{ $masterresto->resto }}</option>
-                                      @endforeach
-                                    </select>
-                                  </div>
-                                  <div class="col-sm-12">
-                                    <label for="out_desc">Deskripsi Movement Out:</label>
-                                    <input type="text" name="out_desc" id="out_desc" class="form-control" required>
-                                  </div>
-                                  <div class="col-sm-12">
-                                    <label for="reason_id">Alasan Movement Out:</label>
-                                    <select name="reason_id" id="reason_id" class="form-control" required>
-                                      <option value="">Pilih Alasan</option>
-                                      @foreach($reasons as $reason)
-                                        <option value="{{ $reason->reason_id }}">{{ $reason->reason_name }}</option>
-                                      @endforeach
-                                    </select>
-                                  </div>
+                                    <!-- Tanggal, Lokasi, dan Deskripsi -->
+                                    <div class="col-sm-12">
+                                        <label for="loc_id">Lokasi :</label>
+                                        <input type="text" name="loc_id" id="loc_id" class="form-control" value="{{ $locId }}" readonly>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label for="opname_desc">Deskripsi Stock Opname:</label>
+                                        <input type="text" name="opname_desc" id="opname_desc" class="form-control" required>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label for="so_id">Alasan Stock Opname:</label>
+                                        <select name="so_id" id="so_id" class="form-control" required>
+                                            <option value="">Pilih Alasan</option>
+                                            @foreach($reasons as $reason)
+                                                <option value="{{ $reason->reason_id }}">{{ $reason->reason_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                       
                                   <!-- Container untuk data asset -->
                                   <div id="assetFieldsContainer">
-                                    <!-- Field Asset Pertama -->
+                                    <!-- Asset Field Section -->
                                     <div class="asset-fields">
                                       <div class="row">
                                         <div class="col-sm-12">
@@ -329,24 +310,20 @@
                                           </select>
                                         </div>
                                         <div class="col-sm-12">
-                                          <label for="merk">Merk:</label>
-                                          <input type="text" name="merk[]" class="form-control" readonly>
-                                        </div>
-                                        <div class="col-sm-12">
-                                          <label for="qty">Quantity:</label>
-                                          <input type="text" name="qty[]" class="form-control" readonly>
-                                        </div>
-                                        <div class="col-sm-12">
                                           <label for="satuan">Satuan:</label>
-                                          <input type="text" name="satuan[]" class="form-control" readonly>
+                                          <input type="text" name="satuan[]" class="form-control satuan" readonly>
                                         </div>
                                         <div class="col-sm-12">
-                                          <label for="serial_number">Serial Number:</label>
-                                          <input type="text" name="serial_number[]" class="form-control" readonly>
+                                          <label for="register_code">Asset Tag:</label>
+                                          <input type="text" name="register_code[]" class="form-control register_code" readonly>
                                         </div>
                                         <div class="col-sm-12">
-                                          <label for="register_code">Register Code:</label>
-                                          <input type="text" name="register_code[]" class="form-control" readonly>
+                                          <label for="qty">Qty OnHand:</label>
+                                          <input type="text" name="qty[]" class="form-control qty" readonly>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <label for="qty_physical">Qty Actual:</label>
+                                          <input type="number" name="qty_physical[]" class="form-control" required>
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="condition_id">Kondisi Asset:</label>
@@ -358,9 +335,6 @@
                                           </select>
                                         </div>
                                       </div>
-                                      <!-- Tombol untuk menambah atau menghapus field -->
-                                      <button type="button" class="btn btn-success btn-add-asset mt-2">+</button>
-                                      <button type="button" class="btn btn-danger btn-remove-asset mt-2">-</button>
                                     </div>
                                   </div>
                                 </div>
@@ -380,76 +354,21 @@
                               <div class="modal-dialog modal-md">
                                   <div class="modal-content">
                                       <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Update Moveout</h5>
+                                          <h5 class="modal-title" id="exampleModalLabel">Update Stock Opname</h5>
                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                               <span aria-hidden="true">&times;</span>
                                           </button>
                                       </div>
                                       <form id="updateForm">
                                           @csrf
-                                          @method('PUT') <!-- Method override for PUT request -->
+                                          @method('PUT') <!-- Metode override untuk request PUT -->
                                           <div class="modal-body">
                                               <div class="row">
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="edit-out_date">Tanggal Movement Out:</label>
-                                                      <input type="date" name="out_date" id="edit-out_date" class="form-control" required>
+                                                      <label for="edit-qty_physical">Qty Physical:</label>
+                                                      <input type="number" name="qty_physical" id="edit-qty_physical" class="form-control" required>
                                                   </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-from_loc">Lokasi Asal:</label>
-                                                      <input type="text" name="from_loc" id="edit-from_loc" class="form-control" required>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-dest_loc">Lokasi Tujuan:</label>
-                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-out_desc">Deskripsi Movement Out:</label>
-                                                      <input type="text" name="out_desc" id="edit-out_desc" class="form-control" required>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-reason_id">Alasan Movement Out:</label>
-                                                      <select name="reason_id" id="edit-reason_id" class="form-control" required>
-                                                          <option value="">Pilih Alasan</option>
-                                                          @foreach($reasons as $reason)
-                                                              <option value="{{ $reason->reason_id }}">{{ $reason->reason_name }}</option>
-                                                          @endforeach
-                                                      </select>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-asset_id">Data Asset:</label>
-                                                      <select name="asset_id" id="edit-asset_id" class="form-control" required>
-                                                          <option value="">Pilih Asset</option>
-                                                          @foreach($assets as $asset)
-                                                              <option value="{{ $asset->id }}">{{ $asset->asset_name }}</option>
-                                                          @endforeach
-                                                      </select>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-brand">Merk:</label>
-                                                      <input type="text" name="brand" id="edit-brand" class="form-control" readonly>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-qty">Quantity:</label>
-                                                      <input type="text" name="qty" id="edit-qty" class="form-control" readonly>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-uom">Satuan:</label>
-                                                      <input type="text" name="uom" id="edit-uom" class="form-control" readonly>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-asset_tag">Serial Number:</label>
-                                                      <input type="text" name="asset_tag" id="edit-asset_tag" class="form-control" readonly>
-                                                  </div>
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-condition_id">Kondisi Asset:</label>
-                                                      <select name="condition" id="edit-condition" class="form-control" required>
-                                                          <option value="">Pilih Kondisi</option>
-                                                          @foreach($conditions as $condition)
-                                                              <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
-                                                          @endforeach
-                                                      </select>
-                                                  </div>
-                                                  <input type="hidden" name="out_id" id="out_id">
+                                                  <input type="hidden" name="opname_id" id="opname_id">
                                               </div>
                                           </div>
                                           <div class="modal-footer">
@@ -465,7 +384,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="brandModalLabel">Detail Movement Out</h5>
+                                        <h5 class="modal-title" id="brandModalLabel">Detail Movement</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -523,7 +442,7 @@
                     <div class="card-body">
                       <div class="table-responsive product-table" style="max-width: 100%; overflow-x: auto;">
                         <div class="d-flex justify-content-between mb-3 mt-3">
-                            <h5>Movement Out Data</h5> <!-- Add a heading for the table if needed -->
+                            <h5>Adjustment Stock Data</h5> <!-- Add a heading for the table if needed -->
                             <!-- Search Input Field aligned to the right -->
                             <div class="input-group" style="width: 250px;">
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search for assets..." />
@@ -532,46 +451,45 @@
                         <table class="table table-striped display" id="coba" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
-                                    <th>No Movement Out</th>
-                                    <th>Tanggal Movement Out</th>
-                                    <th>Lokasi Asal</th>
-                                    <th>Lokasi Tujuan</th>
-                                    <th>ID Movement In</th>
-                                    <th>Deskripsi</th>
-                                    <th>Alasan</th>
-                                    <th>Status Movement</th>
-                                    <th>Actions</th>
+                                    <th>Opname ID</th>
+                                    <th>Location</th>
+                                    <th>Description</th>
+                                    <th>Register Code</th>
+                                    <th>Qty OnHand</th>
+                                    <th>Qty Actual</th>
+                                    <th>Qty  Difference</th>
+                                    <th>Kondisi</th>
+                                    <th>Satuan</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($moveouts as $moveout)
                                     <tr class="text-center">
-                                        <td>{{ $moveout->out_no }}</td>
-                                        <td>{{ $moveout->out_date }}</td>
-                                        <td>{{ $moveout->from_loc }}</td>
-                                        <td>{{ $moveout->dest_loc }}</td>
-                                        <td>{{ $moveout->in_id }}</td>
-                                        <td>{{ $moveout->out_desc }}</td>
-                                        <td>{{ $moveout->reason_name }}</td>
-                                        <td>{{ $moveout->approval_name }}</td>
+                                      {{-- <td>
+                                        <img src="{{ asset($moveout->relative_qr_code_path) }}" alt="QR Code" style="width: 100px; height: 100px;">
+                                    </td> --}}
+                                        <td>{{ $moveout->opname_id }}</td>
+                                        <td>{{ $moveout->loc_id }}</td>
+                                        <td>{{ $moveout->opname_desc }}</td>
+                                        <td>{{ $moveout->asset_tag }}</td>
+                                        <td>{{ $moveout->qty_onhand }}</td>
+                                        <td>{{ $moveout->qty_physical }}</td>
+                                        <td>{{ $moveout->qty_difference }}</td>
+                                        <td>{{ $moveout->condition_id }}</td>
+                                        <td>{{ $moveout->uom }}</td>
+                                        <td>{{ $moveout->image }}</td>
                                         <td class="text-center">
-                                            @if($moveout->appr_1 != 2)
+                                          @if($moveout->is_verify != 1)
                                             <a href="javascript:void(0);" class="edit-button" 
-                                            data-id="{{ $moveout->out_id }}" 
+                                            data-id="{{ $moveout->opname_id }}" 
                                             title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form class="delete-form" action="{{ url('admin/moveouts/delete', $moveout->out_id) }}" method="POST" style="display:inline;">
-                                              @csrf
-                                              @method('DELETE')
-                                              <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;" onclick="confirmDelete(event, this)">
-                                                  <i class="fas fa-trash-alt" style="color: red;"></i>
-                                              </button>
-                                          </form>
-                                            @endif
+                                          @endif
                                             <a href="javascript:void(0);" class="detail-button" 
-                                            data-id="{{ $moveout->out_id }}" 
-                                            data-no="{{ $moveout->out_no }}" 
+                                            data-id="{{ $moveout->opname_id }}" 
                                             title="Detail">
                                                 <i class="fas fa-book"></i>
                                             </a>
@@ -679,354 +597,342 @@
     {{-- Get Data moveout --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function() {
-          // Mengambil data moveout menggunakan Ajax
-          $.ajax({
-              url: "{{ route('get.moveout') }}", // Route untuk get_moveout
-              method: "GET",
-              success: function(data) {
-                  let rows = '';
-                  data.forEach(function(moveout) {
-                      rows += `
-                          <tr>
-                              <td>${moveout.out_id}</td> <!-- Tampilkan ID moveout -->
-                              <td>${moveout.out_no}</td> <!-- Tampilkan Nama moveout -->
-                              <td>
-                              <a href="javascript:void(0);" class="edit-button" data-id="${moveout.out_id}" data-name="${moveout.out_no}" title="Edit">
-                                  <i class="fas fa-edit"></i>
-                              </a>
-                              <form class="delete-form" action="{{ url('admin/moveouts/delete') }}/${moveout.out_id}" method="POST" style="display:inline;">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;">
-                                      <i class="fas fa-trash-alt" style="color: red;"></i>
-                                  </button>
-                              </form>
-                          </td>
-                          </tr>
-                      `;
-                  });
-                  $('#moveoutTableBody').html(rows); // Memasukkan baris ke dalam tbody
-              },
-              error: function(jqXHR, textStatus, errorThrown) {
-                  console.error('Error fetching data:', textStatus, errorThrown);
-              }
-          });
-      });
-  </script>
+        $(document).ready(function() {
+            // Mengambil data moveout menggunakan Ajax
+            $.ajax({
+                url: "{{ route('get.moveout') }}", // Route untuk get_moveout
+                method: "GET",
+                success: function(data) {
+                    let rows = '';
+                    data.forEach(function(moveout) {
+                        rows += `
+                            <tr>
+                                <td>${moveout.out_id}</td> <!-- Tampilkan ID moveout -->
+                                <td>${moveout.out_no}</td> <!-- Tampilkan Nama moveout -->
+                                <td>
+                                <a href="javascript:void(0);" class="edit-button" data-id="${moveout.out_id}" data-name="${moveout.out_no}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form class="delete-form" action="{{ url('admin/moveouts/delete') }}/${moveout.out_id}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;">
+                                        <i class="fas fa-trash-alt" style="color: red;"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            </tr>
+                        `;
+                    });
+                    $('#moveoutTableBody').html(rows); // Memasukkan baris ke dalam tbody
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching data:', textStatus, errorThrown);
+                }
+            });
+        });
+    </script>
 
-  {{-- Add Data moveout --}}
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-      $(document).ready(function () {
-      // Get the CSRF token from the meta tag
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-          $('#saveMoveOutButton').click(function (e) {
-              e.preventDefault();
+    {{-- Add Data moveout --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        // Get the CSRF token from the meta tag
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+            $('#saveMoveOutButton').click(function (e) {
+                e.preventDefault();
 
-              // Ambil data form
-              var moveoutData = {
-      out_date: $('#out_date').val(),
-      from_loc: $('#from_loc').val(),
-      dest_loc: $('#dest_loc').val(),
-      out_desc: $('#out_desc').val(),
-      reason_id: $('#reason_id').val(),
-      // Gather asset data as arrays
-      asset_id: [],
-      register_code: [],
-      serial_number: [],
-      merk: [],
-      qty: [],
-      satuan: [],
-      condition_id: []
-  };
+                let isValid = true;
+    $('input[name^="qty_physical"]').each(function() {
+        if ($(this).val() === '') {
+            isValid = false;
+            alert('Qty Actual field is required for each asset.');
+            return false; // Break the loop
+        }
+    });
 
-  // Loop through each asset field
-  $('.asset-select').each(function(index) {
-      moveoutData.asset_id.push($(this).val());
-  });
-  $('input[name^="register_code"]').each(function(index) {
-      moveoutData.register_code.push($(this).val());
-  });
-  $('input[name^="serial_number"]').each(function(index) {
-      moveoutData.serial_number.push($(this).val());
-  });
-  $('input[name^="merk"]').each(function(index) {
-      moveoutData.merk.push($(this).val());
-  });
-  $('input[name^="qty"]').each(function(index) {
-      moveoutData.qty.push($(this).val());
-  });
-  $('input[name^="satuan"]').each(function(index) {
-      moveoutData.satuan.push($(this).val());
-  });
-  $('select[name^="condition_id"]').each(function(index) {
-      moveoutData.condition_id.push($(this).val());
-  });
+    if (!isValid) {
+        return; // Exit if validation fails
+    }
+                // Ambil data form
+                var moveoutData = {
+        loc_id: $('#loc_id').val(),
+        opname_desc: $('#opname_desc').val(),
+        so_id: $('#so_id').val(),
+        // Gather asset data as arrays
+        asset_id: [],
+        register_code: [],
+        qty: [],
+        satuan: [],
+        condition_id: [],
+        qty_physical: []
+    };
 
-  // Send the gathered data
-  $.ajax({
-      url: '/add-moveout', // Update this to your correct URL
-      method: 'POST',
-      data: moveoutData,
-      success: function(response) {
-          console.log(response);
-          if (response.status === 'success') {
-              $('#addDataMoveOut').modal('hide');
-              window.location.href = response.redirect_url;
-          } else {
-              alert(response.message);
-          }
-      },
-      error: function(jqXHR) {
-          const message = jqXHR.responseJSON?.message || 'Failed to update moveout.';
-          alert(message);
-      }
-  });
+    // Loop through each asset field
+    $('.asset-select').each(function(index) {
+        moveoutData.asset_id.push($(this).val());
+    });
+    $('input[name^="register_code"]').each(function(index) {
+        moveoutData.register_code.push($(this).val());
+    });
+    $('input[name^="qty"]').each(function(index) {
+        moveoutData.qty.push($(this).val());
+    });
+    $('input[name^="satuan"]').each(function(index) {
+        moveoutData.satuan.push($(this).val());
+    });
+    $('input[name^="qty_physical"]').each(function(index) {
+        moveoutData.qty_physical.push($(this).val());
+    });
+    $('select[name^="condition_id"]').each(function(index) {
+        moveoutData.condition_id.push($(this).val());
+    });
+
+    // Send the gathered data
+    $.ajax({
+        url: '/add-stockopname', // Update this to your correct URL
+        method: 'POST',
+        data: moveoutData,
+        success: function(response) {
+            console.log(response);
+            if (response.status === 'success') {
+                $('#addDataMoveOut').modal('hide');
+                window.location.href = response.redirect_url;
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(jqXHR) {
+            const message = jqXHR.responseJSON?.message || 'Failed to update moveout.';
+            alert(message);
+        }
+    });
 });
-      });
+        });
+    </script>
+
+    {{-- Update Data moveout --}}
+    <script>
+      // Event handler for edit button click
+      $(document).on('click', '.edit-button', function() {
+    const opnameId = $(this).data('id'); // Ambil ID dari button
+
+    $.ajax({
+        url: `/admin/stockopnames/put/${opnameId}`,
+        method: 'GET',
+        success: function(data) {
+            $('#opname_id').val(data.opname_id);
+            $('#edit-qty_physical').val(data.qty_physical);
+            $('#updateModal').modal('show');
+        },
+        error: function(xhr) {
+            alert(`Error fetching data: ${xhr.responseJSON.message}`);
+        }
+    });
+});
+
+// Submit form dengan konfirmasi SweetAlert
+$('#updateForm').on('submit', function(e) {
+    e.preventDefault();
+
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Data yang sudah diubah tidak akan bisa diperbaiki.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Simpan Perubahan',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/admin/stockopnames/edit/${$('#opname_id').val()}`,
+                method: 'PUT',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire(
+                            'Tersimpan!',
+                            'Data telah berhasil diubah.',
+                            'success'
+                        ).then(() => {
+                            window.location.href = response.redirect_url;
+                        });
+                    }
+                },
+                error: function(jqXHR) {
+                    const message = jqXHR.responseJSON?.message || 'Gagal mengupdate data.';
+                    Swal.fire('Error', message, 'error');
+                }
+            });
+        }
+    });
+});
   </script>
+    
+    {{-- Detail --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '.detail-button', function() {
+        var outId = $(this).data('id');
 
-  {{-- Update Data moveout --}}
-  <script>
-    function formatDate(dateString) {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  const date = new Date(dateString);
-  return date.toLocaleDateString(undefined, options); // Adjust locale and options as needed
-}
-
-
-
-    $(document).on('click', '.edit-button', function() {
-        const outId = $(this).data('id'); // Get the asset ID from button
-
-        // AJAX request to fetch asset details
+        // AJAX request to fetch data from the server
         $.ajax({
-            url: `/admin/moveouts/put/${outId}`, // Updated route to get asset details
+            url: '/fetch-moveout-details/' + outId, // Adjust URL as needed
             method: 'GET',
-            success: function(data) {
-                // Populate modal fields with fetched data
-                //$('#out_id').val(data.out_id);
-                $('#edit-out_date').val(formatDate(data.out_date));
-                $('#edit-from_loc').val(data.from_loc);
-                $('#edit-dest_loc').val(data.dest_loc);
-                $('#edit-out_desc').val(data.out_desc);
-                $('#edit-reason_id').val(data.reason_id);
-                $('#edit-asset_id').val(data.asset_id).change(); // Trigger change to fetch asset details
-                $('edit-brand').val(data.brand);
-                $('#edit-qty').val(data.qty);
-                $('#edit-uom').val(data.uom);
-                $('#edit-asset_tag').val(data.asset_tag);
-                $('#edit-asset_id').val(data.asset_id);
-                $('#edit-condition').val(data.condition);
+            success: function(response) {
+                // Assuming response is a JSON object containing the necessary data
+                $('#moveout-id').text(response.out_id);
+                $('#moveout-no').text(response.out_no);
+                $('#out-date').text(response.out_date);
+                $('#from-loc').text(response.from_loc);
+                $('#dest-loc').text(response.dest_loc);
+                $('#in-id').text(response.in_id);
+                $('#out-desc').text(response.out_desc);
+                $('#asset-id').text(response.asset_id);
+                $('#asset-name').text(response.asset_name);
+                $('#asset-tag').text(response.asset_tag);
+                $('#serial-number').text(response.serial_number);
+                $('#asset-brand').text(response.brand);
+                $('#asset-qty').text(response.qty);
+                $('#asset-uom').text(response.uom);
+                $('#asset-cond').text(response.condition);
+                $('#asset-img').text(response.image); // Change this to an <img> tag if needed
 
                 // Show the modal
-                $('#updateModal').modal('show');
+                $('#MoveOutDetailModal').modal('show');
             },
-            error: function(xhr) {
-                alert(`Error fetching moveout data: ${xhr.responseJSON.message}`);
-            }
-        });
-    });
-
-    // Event handler for asset selection change
-    $('#asset_id').on('change', function() {
-        const assetId = $(this).val();
-
-        if (assetId) {
-            fetch(`/get-asset-details/${assetId}`)
-                .then(response => response.json())
-                .then(data => {
-                    $('#brand').val(data.brand || '');
-                    $('#qty').val(data.qty || '');
-                    $('#uom').val(data.uom || '');
-                    $('#asset_id').val(data.asset_id || '');
-                    $('#asset_tag').val(data.asset_tag || '');
-                })
-                .catch(error => console.error('Error fetching asset details:', error));
-        } else {
-            $('#brand').val('');
-            $('#qty').val('');
-            $('#uom').val('');
-            $('#asset_id').val('');
-            $('#asset_tag').val('');
-        }
-    });
-
-    // Form submission for updating asset
-    $('#updateForm').on('submit', function(e) {
-        e.preventDefault(); // Prevent form reload
-
-        $.ajax({
-            url: `/admin/moveouts/edit/${$('#out_id').val()}`,
-            method: 'PUT', // Using PUT for updating data
-            data: $(this).serialize(), // Serialize form data
-            success: function(response) {
-                if (response.status === 'success') {
-                    window.location.href = response.redirect_url; // Redirect to configured page
-                }
-            },
-            error: function(jqXHR) {
-                const message = jqXHR.responseJSON?.message || 'Failed to update moveout.';
-                alert(message); // Show error message if failed
+            error: function(xhr, status, error) {
+                console.error('Error fetching move out details:', error);
+                alert('Unable to fetch details. Please try again.');
             }
         });
     });
 </script>
-  
-  {{-- Detail --}}
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).on('click', '.detail-button', function() {
-      var outId = $(this).data('id');
-
-      // AJAX request to fetch data from the server
-      $.ajax({
-          url: '/fetch-moveout-details/' + outId, // Adjust URL as needed
-          method: 'GET',
-          success: function(response) {
-              // Assuming response is a JSON object containing the necessary data
-              $('#moveout-id').text(response.out_id);
-              $('#moveout-no').text(response.out_no);
-              $('#out-date').text(response.out_date);
-              $('#from-loc').text(response.from_loc);
-              $('#dest-loc').text(response.dest_loc);
-              $('#in-id').text(response.in_id);
-              $('#out-desc').text(response.out_desc);
-              $('#asset-id').text(response.asset_id);
-              $('#asset-name').text(response.asset_name);
-              $('#asset-tag').text(response.asset_tag);
-              $('#serial-number').text(response.serial_number);
-              $('#asset-brand').text(response.brand);
-              $('#asset-qty').text(response.qty);
-              $('#asset-uom').text(response.uom);
-              $('#asset-cond').text(response.condition);
-              $('#asset-img').text(response.image); // Change this to an <img> tag if needed
-
-              // Show the modal
-              $('#MoveOutDetailModal').modal('show');
-          },
-          error: function(xhr, status, error) {
-              console.error('Error fetching move out details:', error);
-              alert('Unable to fetch details. Please try again.');
-          }
-      });
-  });
-</script>
-  
-  {{-- Delete data moveout --}}
-  <script>
+    
+    {{-- Delete data moveout --}}
+    <script>
       $(document).on('click', '.delete-button', function(e) {
-      e.preventDefault(); // Mencegah submit form default
-      const form = $(this).closest('form'); // Ambil form yang terdekat dari tombol
-
-      // Tampilkan dialog konfirmasi
-      if (confirm('Apakah Anda yakin ingin menghapus moveout ini?')) {
-          // Ambil URL dari action form
-          const actionUrl = form.attr('action');
-          
-          $.ajax({
-              url: actionUrl, // URL dari form
-              method: 'DELETE', // Method untuk delete
-              data: form.serialize(), // Kirim data form
-              success: function(response) {
-                  if (response.status === 'success') {
-                      window.location.href = response.redirect_url; // Redirect ke Admin.moveout
-                  } else {
-                      alert(response.message); // Tampilkan pesan error jika gagal
-                  }
-              },
-              error: function(jqXHR) {
-                  alert('Gagal menghapus data. Coba lagi.');
+          e.preventDefault(); // Prevent default form submission
+          const form = $(this).closest('form'); // Get the closest form to the button
+  
+          // Display confirmation dialog
+          Swal.fire({
+              title: 'Apakah Anda yakin?',
+              text: 'Tindakan ini tidak dapat dibatalkan.',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Ya, hapus!',
+              cancelButtonText: 'Tidak, simpan'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Get the action URL from the form
+                  const actionUrl = form.attr('action');
+                  
+                  // Perform AJAX DELETE request
+                  $.ajax({
+                      url: actionUrl, // Form action URL
+                      method: 'DELETE', // HTTP method
+                      data: form.serialize(), // Serialize form data
+                      success: function(response) {
+                          if (response.status === 'success') {
+                              window.location.href = response.redirect_url; // Redirect on success
+                          } else {
+                              Swal.fire('Error!', response.message, 'error'); // Show error message
+                          }
+                      },
+                      error: function(jqXHR) {
+                          Swal.fire('Gagal!', 'Gagal menghapus data. Coba lagi.', 'error'); // Error message
+                      }
+                  });
               }
           });
-      }
-  });
+      });
+  </script>
+    
+    <script>
+      // JavaScript for searching/filtering the table rows
+      document.getElementById('searchInput').addEventListener('keyup', function() {
+          var input, filter, table, tr, td, i, j, txtValue;
+          input = document.getElementById('searchInput');
+          filter = input.value.toLowerCase();
+          table = document.getElementById('coba');
+          tr = table.getElementsByTagName('tr');
+          
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 1; i < tr.length; i++) { // Start from 1 to skip table header
+              tr[i].style.display = "none"; // Hide the row initially
+              
+              // Loop through all columns in the row
+              for (j = 0; j < tr[i].getElementsByTagName('td').length; j++) {
+                  td = tr[i].getElementsByTagName('td')[j];
+                  if (td) {
+                      txtValue = td.textContent || td.innerText;
+                      if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                          tr[i].style.display = ""; // Show the row if match is found
+                          break; // Exit loop once a match is found
+                      }
+                  }
+              }
+          }
+      });
   </script>
   
   <script>
-    // JavaScript for searching/filtering the table rows
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        var input, filter, table, tr, td, i, j, txtValue;
-        input = document.getElementById('searchInput');
-        filter = input.value.toLowerCase();
-        table = document.getElementById('coba');
-        tr = table.getElementsByTagName('tr');
-        
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 1; i < tr.length; i++) { // Start from 1 to skip table header
-            tr[i].style.display = "none"; // Hide the row initially
+    $(document).ready(function() {
+        // This will handle all modals that have a button with the data-dismiss attribute
+        $('[data-dismiss="modal"]').on('click', function() {
+            $('.modal').modal('hide');  // Hide any open modal
+        });
+    });
+  </script>
+
+  <script>
+      document.querySelectorAll('.asset-select').forEach(select => {
+        select.addEventListener('change', function () {
+            const assetId = this.value;
+            const assetFields = this.closest('.asset-fields');
             
-            // Loop through all columns in the row
-            for (j = 0; j < tr[i].getElementsByTagName('td').length; j++) {
-                td = tr[i].getElementsByTagName('td')[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                        tr[i].style.display = ""; // Show the row if match is found
-                        break; // Exit loop once a match is found
-                    }
-                }
+            if (assetId) {
+                fetch(`/get-asset-details/${assetId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        assetFields.querySelector('.qty').value = data.qty || '';
+                        assetFields.querySelector('.satuan').value = data.satuan || '';
+                        assetFields.querySelector('.register_code').value = data.register_code || '';
+                    })
+                    .catch(error => console.error('Error fetching asset details:', error));
+            } else {
+                assetFields.querySelector('.qty').value = '';
+                assetFields.querySelector('.satuan').value = '';
+                assetFields.querySelector('.register_code').value = '';
             }
-        }
+        });
     });
-</script>
-
-<script>
-  $(document).ready(function() {
-      // This will handle all modals that have a button with the data-dismiss attribute
-      $('[data-dismiss="modal"]').on('click', function() {
-          $('.modal').modal('hide');  // Hide any open modal
+    </script>
+  <script>
+    $(document).ready(function() {
+      // Menambahkan field baru
+      $('.btn-add-asset').click(function() {
+        var assetFields = $(this).closest('.asset-fields').clone(); // Clone field
+        assetFields.find('input').val(''); // Reset nilai input
+        assetFields.find('select').val(''); // Reset nilai select
+        $('#assetFieldsContainer').append(assetFields); // Tambahkan field yang baru
       });
-  });
-</script>
-
-<script>
-document.getElementById('asset_id').addEventListener('change', function () {
-    const assetId = this.value;
-
-    if (assetId) {
-        fetch(`/get-asset-details/${assetId}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('merk').value = data.merk || '';
-                document.getElementById('qty').value = data.qty || '';
-                document.getElementById('satuan').value = data.satuan || '';
-                document.getElementById('serial_number').value = data.serial_number || '';
-                document.getElementById('register_code').value = data.register_code || '';
-            })
-            .catch(error => console.error('Error fetching asset details:', error));
-    } else {
-        document.getElementById('merk').value = '';
-        document.getElementById('qty').value = '';
-        document.getElementById('satuan').value = '';
-        document.getElementById('serial_number').value = '';
-        document.getElementById('register_code').value = '';
-    }
-});
-</script>
-<script>
-  $(document).ready(function() {
-    // Menambahkan field baru
-    $('.btn-add-asset').click(function() {
-      var assetFields = $(this).closest('.asset-fields').clone(); // Clone field
-      assetFields.find('input').val(''); // Reset nilai input
-      assetFields.find('select').val(''); // Reset nilai select
-      $('#assetFieldsContainer').append(assetFields); // Tambahkan field yang baru
+  
+      // Menghapus field aset
+      $('#assetFieldsContainer').on('click', '.btn-remove-asset', function() {
+        if ($('.asset-fields').length > 1) {
+          $(this).closest('.asset-fields').remove();
+        }
+      });
     });
-
-    // Menghapus field aset
-    $('#assetFieldsContainer').on('click', '.btn-remove-asset', function() {
-      if ($('.asset-fields').length > 1) {
-        $(this).closest('.asset-fields').remove();
-      }
-    });
-  });
-</script>
+  </script>
   
     <!-- login js-->
     <!-- Plugin used-->

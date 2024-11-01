@@ -70,11 +70,11 @@ Route::prefix('admin/registrasi_asset')->group(function(){
     Route::get('/export_data_asset', [RegistrasiAssetController::class,'ExportToExcel']);
     Route::post('/import', [MasterRegistrasiModel::class, 'import'])->name('import');
 }); 
-Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController::class, 'show']);
-Route::put('/admin/registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
-Route::post('admin/registrasi_asset/approve', [RegistrasiAssetController::class, 'approve']);
-Route::get('/assets/details/{register_code}', [RegistrasiAssetController::class, 'TampilDataQR'])->name('assets.details');
-Route::post('/assets/import', [RegistrasiAssetController::class, 'importExcel'])->name('assets.import');
+    Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController::class, 'show']);
+    Route::put('/admin/registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
+    Route::post('admin/registrasi_asset/approve', [RegistrasiAssetController::class, 'approve']);
+    Route::get('/assets/details/{register_code}', [RegistrasiAssetController::class, 'TampilDataQR'])->name('assets.details');
+    Route::post('/assets/import', [RegistrasiAssetController::class, 'importExcel'])->name('assets.import');
 
 Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
@@ -320,6 +320,39 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/revdis-taf', [DisposalController::class, 'HalamanTaf']);
     Route::get('/admin/revdis-taf', [DisposalController::class, 'HalamanTaf'])->name('Admin.revdis-taf');
     
+    // Stock Opname
+    Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname']);
+    Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname'])->name('Admin.stockopname');
+    Route::post('/add-stockopname', [StockOpnameController::class, 'AddDataStockOpname'])->name('add.stockopname');
+    Route::get('/get-stockopname', [StockOpnameController::class, 'GetStockOpname'])->name('get.stockopname');
+    Route::get('/admin/stockopnames', [StockOpnameController::class, 'Index'])->name('Admin.stockopname');
+    Route::get('/admin/stockopnames/edit/{id}', [StockOpnameController::class, 'showEditForm'])->name('edit.stockopname');
+    Route::get('/admin/stockopnames/put/{opnameId}', [StockOpnameController::class, 'showPutForm']);
+    Route::put('/admin/stockopnames/edit/{id}', [StockOpnameController::class, 'updateDataStockOpname'])->name('update.stockopname');
+    Route::delete('/admin/stockopnames/delete/{id}', [StockOpnameController::class, 'deleteDataStockOpname'])->name('delete.stockopname');
+    Route::get('/get-asset-details/{id}', [StockOpnameController::class, 'getAssetDetails']);
+    Route::get('/admin/stockopnames/detail/{id}', [StockOpnameController::class, 'getStockOpnameDetail']);
+    Route::get('/fetch-stockopname-details/{id}', [StockOpnameController::class, 'getDetails']);
+    Route::get('/stockopname/{id}', [StockOpnameController::class, 'getStockOpnameById']);
+    Route::get('/stockopname/{id}/edit', 'StockOpnameController@edit');
+    Route::get('/assets/{id}', 'AssetController@show');
+    
+    // Adjustment Stock Opname
+    Route::get('/admin/adjuststock', [StockOpnameController::class, 'HalamanAdjustStock']);
+    Route::get('/admin/adjuststock', [StockOpnameController::class, 'HalamanAdjustStock'])->name('Admin.adjuststock');
+    Route::post('/add-adjuststock', [StockOpnameController::class, 'AddDataAdjustStock'])->name('add.adjuststock');
+    Route::get('/get-adjuststock', [StockOpnameController::class, 'GetAdjustStock'])->name('get.adjuststock');
+    Route::get('/admin/adjuststocks', [StockOpnameController::class, 'IndexA'])->name('Admin.adjuststock');
+    Route::get('/admin/adjuststocks/edit/{id}', [StockOpnameController::class, 'showEditForm'])->name('edit.adjuststock');
+    Route::get('/admin/adjuststocks/put/{id}', [StockOpnameController::class, 'showPutForm']);
+    Route::put('/admin/adjuststocks/edit/{id}', [StockOpnameController::class, 'updateDataAdjustStock'])->name('update.adjuststock');
+    Route::delete('/admin/adjuststocks/delete/{id}', [StockOpnameController::class, 'deleteDataAdjustStock'])->name('delete.adjuststock');
+    Route::get('/get-asset-details/{id}', [StockOpnameController::class, 'getAssetDetails']);
+    Route::get('/admin/adjuststocks/detail/{id}', [StockOpnameController::class, 'getAdjustStockDetail']);
+    Route::get('/fetch-adjuststock-details/{id}', [StockOpnameController::class, 'getDetails']);
+    Route::get('/adjuststock/{id}', [StockOpnameController::class, 'getAdjustStockById']);
+    Route::get('/adjuststock/{id}/edit', 'StockOpnameController@edit');
+    Route::get('/assets/{id}', 'AssetController@show');
 
     // Route::get('/admin/regist', [AssetsController::class, 'index'])->name('admin.assets');
     // Route::post('/admin/regist', [AssetsController::class, 'addDataAssets'])->name('add-asset');
