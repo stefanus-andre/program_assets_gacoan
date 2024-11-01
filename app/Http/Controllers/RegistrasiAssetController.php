@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use App\Exports\AssetExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MasterRegistrasiImport;
+use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Log;
 
 class RegistrasiAssetController extends Controller
@@ -65,6 +66,7 @@ public function AddDataRegistrasiAsset(Request $request) {
         'merk' => 'required|string|max:255',
         'qty' => 'required',
         'satuan' => 'required|string|max:255',
+        'region' => 'required|string|max:100',
         'register_location' => 'required|string|max:255',
         'layout' => 'required|string|max:255',
         'register_date' => 'required',
@@ -87,6 +89,7 @@ public function AddDataRegistrasiAsset(Request $request) {
     $merk = $validatedData['merk'];
     $qty = $validatedData['qty'];
     $satuan = $validatedData['satuan'];
+    $region = $validatedData['region'];
     $register_location = $validatedData['register_location'];
     $layout = $validatedData['layout']; 
     $register_date = $validatedData['register_date'];
@@ -154,6 +157,7 @@ imagedestroy($qrImage); // Free
     $asset->merk = $merk;
     $asset->qty = $qty;
     $asset->satuan = $satuan;
+    $asset->region = $region;
     $asset->register_location = $register_location;
     $asset->layout = $layout;
     $asset->register_date = $register_date;
@@ -283,7 +287,8 @@ imagedestroy($qrImage); // Free
             'merk' => 'nullable|string|max:255',
             'qty' => 'required|integer|min:1',
             'satuan' => 'nullable|string|max:100',
-            'register_location' => 'nullable|string|max:255',
+            'region' => 'required|string|max:100',
+            'register_location' => 'required|string|max:255',
             'layout' => 'nullable|string|max:255',
             'register_date' => 'nullable|date',
             'supplier' => 'nullable|string|max:255',
@@ -359,6 +364,24 @@ imagedestroy($qrImage); // Free
         } else {
             return response()->json(['status' => 'error', 'message' => 'Asset not found']);
         }
+    }
+
+    public function generatePdf($register_code) {
+        $dataRegistrasiAsset = MasterRegistrasiModel::where('register_code',$register_code)->first();
+        if ($dataRegistrasiAsset) {
+            return redirect()->back()->with('error','Data not found');
+        }
+
+        $dompdf = new Dompdf();
+
+        $html = view('Admin.registrasi_asset.cetak_pdf', compact('dataRegistrasiAsset'))->render();
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        return $dompdf->stream("QRcode_{$dataRegistrasiAsset->register_code}.pdf");
     }
 }
 

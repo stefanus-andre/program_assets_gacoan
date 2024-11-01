@@ -64,8 +64,11 @@ Route::prefix('admin/registrasi_asset')->group(function(){
     Route::delete('/delete_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'DeleteDataRegistrasiAsset']);
     Route::get('/export_data_asset', [RegistrasiAssetController::class,'ExportToExcel']);
     Route::post('/import', [RegistrasiAssetController::class, 'import'])->name('import');
+    Route::get('/cetak_qr_code/{register_code}', [RegistrasiAssetController::class, 'generatePdf'])->name('generate.pdf');
    
 }); 
+//cetak ke pdf
+
 Route::get('/admin/registrasi_asset/get_detail/{id}', [RegistrasiAssetController::class, 'GetDetailDataRegistrasiAsset']);
 Route::put('/admin/registrasi_asset/update_data_registrasi_asset/{id}', [RegistrasiAssetController::class, 'update']);
 Route::post('admin/registrasi_asset/approve', [RegistrasiAssetController::class, 'approve']);

@@ -158,9 +158,6 @@
     <button id="logoutBtn"><i data-feather="log-out"> </i><span>Log Out</span></button>
 </li>
                   </form>
-
-
-
                 </ul>
               </li>
             </ul>
@@ -373,7 +370,7 @@
   <!-- Update Modal -->
 <!-- Update Asset Modal -->
 <div class="modal fade" id="editDataAsset" tabindex="-1" role="dialog" aria-labelledby="editDataAssetLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editDataAssetLabel">Update Asset</h5>
@@ -383,107 +380,136 @@
             </div>
             <div class="modal-body">
                 <form id="updateAssetForm" >
+                <div class="row">
                     @csrf
                     @method('PUT')
                     <input type="hidden" id="assetId" name="id">
 
-                    <div class="form-group">
-                        <label for="edit-register_code">Register Code:</label>
-                        <input type="text" id="edit-register_code" name="register_code" class="form-control" required>
-                    </div>
+                    <div class="col-sm-6">
+              <label for="register_code">Register Code : </label>
+              <input type="text" name="register_code" id="edit-register_code" class="form-control" placeholder="Masukkkan Kode Registrasi..." required>
+            </div>
 
-                    <div class="form-group">
-                        <label for="edit-asset_name">Asset Name:</label>
-                        <input type="text" id="edit-asset_name" name="asset_name" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-serial_number">Serial Number:</label>
-                        <input type="text" id="edit-serial_number" name="serial_number" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-type_asset">Type Asset:</label>
-                        <input type="text" id="edit-type_asset" name="type_asset" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-category_asset">Category Asset:</label>
-                        <input type="text" id="edit-category_asset" name="category_asset" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-prioritas">Priority:</label>
-                        <input type="text" id="edit-prioritas" name="prioritas" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-merk">Brand:</label>
-                        <input type="text" id="edit-merk" name="merk" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-qty">Quantity:</label>
-                        <input type="number" id="edit-qty" name="qty" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-satuan">Unit:</label>
-                        <input type="text" id="edit-satuan" name="satuan" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-register_location">Register Location:</label>
-                        <input type="text" id="edit-register_location" name="register_location" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-layout">Layout:</label>
-                        <input type="text" id="edit-layout" name="layout" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-register_date">Register Date:</label>
-                        <input type="date" id="edit-register_date" name="register_date" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-supplier">Supplier:</label>
-                        <input type="text" id="edit-supplier" name="supplier" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-status">Status:</label>
-                        <select name="status" id="edit-status" class="form-control">
-                        <option value=""></option>
-                        <option value="PRIORITY">PRIORITY</option>
-                        <option value="NOT PRIORITY">NOT PRIORITY</option>
-                        <option value="BASIC">BASIC</option>
+            <div class="col-sm-6">
+              <label for="asset_name">Asset Name : </label>
+              <!-- <input type="text" name="periodic_maintenance" id="periodic_maintenance" class="form-control" placeholder="Masukkan Periodic Maintenance" required> -->
+              <select name="asset_name" id="edit-asset_name" class="form-control">
+                <option value="" selected disabled> --- Pilih Asset Name ---</option>
               </select>
-                    </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="serial_number">Serial Number : </label>
+              <input type="text" name="serial_number" id="edit-serial_number" class="form-control" placeholder="Masukkan Serial Number" required>
+            </div>
+            <div class="col-sm-6">
+              <label for="type_asset">Type Asset : </label>
+              <select name="type_asset" id="edit-type_asset" class="form-control">
+                <option value="" selected disabled></option>
+                <!-- <option value="sparepart">Sparepart</option>
+                <option value="unit">Unit</option> -->
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="category_asset">Category Asset : </label>
+              <!-- <input type="text" name="category_asset" id="category_asset" class="form-control" placeholder="Masukkan Category Asset" required> -->
+              <select name="category_asset" id="edit-category_asset" class="form-control">
+                <option value="" selected disabled> --- PILIH CATEGORY ASSET ---- </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="prioritas">Prioritas : </label>
+              <!-- <input type="text" name="prioritas" id="prioritas" class="form-control" placeholder="Masukkan Prioritas" required> -->
+               <select name="prioritas" id="edit-prioritas" class="form-control">
+                <option value="" selected disabled> --- PILIH PRIORITAS ---- </option>
+               </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="merk">Merk : </label>
+              <select name="merk" id="edit-merk" class="form-control">
+                <option value="" selected disabled> --- Pilih Merk ---</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="qty">Quantity : </label>
+              <input type="number" name="qty" id="edit-qty" class="form-control" placeholder="Masukkan Quantity" required
+              min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+            </div>
+            <div class="col-sm-6">
+              <label for="satuan">Satuan : </label>
+              <!-- <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Masukkan Satuan" required> -->
+               <select name="satuan" id="edit-satuan" class="form-control">
+                <option value="" selected disabled> --- PILIH SATUAN ---- </option>o
+               </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="region">Pilih Region: </label>
+              <select name="region" id="edit-region" class="form-control" required>
+                  <option value="" selected disabled> --- Pilih Region ----</option>
+              </select>
+          </div>
+          <div class="col-sm-6">
+    <label for="register_location">Register Location:</label>
+    <select name="register_location" id="edit-register_location" class="form-control">
+        <option value="">--- Pilih Register Location ----</option>
+    </select>
+</div>
 
-                    <div class="form-group">
-                        <label for="edit-purchase_number">Purchase Number:</label>
-                        <input type="text" id="edit-purchase_number" name="purchase_number" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-purchase_date">Purchase Date:</label>
-                        <input type="date" id="edit-purchase_date" name="purchase_date" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-warranty">Warranty:</label>
-                        <input type="text" id="edit-warranty" name="warranty" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-periodic_maintenance">Periodic Maintenance:</label>
-                        <input type="text" id="edit-periodic_maintenance" name="periodic_maintenance" class="form-control">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="submitUpdate">Update Asset</button>
-                </form>
+            <div class="col-sm-6">
+              <label for="layout">Layout : </label>
+              <!-- <input type="text" name="layout" id="layout" class="form-control" placeholder="Masukkan Layout" required> -->
+              <select name="layout" id="edit-layout" class="form-control">
+                <option value="" selected disabled> --- Pilih Layout ---</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="asset_model">Status : </label>
+              <select name="status" id="edit-status" class="form-control">
+                <option value=""></option>
+                <option value="PRIORITY">PRIORITY</option>
+                <option value="NOT PRIORITY">NOT PRIORITY</option>
+                <option value="BASIC">BASIC</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="register_date">Register Date : </label>
+              <input type="date" name="register_date" id="edit-register_date" class="form-control" placeholder="Masukkan Register Date" required>
+            </div>
+            <div class="col-sm-6">
+              <label for="supplier">Supplier : </label>
+              <!-- <input type="text" name="supplier" id="supplier" class="form-control" placeholder="Masukkan Supplier" required> -->
+              <select name="supplier" id="edit-supplier" class="form-control">
+                <option value="" selected disabled> --- Pilih Supplier ---</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="purchase_number">Purchase Number : </label>
+              <input type="text" name="purchase_number" id="edit-purchase_number" class="form-control" placeholder="Masukkan Purchase Number" required>
+            </div>
+            <div class="col-sm-6">
+              <label for="purchase_date">Purchase Date : </label>
+              <input type="date" name="purchase_date" id="edit-purchase_date" class="form-control" placeholder="Masukkan Purchase Date" required>
+            </div>
+              <input type="hidden" name="approve_status" id="approve_status" class="form-control">
+            <div class="col-sm-6">
+              <label for="warranty">Warranty : </label>
+              <select name="warranty" id="edit-warranty" class="form-control">
+                <option value=""> --- PILIH WARRANTY ---- </option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="periodic_maintenance">Periodic Maintenace : </label>
+              <!-- <input type="text" name="periodic_maintenance" id="periodic_maintenance" class="form-control" placeholder="Masukkan Periodic Maintenance" required> -->
+              <select name="periodic_maintenance" id="edit-periodic_maintenance" class="form-control">
+                <option value="" selected disabled> --- Pilih Periodic Maintenance ---</option>
+              </select>
+            </div>
+              </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" id="submitUpdate">Update Asset</button>
+            </div>
             </div>
         </div>
     </div>

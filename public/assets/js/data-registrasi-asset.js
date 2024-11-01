@@ -124,7 +124,7 @@ $(document).ready(function() {
                             Actions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton${row.id}">
-                            <a class="dropdown-item" href="${row.qr_code_path}" download="QRCode_${row.register_code}.png">Download QR Code</a>
+                            <a class="dropdown-item" href="{{ route('generate.pdf', $row->register_code) }}" target="_blank">Cetak QR Code</a>
                             <button class="dropdown-item detail-btn" data-id="${row.id}" data-toggle="modal" data-target="#detailDataAsset">Detail Barang Asset</button>
                             <button class="dropdown-item update-btn" data-id="${row.id}" data-toggle="modal" data-target="#editDataAsset">Update</button>
                             <button class="dropdown-item delete-btn" data-id="${row.id}">Delete</button>
@@ -302,23 +302,25 @@ $(document).ready(function() {
             success: function(data) {
                 // Populate the modal fields with the fetched data
                 $('#edit-register_code').val(data.register_code);
-                $('#edit-asset_name').val(data.asset_name);
+                $('#edit-asset_name').val(data.asset_name).get();
                 $('#edit-serial_number').val(data.serial_number);
-                $('#edit-type_asset').val(data.type_asset);
-                $('#edit-category_asset').val(data.category_asset);
-                $('#edit-prioritas').val(data.prioritas);
-                $('#edit-merk').val(data.merk);
-                $('#edit-qty').val(data.qty);
-                $('#edit-satuan').val(data.satuan);
-                $('#edit-register_location').val(data.register_location);
-                $('#edit-layout').val(data.layout);
+                $('#edit-type_asset').val(data.type_asset).get();
+                $('#edit-category_asset').val(data.category_asset).get();
+                $('#edit-prioritas').val(data.prioritas).get();
+                $('#edit-merk').val(data.merk).get();
+                $('#edit-qty').val(data.qty).get();
+                $('#edit-satuan').val(data.satuan).get();
+                $('#edit-register_location').val(data.register_location).get();
+                $('#edit-layout').val(data.layout).get();
                 $('#edit-register_date').val(data.register_date);
-                $('#edit-supplier').val(data.supplier);
-                $('#edit-status').val(data.status);
+                $('#edit-supplier').val(data.supplier).get();
+                $('#edit-status').val(data.status).get();
                 $('#edit-purchase_number').val(data.purchase_number);
                 $('#edit-purchase_date').val(data.purchase_date);
-                $('#edit-warranty').val(data.warranty);
-                $('#edit-periodic_maintenance').val(data.periodic_maintenance);
+                $('#edit-warranty').val(data.warranty).get();
+                $('#edit-region').val(data.region).get();
+
+                $('#edit-periodic_maintenance').val(data.periodic_maintenance).get();
                 $('#submitUpdate').attr('data_id', assetId);
                 // Show the modal
                 $('#editDataAsset').modal('show');
@@ -812,6 +814,272 @@ $('#coba').on('click', '.delete-btn', function(){
         });
         
         
+
+    //edit javascript
+
+
+        $(document).ready(function(){
+            $.ajax({
+                url: '/get-regist',  // Ensure this matches your actual route for getAssets
+                method: 'GET',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        var regionSelect = $('#edit-asset_name');
+                        regionSelect.empty(); // Clear existing options
+                        
+                        // Loop through the assets and append them to the dropdown
+                        $.each(response.data, function(index, asset) {
+                            regionSelect.append($('<option>', {
+                                value: asset.asset_model, // Assuming 'asset_id' is a field in MasterAsset
+                                text: asset.asset_model // Assuming 'asset_model' is a field in MasterAsset
+                            }));
+                        });
+                    } else {
+                        alert('Failed to fetch assets');
+                    }
+                },
+                error: function() {
+                    alert('An error occurred while fetching assets');
+                }
+            });
+        });
+
+
+
+        $(document).ready(function(){
+            // Fetch regions and populate the dropdown
+            $.ajax({
+                url: '/get-type', // Route to fetch regions
+                method: 'GET',
+                success: function(data) {
+                    var regionSelect = $('#edit-type_asset');
+                    $.each(data, function(index, type) {
+                        regionSelect.append($('<option>', {
+                            value: type.type_code, // Assuming 'id' is the unique identifier for the region
+                            text: type.type_code + ' - ' + type.type_name // Assuming 'name' is the display name of the region
+                        }));
+                    });
+                }
+            });
+        });
+
+
+        $(document).ready(function(){
+            // Fetch regions and populate the dropdown
+            $.ajax({
+                url: '/get-category', // Route to fetch regions
+                method: 'GET',
+                success: function(data) {
+                    var regionSelect = $('#edit-category_asset');
+                    $.each(data, function(index, category) {
+                        regionSelect.append($('<option>', {
+                            value: category.cat_code, // Assuming 'id' is the unique identifier for the region
+                            text: category.cat_code + ' - ' + category.cat_name // Assuming 'name' is the display name of the region
+                        }));
+                    });
+                }
+            });
+        });
+
+
+        $(document).ready(function(){
+            // Fetch regions and populate the dropdown
+            $.ajax({
+                url: '/get-priority', // Route to fetch regions
+                method: 'GET',
+                success: function(data) {
+                    var regionSelect = $('#edit-prioritas');
+                    $.each(data, function(index, prioritas) {
+                        regionSelect.append($('<option>', {
+                            value: prioritas.priority_code, // Assuming 'id' is the unique identifier for the region
+                            text: prioritas.priority_code + ' - ' + prioritas.priority_name // Assuming 'name' is the display name of the region
+                        }));
+                    });
+                }
+            });
+        });
+
+
+        
+        $(document).ready(function(){
+            // Fetch regions and populate the dropdown
+            $.ajax({
+                url: '/admin/get-brand', // Route to fetch regions
+                method: 'GET',
+                success: function(data) {
+                    var regionSelect = $('#edit-merk');
+                    $.each(data, function(index, merk) {
+                        regionSelect.append($('<option>', {
+                            value: merk.brand_name, // Assuming 'id' is the unique identifier for the region
+                            text: merk.brand_name // Assuming 'name' is the display name of the region
+                        }));
+                    });
+                }
+            });
+        });
+
+
+        $(document).ready(function(){
+            // Fetch regions and populate the dropdown
+            $.ajax({
+                url: '/get-uom', // Route to fetch regions
+                method: 'GET',
+                success: function(data) {
+                    var regionSelect = $('#edit-satuan');
+                    $.each(data, function(index, uom) {
+                        regionSelect.append($('<option>', {
+                            value: uom.uom_name, // Assuming 'id' is the unique identifier for the region
+                            text: uom.uom_name // Assuming 'name' is the display name of the region
+                        }));
+                    });
+                }
+            });
+        });
+
+        
+    $(document).ready(function(){
+        // Fetch regions and populate the dropdown
+        $.ajax({
+            url: '/admin/get-region', // Route to fetch regions
+            method: 'GET',
+            success: function(data) {
+                var regionSelect = $('#edit-region');
+                $.each(data, function(index, region) {
+                    regionSelect.append($('<option>', {
+                        value: region.region_name, // Assuming 'id' is the unique identifier for the region
+                        text: region.region_name // Assuming 'name' is the display name of the region
+                    }));
+                });
+            }
+        });
+    });
+    
+
+    
+    $(document).ready(function(){
+        // Fetch regions and populate the dropdown
+        $.ajax({
+            url: '/get-layout', // Route to fetch regions
+            method: 'GET',
+            success: function(data) {
+                var regionSelect = $('#edit-layout');
+                $.each(data, function(index, layout) {
+                    regionSelect.append($('<option>', {
+                        value: layout.layout_code, // Assuming 'id' is the unique identifier for the region
+                        text: layout.layout_code + ' - ' + layout.layout_name // Assuming 'name' is the display name of the region
+                    }));
+                });
+            }
+        });
+    });
+
+
+
+    $(document).ready(function(){
+        // Fetch regions and populate the dropdown
+        $.ajax({
+            url: '/admin/get-supplier', // Route to fetch regions
+            method: 'GET',
+            success: function(data) {
+                var regionSelect = $('#edit-supplier');
+                $.each(data, function(index, supplier) {
+                    regionSelect.append($('<option>', {
+                        value: supplier.supplier_name, // Assuming 'id' is the unique identifier for the region
+                        text: supplier.supplier_name // Assuming 'name' is the display name of the region
+                    }));
+                });
+            }
+        });
+    });
+
+    
+    $(document).ready(function(){
+        // Fetch regions and populate the dropdown
+        $.ajax({
+            url: '/admin/get-warranty', // Route to fetch regions
+            method: 'GET',
+            success: function(data) {
+                var regionSelect = $('#edit-warranty');
+                $.each(data, function(index, warranty) {
+                    regionSelect.append($('<option>', {
+                        value: warranty.warranty_name + ' - ' + warranty.warranty_day, // Assuming 'id' is the unique identifier for the region
+                        text: warranty.warranty_name + ' - ' + warranty.warranty_day // Assuming 'name' is the display name of the region
+                    }));
+                });
+            }
+        });
+    });
+
+
+    $(document).ready(function(){
+        // Fetch regions and populate the dropdown
+        $.ajax({
+            url: '/admin/get-periodic', // Route to fetch regions
+            method: 'GET',
+            success: function(data) {
+                var regionSelect = $('#edit-periodic_maintenance');
+                $.each(data, function(index, periodic) {
+                    regionSelect.append($('<option>', {
+                        value: periodic.periodic_mtc_name, // Assuming 'id' is the unique identifier for the region
+                        text: periodic.periodic_mtc_name	 // Assuming 'name' is the display name of the region
+                    }));
+                });
+            }
+        });
+    });
+
+
+    $(document).ready(function() {
+        // Initialize Select2 with AJAX search
+        $('#edit-register_location').select2({
+            placeholder: '--- Pilih Register Location ---',
+            ajax: {
+                url: '/admin/get-resto', // Route to fetch regions
+                dataType: 'json',
+                delay: 250, // Delay to avoid overloading the server
+                data: function(params) {
+                    return {
+                        search: params.term || '', // Send the search term if available, otherwise an empty string
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: $.map(data, function(resto) {
+                            return {
+                                id: resto.kode_resto + ' - ' + resto.resto + ' - ' + resto.kom_resto, // Unique ID combining fields
+                                text: resto.kode_resto + ' - ' + resto.resto + ' - ' + resto.kom_resto // Display text combining fields
+                            };
+                        })
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 0
+        });
+    
+        // Assuming `data` is a JavaScript object that contains `register_location`
+        var data = {
+            register_location: 'some_value' // Replace with the actual value you want to set
+        };
+    
+        // Set the value of the select2 element and trigger change for visual update
+        $('#edit-register_location').val(data.register_location).trigger('change');
+    
+        // Get the value of the select2 element
+        var selectedValue = $('#edit-register_location').val();
+        console.log('Selected value:', selectedValue);
+    });
+    
+
+
+
+
+
+
+
+        
+
+
 
 
 

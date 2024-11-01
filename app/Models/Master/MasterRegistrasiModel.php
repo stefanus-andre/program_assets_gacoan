@@ -26,6 +26,7 @@ class MasterRegistrasiModel extends Model
         'merk',
         'qty',
         'satuan',
+        'region',
         'register_location',
         'layout',
         'register_date',
