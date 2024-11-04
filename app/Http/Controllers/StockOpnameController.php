@@ -203,7 +203,18 @@ class StockOpnameController extends Controller
         ]);
     }
 
-    public function showPutForm($opnameId)
+    public function showPutFormStockOpname($opnameId)
+    {
+        $moveout = MasterStockOpnameModel::where('opname_id', $opnameId)->first();
+        
+        if (!$moveout) {
+            return response()->json(['message' => 'Moveout not found'], 404);
+        }
+        
+        return response()->json($moveout);
+    }
+
+    public function showPutFormAdjustStock($opnameId)
     {
         $moveout = OpnameDetails::where('opname_id', $opnameId)->first();
         
@@ -242,33 +253,29 @@ class StockOpnameController extends Controller
     public function getDetails($id)
     {
         // Fetch data from t_out and t_out_detail based on the out_id
-        $moveOut = DB::table('t_out')
-            ->where('out_id', $id)
+        $moveOut = DB::table('t_opname_header')
+            ->where('opname_id', $id)
             ->first();
 
-        $moveOutDetails = DB::table('t_out_detail')
-            ->where('out_id', $id)
+        $moveOutDetails = DB::table('t_opname_detail')
+            ->where('opname_id', $id)
             ->get(); // Assuming you want to retrieve all details related to this out_id
 
         // Combine the results (if necessary)
         $response = [
-            'out_id' => $moveOut->out_id,
-            'out_no' => $moveOut->out_no,
-            'out_date' => $moveOut->out_date,
-            'from_loc' => $moveOut->from_loc,
-            'dest_loc' => $moveOut->dest_loc,
-            'in_id' => $moveOut->in_id,
-            'out_desc' => $moveOut->out_desc,
+            'opname_id' => $moveOut->opname_id,
+            'opname_no' => $moveOut->opname_no,
+            'loc_id' => $moveOut->loc_id,
+            'so_id' => $moveOut->so_id,
+            'opname_desc' => $moveOut->opname_desc,
+            'create_date' => $moveOut->create_date,
             // Assuming there's a single asset, or you need to modify this to handle multiple assets
-            'asset_id' => $moveOutDetails->first()->asset_id ?? '',
-            'asset_name' => $moveOutDetails->first()->asset_name ?? '',
             'asset_tag' => $moveOutDetails->first()->asset_tag ?? '',
-            'serial_number' => $moveOutDetails->first()->serial_number ?? '',
-            'brand' => $moveOutDetails->first()->brand ?? '',
-            'qty' => $moveOutDetails->first()->qty ?? '',
+            'qty_onhand' => $moveOutDetails->first()->qty_onhand ?? '',
+            'qty_physical' => $moveOutDetails->first()->qty_physical ?? '',
+            'qty_difference' => $moveOutDetails->first()->qty_difference ?? '',
+            'condition_id' => $moveOutDetails->first()->condition_id ?? '',
             'uom' => $moveOutDetails->first()->uom ?? '',
-            'condition' => $moveOutDetails->first()->condition ?? '',
-            'image' => $moveOutDetails->first()->image ?? '',
         ];
 
         return response()->json($response);
@@ -352,14 +359,8 @@ class StockOpnameController extends Controller
                 mkdir($locDir, 0777, true); // Create folder with permission
             }
 
-            $filePaths = []; // Initialize an array to hold multiple file paths
-            if ($request->hasFile('image')) {
-                foreach ($request->file('image') as $file) {
-                    $fileName = time() . '_' . $file->getClientOriginalName(); // Add timestamp to filename
-                    $file->move($locDir, $fileName); // Move the file to the location
-                    $filePaths[] = "assets/images/SO/{$request->input('loc_id')}/" . $fileName; // Save path
-                }
-            }
+            $fileIndex = 1;
+            
 
             // Loop through assets to save detail
             foreach ($request->input('asset_id') as $index => $assetId) {
@@ -392,6 +393,25 @@ class StockOpnameController extends Controller
                 // Format opname_id untuk setiap detail
                 $opname = "{$trx_code}.{$today}.{$request->input('so_id')}.{$request->input('loc_id')}.{$transaction_number_str}";
             
+                $filePath = null;
+
+                if ($request->hasFile('image') && isset($request->file('image')[$index])) {
+                    $file = $request->file('image')[$index];
+                
+                    if ($file->isValid()) { // Check if f ile is valid
+                        $fileName = "{$opname}-{$transaction_number_str}." . $file->getClientOriginalExtension();
+                
+                        try {
+                            $file->move($locDir, $fileName);
+                            $filePath = "assets/images/SO/{$request->input('loc_id')}/" . $fileName;
+                        } catch (\Exception $e) {
+                            return response()->json(['status' => 'error', 'message' => 'File move failed: ' . $e->getMessage()]);
+                        }
+                    } else {
+                        return response()->json(['status' => 'error', 'message' => 'Invalid file or upload failed.']);
+                    }
+                }
+
                 // Save asset detail data including file paths if applicable
                 DB::table('t_opname_detail')->insert([
                     'opname_det_id' => $moveout->opname_no, // Sequential ID
@@ -402,8 +422,14 @@ class StockOpnameController extends Controller
                     'qty_difference' => $qty_difference,
                     'uom' => $request->input('satuan')[$index],
                     'condition_id' => $request->input('condition_id')[$index],
-                    'image' => $filePaths[$index] ?? null, // Store file path in detail if available
+                    'image' => $filePath, // Store file path in detail if available
                 ]);
+
+                DB::table('table_registrasi_asset')
+                ->where('id', $assetId) // Match asset by ID
+                ->update(['qty' => $qty_onhand]);
+
+                $fileIndex++;
             }
 
             return response()->json([
@@ -533,6 +559,61 @@ class StockOpnameController extends Controller
         }
     
         // Ambil qty_physical dari input
+        $opnameDesc = $request->input('opname_desc');
+        $soId = $request->input('so_id');
+        $conditionId = $request->input('condition_id');
+        $image = $request->input('image');
+        
+            $baseDir = public_path('assets/images/SO');
+            $locDir = $baseDir . '/' . $request->input('loc_id');
+
+            if (!file_exists($locDir)) {
+                mkdir($locDir, 0777, true); // Create folder with permission
+            }
+
+            $filePaths = []; // Initialize an array to hold multiple file paths
+            if ($request->hasFile('image')) {
+                foreach ($request->file('image') as $file) {
+                    $fileName = time() . '_' . $file->getClientOriginalName(); // Add timestamp to filename
+                    $file->move($locDir, $fileName); // Move the file to the location
+                    $filePaths[] = "assets/images/SO/{$request->input('loc_id')}/" . $fileName; // Save path
+                }
+            }
+    
+        // Update data dengan opname_desc, qty_onhand tetap, dan qty_difference yang baru dihitung
+        $opnameDetail->update([
+            'condition_id' => $conditionId,
+            'image' => $image
+        ]);
+
+        $opnameHeader = MasterStockOpnameModel::where('opname_id', $id)->first();
+
+        if ($opnameHeader) {
+            // Update kolom is_verify di tabel header
+            $opnameHeader->update([
+                'opname_desc' => $opnameDesc,
+                'so_id' => $soId
+            ]);
+        }
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data moveout berhasil diubah',
+            'redirect_url' => route('Admin.stockopname') // Pastikan ini sesuai dengan rute yang ada
+        ]);
+    }
+    
+
+    public function updateDataAdjustStock(Request $request, $id)
+    {
+        // Temukan data yang akan diupdate
+        $opnameDetail = OpnameDetails::where('opname_id', $id)->first();
+
+        if (!$opnameDetail) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+    
+        // Ambil qty_physical dari input
         $qtyPhysical = $request->input('qty_physical');
         $qtyOnHand = $request->input('qty_physical');
     
@@ -545,6 +626,11 @@ class StockOpnameController extends Controller
             'qty_difference' => $qtyDifference,
             'qty_onhand' => $qtyOnHand,
         ]);
+
+        $assetId = $opnameDetail->asset_id; // Assuming asset_id is in opname details
+        DB::table('table_registrasi_asset')
+        ->where('asset_id', $assetId)
+        ->update(['qty' => $qtyOnHand]); // Update qty_onhand with the new quantity
 
         $opnameHeader = MasterStockOpnameModel::where('opname_id', $id)->first();
 
@@ -560,35 +646,6 @@ class StockOpnameController extends Controller
             'message' => 'Data moveout berhasil diubah',
             'redirect_url' => route('Admin.adjuststock') // Pastikan ini sesuai dengan rute yang ada
         ]);
-    }
-    
-
-    public function updateDataAdjustStock(Request $request, $id)
-    {
-        // Validasi input
-        $request->validate([
-            'out_no' => 'required|string|max:255',
-        ]);
-
-        // Cek apakah MoveOut dengan id yang benar ada
-        $moveout = MasterStockOpnameModel::find($id); // Langsung gunakan find jika ID adalah primary key
-
-        if (!$moveout) {
-            return response()->json(['status' => 'error', 'message' => 'move$moveout not found.'], 404);
-        }
-
-        // Update data move$moveout
-        $moveout->out_no = $request->out_no;
-        
-        if ($moveout->save()) { // Menggunakan save() yang lebih aman daripada update()
-            return response()->json([
-                'status' => 'success',
-                'message' => 'move$moveout updated successfully.',
-                'redirect_url' => route('Admin.stockopname'), // Sesuaikan dengan route index Anda
-            ]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Failed to update move$moveout.'], 500);
-        }
     }
 
     public function edit($id)
@@ -628,7 +685,7 @@ class StockOpnameController extends Controller
             return response()->json([
                 'status' => 'success', 
                 'message' => 'MoveOut deactivated successfully.', // Updated message for clarity
-                'redirect_url' => route('Admin.stockopname')
+                'redirect_url' => route('Admin.adjuststock')
             ]);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Data MoveOut not found.'], 404);

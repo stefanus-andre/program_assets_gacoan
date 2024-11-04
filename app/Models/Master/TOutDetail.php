@@ -10,7 +10,7 @@ class TOutDetail extends Model
     use HasFactory;
 
     protected $table = 't_out_detail';
-    protected $primaryKey = 'out_det_id';
+    protected $primaryKey = 'out_id';
 
     protected $fillable = [
         'out_det_id',

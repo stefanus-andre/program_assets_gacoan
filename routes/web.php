@@ -137,7 +137,11 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/get-moveout', [MovementOutController::class, 'GetMoveOut'])->name('get.moveout');
     Route::get('/admin/moveouts', [MovementOutController::class, 'Index'])->name('Admin.moveout');
     Route::get('/admin/moveouts/edit/{id}', [MovementOutController::class, 'showEditForm'])->name('edit.moveout');
-    Route::get('/admin/moveouts/put/{id}', [MovementOutController::class, 'showPutForm']);
+    Route::get('/admin/moveouts/put/{id}', [MovementOutController::class, 'getDetails']);
+    Route::get('/out-data/{out_id}', 'MovementController@getOutData');
+    Route::get('/asset-data/{asset_id}', 'MovementController@getAssetData');
+    Route::get('/admin/moveouts/put/{outId}', [MovementOutController::class, 'showPutFormMoveout']);
+    Route::get('/admin/moveoutdetails/put/{outId}', [MovementOutController::class, 'showPutFormMoveoutDetail']);
     Route::put('/admin/moveouts/edit/{id}', [MovementOutController::class, 'updateDataMoveOut'])->name('update.moveout');
     Route::delete('/admin/moveouts/delete/{id}', [MovementOutController::class, 'deleteDataMoveOut'])->name('delete.moveout');
     Route::get('/get-asset-details/{id}', [MovementOutController::class, 'getAssetDetails']);
@@ -327,7 +331,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/get-stockopname', [StockOpnameController::class, 'GetStockOpname'])->name('get.stockopname');
     Route::get('/admin/stockopnames', [StockOpnameController::class, 'Index'])->name('Admin.stockopname');
     Route::get('/admin/stockopnames/edit/{id}', [StockOpnameController::class, 'showEditForm'])->name('edit.stockopname');
-    Route::get('/admin/stockopnames/put/{opnameId}', [StockOpnameController::class, 'showPutForm']);
+    Route::get('/admin/stockopnames/put/{opnameId}', [StockOpnameController::class, 'showPutFormStockOpname']);
     Route::put('/admin/stockopnames/edit/{id}', [StockOpnameController::class, 'updateDataStockOpname'])->name('update.stockopname');
     Route::delete('/admin/stockopnames/delete/{id}', [StockOpnameController::class, 'deleteDataStockOpname'])->name('delete.stockopname');
     Route::get('/get-asset-details/{id}', [StockOpnameController::class, 'getAssetDetails']);
@@ -344,7 +348,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/get-adjuststock', [StockOpnameController::class, 'GetAdjustStock'])->name('get.adjuststock');
     Route::get('/admin/adjuststocks', [StockOpnameController::class, 'IndexA'])->name('Admin.adjuststock');
     Route::get('/admin/adjuststocks/edit/{id}', [StockOpnameController::class, 'showEditForm'])->name('edit.adjuststock');
-    Route::get('/admin/adjuststocks/put/{id}', [StockOpnameController::class, 'showPutForm']);
+    Route::get('/admin/adjuststocks/put/{opnameId}', [StockOpnameController::class, 'showPutFormAdjustStock']);
     Route::put('/admin/adjuststocks/edit/{id}', [StockOpnameController::class, 'updateDataAdjustStock'])->name('update.adjuststock');
     Route::delete('/admin/adjuststocks/delete/{id}', [StockOpnameController::class, 'deleteDataAdjustStock'])->name('delete.adjuststock');
     Route::get('/get-asset-details/{id}', [StockOpnameController::class, 'getAssetDetails']);

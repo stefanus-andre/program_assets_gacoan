@@ -385,14 +385,52 @@ class MovementController extends Controller
         if (!$moveout) {
             return response()->json(['status' => 'error', 'message' => 'moveout not found.'], 404);
         }
+        $trx_code = DB::table('t_trx')->where('trx_name', 'Confirmation Movement')->value('trx_code');
+
+            // Format yymmdd untuk tanggal hari ini
+            $today = Carbon::now()->format('ymd');
+
+            // Hitung urutan nomor transaksi untuk hari ini
+            $todayDate = Carbon::now()->format('Y-m-d');
+            $todayCount = MasterMoveOut::whereDate('create_date', $todayDate)->count() + 1;
+            $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+
+            // Format opname_id
+            $moveout->in_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('dest_loc')}.{$transaction_number}";
 
         // Update data moveout
         $moveout->appr_3_date = Carbon::now();
         $moveout->appr_3 = $request->appr_3;
         if ($request->appr_3 == '2') {
             $moveout->is_confirm = '4';
+            $trx_code = DB::table('t_trx')->where('trx_name', 'Asset Movement')->value('trx_code');
+            
+                // Format yymmdd untuk tanggal hari ini
+                $today = Carbon::now()->format('ymd');
+            
+                // Get the last transaction number used for today from opname_id
+                $lastTransaction = DB::table('t_out_detail')
+                    ->where('out_id', 'like', "{$trx_code}.{$today}.%") // Filter by out_id format
+                    ->orderBy('out_id', 'desc')
+                    ->first();
+            
+                // Calculate the next transaction number
+                if ($lastTransaction) {
+                    // Extract the last transaction number from the out_id
+                    $lastOpnameId = $lastTransaction->out_id;
+                    preg_match('/\.(\d{3})$/', $lastOpnameId, $matches);
+                    $transaction_number = isset($matches[1]) ? intval($matches[1]) + 1 : 1; // Increment the last number or start with 1
+                } else {
+                    $transaction_number = 1; // Start with 1 if no transaction found
+                }
+                
+                $transaction_number_str = str_pad($transaction_number, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+            
+                // Format opname_id untuk setiap detail
+                $in = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('dest_loc')}.{$transaction_number_str}";
+
             $newInId = DB::table('t_in')->insertGetId([
-                'in_id' => $moveout->in_id,  // Ambil dari out_id
+                'in_id' => $in,  // Ambil dari out_id
                 'out_id' => $moveout->out_id,  // Ambil dari out_id
                 'in_date' => $moveout->out_date,  // Ambil dari out_id
                 'from_loc' => $moveout->from_loc,  // Ambil dari out_id
@@ -409,7 +447,7 @@ class MovementController extends Controller
 
             foreach ($moveoutDetails as $detail) {
                 DB::table('t_in_detail')->insert([
-                    'in_id' => $moveout->in_id,  // Menghubungkan dengan data baru di t_in
+                    'in_id' => $in,  // Menghubungkan dengan data baru di t_in
                     'in_det_id' => $detail->out_det_id,
                     'asset_tag' => $detail->asset_tag,
                     'asset_id' => $detail->asset_id,

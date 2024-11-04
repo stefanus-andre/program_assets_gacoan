@@ -283,13 +283,8 @@
                                     <input type="date" name="out_date" id="out_date" class="form-control" required>
                                   </div>
                                   <div class="col-sm-12">
-                                    <label for="form_loc">Lokasi Asal:</label>
-                                    <select name="form_loc" id="form_loc" class="form-control" required>
-                                      <option value="">Pilih Asal</option>
-                                      @foreach($restos as $masterresto)
-                                        <option value="{{ $masterresto->store_code }}">{{ $masterresto->resto }}</option>
-                                      @endforeach
-                                    </select>
+                                    <label for="from_loc">Lokasi Asal:</label>
+                                    <input type="text" name="from_loc" id="from_loc" class="form-control" value="{{ $fromLoc }}" readonly>
                                   </div>
                                   <div class="col-sm-12">
                                     <label for="dest_loc">Lokasi Tujuan:</label>
@@ -330,23 +325,23 @@
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="merk">Merk:</label>
-                                          <input type="text" name="merk[]" class="form-control" readonly>
+                                          <input type="text" name="merk[]" id="merk" class="form-control" readonly>
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="qty">Quantity:</label>
-                                          <input type="text" name="qty[]" class="form-control" readonly>
+                                          <input type="text" name="qty[]" id="qty" class="form-control" readonly>
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="satuan">Satuan:</label>
-                                          <input type="text" name="satuan[]" class="form-control" readonly>
+                                          <input type="text" name="satuan[]" id="satuan" class="form-control" readonly>
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="serial_number">Serial Number:</label>
-                                          <input type="text" name="serial_number[]" class="form-control" readonly>
+                                          <input type="text" name="serial_number[]" id="serial_number" class="form-control" readonly>
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="register_code">Register Code:</label>
-                                          <input type="text" name="register_code[]" class="form-control" readonly>
+                                          <input type="text" name="register_code[]" id="register_code" class="form-control" readonly>
                                         </div>
                                         <div class="col-sm-12">
                                           <label for="condition_id">Kondisi Asset:</label>
@@ -396,11 +391,11 @@
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-from_loc">Lokasi Asal:</label>
-                                                      <input type="text" name="from_loc" id="edit-from_loc" class="form-control" required>
+                                                      <input type="text" name="from_loc" id="edit-from_loc" class="form-control" required readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-dest_loc">Lokasi Tujuan:</label>
-                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required>
+                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-out_desc">Deskripsi Movement Out:</label>
@@ -437,11 +432,15 @@
                                                       <input type="text" name="uom" id="edit-uom" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="edit-asset_tag">Serial Number:</label>
+                                                      <label for="edit-serial_number">Serial Number:</label>
+                                                      <input type="text" name="serial_number" id="edit-serial_number" class="form-control" readonly>
+                                                  </div>
+                                                  <div class="col-sm-12 mb-2">
+                                                      <label for="edit-asset_tag">Register Code:</label>
                                                       <input type="text" name="asset_tag" id="edit-asset_tag" class="form-control" readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
-                                                      <label for="edit-condition_id">Kondisi Asset:</label>
+                                                      <label for="edit-condition">Kondisi Asset:</label>
                                                       <select name="condition" id="edit-condition" class="form-control" required>
                                                           <option value="">Pilih Kondisi</option>
                                                           @foreach($conditions as $condition)
@@ -533,6 +532,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>No Movement Out</th>
+                                    <th>ID Movement Out</th>
                                     <th>Tanggal Movement Out</th>
                                     <th>Lokasi Asal</th>
                                     <th>Lokasi Tujuan</th>
@@ -547,6 +547,7 @@
                                 @foreach($moveouts as $moveout)
                                     <tr class="text-center">
                                         <td>{{ $moveout->out_no }}</td>
+                                        <td>{{ $moveout->out_id }}</td>
                                         <td>{{ $moveout->out_date }}</td>
                                         <td>{{ $moveout->from_loc }}</td>
                                         <td>{{ $moveout->dest_loc }}</td>
@@ -792,90 +793,192 @@
   </script>
 
   {{-- Update Data moveout --}}
-  <script>
+  {{-- <script>
     function formatDate(dateString) {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  const date = new Date(dateString);
-  return date.toLocaleDateString(undefined, options); // Adjust locale and options as needed
-}
-
-
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const date = new Date(dateString);
+      return date.toLocaleDateString(undefined, options); // Adjust locale and options as needed
+    }
 
     $(document).on('click', '.edit-button', function() {
-        const outId = $(this).data('id'); // Get the asset ID from button
+          const outId = $(this).data('id'); // Ambil ID dari button
 
-        // AJAX request to fetch asset details
-        $.ajax({
-            url: `/admin/moveouts/put/${outId}`, // Updated route to get asset details
-            method: 'GET',
-            success: function(data) {
-                // Populate modal fields with fetched data
-                //$('#out_id').val(data.out_id);
-                $('#edit-out_date').val(formatDate(data.out_date));
-                $('#edit-from_loc').val(data.from_loc);
-                $('#edit-dest_loc').val(data.dest_loc);
-                $('#edit-out_desc').val(data.out_desc);
-                $('#edit-reason_id').val(data.reason_id);
-                $('#edit-asset_id').val(data.asset_id).change(); // Trigger change to fetch asset details
-                $('edit-brand').val(data.brand);
-                $('#edit-qty').val(data.qty);
-                $('#edit-uom').val(data.uom);
-                $('#edit-asset_tag').val(data.asset_tag);
-                $('#edit-asset_id').val(data.asset_id);
-                $('#edit-condition').val(data.condition);
+          $.when(
+            $.ajax({
+                url: `/admin/moveouts/put/${outId}`,
+                method: 'GET'
+            }),
+            $.ajax({
+                url: `/admin/moveoutdetails/put/${outId}`,
+                method: 'GET'
+            })
+        ).done(function(data1, data2) {
+            // data1 dan data2 adalah array [response, statusText]
+            const moveOutData = data1[0];
+            const moveOutDetailsData = data2[0];
 
-                // Show the modal
-                $('#updateModal').modal('show');
-            },
-            error: function(xhr) {
-                alert(`Error fetching moveout data: ${xhr.responseJSON.message}`);
+            // Mengisi data moveouts
+            $('#out_id').val(moveOutData.out_id);
+            $('#edit-from_loc').val(moveOutData.from_loc);
+            $('#edit-dest_loc').val(moveOutData.dest_loc);
+            $('#edit-reason_id').val(moveOutData.reason_id);
+            $('#edit-out_desc').val(moveOutData.out_desc);
+            $('#edit-out_date').val(moveOutData.out_date);
+
+            // Mengisi data moveoutdetails
+            $('#edit-asset_id').val(moveOutDetailsData.asset_id);
+            $('#edit-asset_tag').val(moveOutDetailsData.asset_tag);
+            $('#edit-serial_number').val(moveOutDetailsData.serial_number);
+            $('#edit-brand').val(moveOutDetailsData.brand);
+            $('#edit-qty').val(moveOutDetailsData.qty);
+            $('#edit-uom').val(moveOutDetailsData.uom);
+            $('#edit-condition').val(moveOutDetailsData.condition);
+
+            $('#updateModal').modal('show');
+        }).fail(function(xhr) {
+            alert(`Error fetching data: ${xhr.responseJSON?.message || 'Unknown error occurred'}`);
+        });
+    });
+
+    document.querySelectorAll('.asset-select').forEach(function(select) {
+        select.addEventListener('change', function () {
+            const assetId = this.value;
+            const container = this.closest('.asset-fields');
+
+            if (assetId) {
+                fetch(`/get-asset-details/${assetId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data); // Log the response to see the structure
+
+                        // Mengisi field hanya jika data ada
+                        if (data) {
+                            container.querySelector('input[name="merk[]"]').value = data.merk || '';
+                            container.querySelector('input[name="qty[]"]').value = data.qty || '';
+                            container.querySelector('input[name="satuan[]"]').value = data.satuan || '';
+                            container.querySelector('input[name="serial_number[]"]').value = data.serial_number || '';
+                            container.querySelector('input[name="register_code[]"]').value = data.register_code || '';
+                        } else {
+                            console.warn('No data returned for asset ID:', assetId);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching asset details:', error));
+            } else {
+                // Kosongkan field jika tidak ada aset yang dipilih
+                container.querySelector('input[name="merk[]"]').value = '';
+                container.querySelector('input[name="qty[]"]').value = '';
+                container.querySelector('input[name="satuan[]"]').value = '';
+                container.querySelector('input[name="serial_number[]"]').value = '';
+                container.querySelector('input[name="register_code[]"]').value = '';
             }
         });
     });
 
-    // Event handler for asset selection change
-    $('#asset_id').on('change', function() {
-        const assetId = $(this).val();
-
-        if (assetId) {
-            fetch(`/get-asset-details/${assetId}`)
-                .then(response => response.json())
-                .then(data => {
-                    $('#brand').val(data.brand || '');
-                    $('#qty').val(data.qty || '');
-                    $('#uom').val(data.uom || '');
-                    $('#asset_id').val(data.asset_id || '');
-                    $('#asset_tag').val(data.asset_tag || '');
-                })
-                .catch(error => console.error('Error fetching asset details:', error));
-        } else {
-            $('#brand').val('');
-            $('#qty').val('');
-            $('#uom').val('');
-            $('#asset_id').val('');
-            $('#asset_tag').val('');
-        }
-    });
-
-    // Form submission for updating asset
+    // Form submission untuk mengupdate asset
     $('#updateForm').on('submit', function(e) {
         e.preventDefault(); // Prevent form reload
 
         $.ajax({
             url: `/admin/moveouts/edit/${$('#out_id').val()}`,
-            method: 'PUT', // Using PUT for updating data
+            method: 'PUT', // Menggunakan PUT untuk mengupdate data
             data: $(this).serialize(), // Serialize form data
             success: function(response) {
                 if (response.status === 'success') {
-                    window.location.href = response.redirect_url; // Redirect to configured page
+                    window.location.href = response.redirect_url; // Redirect ke halaman yang diatur
                 }
             },
             error: function(jqXHR) {
                 const message = jqXHR.responseJSON?.message || 'Failed to update moveout.';
-                alert(message); // Show error message if failed
+                alert(message); // Tampilkan pesan error jika gagal
             }
         });
     });
+</script> --}}
+
+<script>
+  // Event handler for edit button click
+  $(document).on('click', '.edit-button', function() {
+      const outId = $(this).data('id'); // Ambil ID dari button
+
+      $.ajax({
+          url: `/admin/moveouts/put/${outId}`,
+          method: 'GET',
+          success: function(data) {
+              $('#out_id').val(data.out_id);
+              $('#edit-from_loc').val(data.from_loc);
+              $('#edit-dest_loc').val(data.dest_loc);
+              $('#edit-reason_id').val(data.reason_id);
+              $('#edit-out_desc').val(data.out_desc);
+              $('#edit-out_date').val(data.out_date);
+              $('#updateModal').modal('show');
+          },
+          error: function(xhr) {
+              alert(`Error fetching data: ${xhr.responseJSON.message}`);
+          }
+      });
+      $.ajax({
+          url: `/admin/moveoutdetails/put/${outId}`,
+          method: 'GET',
+          success: function(data) {
+              $('#out_id').val(data.out_id);
+              $('#edit-asset_id').val(data.asset_id);
+              $('#edit-asset_tag').val(data.asset_tag);
+              $('#edit-serial_number').val(data.serial_number);
+              $('#edit-brand').val(data.brand);
+              $('#edit-qty').val(data.qty);
+              $('#edit-uom').val(data.uom);
+              $('#edit-condition').val(data.condition);
+              $('#updateModal').modal('show');
+          },
+          error: function(xhr) {
+              alert(`Error fetching data: ${xhr.responseJSON.message}`);
+          }
+      });
+  });
+
+// Submit form dengan konfirmasi SweetAlert
+$('#updateForm').on('submit', function(e) {
+e.preventDefault();
+
+Swal.fire({
+    title: 'Apakah Anda yakin?',
+    text: "Data yang sudah diubah tidak akan bisa diperbaiki.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, Simpan Perubahan',
+    cancelButtonText: 'Batal'
+}).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+            url: `/admin/moveouts/edit/${$('#out_id').val()}`,
+            method: 'PUT',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    Swal.fire(
+                        'Tersimpan!',
+                        'Data telah berhasil diubah.',
+                        'success'
+                    ).then(() => {
+                        window.location.href = response.redirect_url;
+                    });
+                }
+            },
+            error: function(jqXHR) {
+                const message = jqXHR.responseJSON?.message || 'Gagal mengupdate data.';
+                Swal.fire('Error', message, 'error');
+            }
+        });
+    }
+});
+});
 </script>
   
   {{-- Detail --}}
@@ -895,6 +998,7 @@
               $('#out-date').text(response.out_date);
               $('#from-loc').text(response.from_loc);
               $('#dest-loc').text(response.dest_loc);
+              $('#reason-id').text(response.reason_id);
               $('#in-id').text(response.in_id);
               $('#out-desc').text(response.out_desc);
               $('#asset-id').text(response.asset_id);
@@ -986,27 +1090,43 @@
 </script>
 
 <script>
-document.getElementById('asset_id').addEventListener('change', function () {
-    const assetId = this.value;
+document.querySelectorAll('.asset-select').forEach(function(select) {
+    select.addEventListener('change', function () {
+        const assetId = this.value;
+        const container = this.closest('.asset-fields');
 
-    if (assetId) {
-        fetch(`/get-asset-details/${assetId}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('merk').value = data.merk || '';
-                document.getElementById('qty').value = data.qty || '';
-                document.getElementById('satuan').value = data.satuan || '';
-                document.getElementById('serial_number').value = data.serial_number || '';
-                document.getElementById('register_code').value = data.register_code || '';
-            })
-            .catch(error => console.error('Error fetching asset details:', error));
-    } else {
-        document.getElementById('merk').value = '';
-        document.getElementById('qty').value = '';
-        document.getElementById('satuan').value = '';
-        document.getElementById('serial_number').value = '';
-        document.getElementById('register_code').value = '';
-    }
+        if (assetId) {
+            fetch(`/get-asset-details/${assetId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Log the response to see the structure
+
+                    // Check if the expected properties exist
+                    if (data) {
+                        container.querySelector('input[name="merk[]"]').value = data.merk || '';
+                        container.querySelector('input[name="qty[]"]').value = data.qty || '';
+                        container.querySelector('input[name="satuan[]"]').value = data.satuan || '';
+                        container.querySelector('input[name="serial_number[]"]').value = data.serial_number || '';
+                        container.querySelector('input[name="register_code[]"]').value = data.register_code || '';
+                    } else {
+                        console.warn('No data returned for asset ID:', assetId);
+                    }
+                })
+                .catch(error => console.error('Error fetching asset details:', error));
+        } else {
+            // Clear fields if no asset is selected
+            container.querySelector('input[name="merk[]"]').value = '';
+            container.querySelector('input[name="qty[]"]').value = '';
+            container.querySelector('input[name="satuan[]"]').value = '';
+            container.querySelector('input[name="serial_number[]"]').value = '';
+            container.querySelector('input[name="register_code[]"]').value = '';
+        }
+    });
 });
 </script>
 <script>

@@ -719,21 +719,21 @@
     <script>
       // Event handler for edit button click
       $(document).on('click', '.edit-button', function() {
-    const opnameId = $(this).data('id'); // Ambil ID dari button
+          const opnameId = $(this).data('id'); // Ambil ID dari button
 
-    $.ajax({
-        url: `/admin/stockopnames/put/${opnameId}`,
-        method: 'GET',
-        success: function(data) {
-            $('#opname_id').val(data.opname_id);
-            $('#edit-qty_physical').val(data.qty_physical);
-            $('#updateModal').modal('show');
-        },
-        error: function(xhr) {
-            alert(`Error fetching data: ${xhr.responseJSON.message}`);
-        }
-    });
-});
+          $.ajax({
+              url: `/admin/adjuststocks/put/${opnameId}`,
+              method: 'GET',
+              success: function(data) {
+                  $('#opname_id').val(data.opname_id);
+                  $('#edit-qty_physical').val(data.qty_physical);
+                  $('#updateModal').modal('show');
+              },
+              error: function(xhr) {
+                  alert(`Error fetching data: ${xhr.responseJSON.message}`);
+              }
+          });
+      });
 
 // Submit form dengan konfirmasi SweetAlert
 $('#updateForm').on('submit', function(e) {
@@ -751,7 +751,7 @@ $('#updateForm').on('submit', function(e) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: `/admin/stockopnames/edit/${$('#opname_id').val()}`,
+                url: `/admin/adjuststocks/edit/${$('#opname_id').val()}`,
                 method: 'PUT',
                 data: $(this).serialize(),
                 success: function(response) {

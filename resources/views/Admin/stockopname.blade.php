@@ -364,15 +364,38 @@
                                               <span aria-hidden="true">&times;</span>
                                           </button>
                                       </div>
-                                      <form id="updateForm">
+                                      <form id="updateForm" enctype="multipart/form-data">
                                           @csrf
                                           @method('PUT') <!-- Metode override untuk request PUT -->
                                           <div class="modal-body">
                                               <div class="row">
-                                                  <div class="col-sm-12 mb-2">
-                                                      <label for="edit-qty_physical">Qty Physical:</label>
-                                                      <input type="number" name="qty_physical" id="edit-qty_physical" class="form-control" required>
-                                                  </div>
+                                                <div class="col-sm-12">
+                                                    <label for="edit-opname_desc">Deskripsi Stock Opname:</label>
+                                                    <input type="text" name="opname_desc" id="edit-opname_desc" class="form-control" required>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label for="edit-so_id">Alasan Stock Opname:</label>
+                                                    <select name="so_id" id="edit-so_id" class="form-control" required>
+                                                        <option value="">Pilih Alasan</option>
+                                                        @foreach($reasons as $reason)
+                                                            <option value="{{ $reason->reason_id }}">{{ $reason->reason_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                  <label for="edit-condition_id">Kondisi Asset:</label>
+                                                  <select name="condition_id" id="edit-condition_id" class="form-control" required>
+                                                    <option value="">Pilih Kondisi</option>
+                                                    @foreach($conditions as $condition)
+                                                      <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                  <label for="edit-image">Upload File:</label>
+                                                  <input type="file" name="image[]" id="edit-image" class="form-control" multiple>
+                                                  <small class="form-text text-muted">You can upload multiple files.</small>
+                                              </div>
                                                   <input type="hidden" name="opname_id" id="opname_id">
                                               </div>
                                           </div>
@@ -395,22 +418,18 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                      <p><strong>ID:</strong> <span id="moveout-id"></span></p>
-                                      <p><strong>No Movement Out:</strong> <span id="moveout-no"></span></p>
-                                      <p><strong>Tanggal:</strong> <span id="out-date"></span></p>
-                                      <p><strong>Lokasi Asal:</strong> <span id="from-loc"></span></p>
-                                      <p><strong>Lokasi Tujuan:</strong> <span id="dest-loc"></span></p>
-                                      <p><strong>ID Movement In:</strong> <span id="in-id"></span></p>
-                                      <p><strong>Deskripsi:</strong> <span id="out-desc"></span></p>
-                                      <p><strong>ID Asset:</strong> <span id="asset-id"></span></p>
-                                      <p><strong>Nama Asset:</strong> <span id="asset-name"></span></p>
-                                      <p><strong>Tag Asset:</strong> <span id="asset-tag"></span></p>
-                                      <p><strong>Serial Number:</strong> <span id="serial-number"></span></p>
-                                      <p><strong>Brand:</strong> <span id="asset-brand"></span></p>
-                                      <p><strong>Quantity:</strong> <span id="asset-qty"></span></p>
-                                      <p><strong>Satuan:</strong> <span id="asset-uom"></span></p>
-                                      <p><strong>Condition:</strong> <span id="asset-cond"></span></p>
-                                      <p><strong>Gambar:</strong> <span id="asset-img"></span></p>
+                                      <p><strong>ID Stock Opname:</strong> <span id="opname-id"></span></p>
+                                      <p><strong>No Stock Opname:</strong> <span id="opname-no"></span></p>
+                                      <p><strong>Lokasi:</strong> <span id="loc-id"></span></p>
+                                      <p><strong>Alasan:</strong> <span id="so-id"></span></p>
+                                      <p><strong>Deskripsi:</strong> <span id="opname-desc"></span></p>
+                                      <p><strong>Asset Tag:</strong> <span id="asset-tag"></span></p>
+                                      <p><strong>Qty On Hand:</strong> <span id="qty-onhand"></span></p>
+                                      <p><strong>Qty Physical:</strong> <span id="qty-physical"></span></p>
+                                      <p><strong>Qty Difference:</strong> <span id="qty-difference"></span></p>
+                                      <p><strong>Kondisi:</strong> <span id="condition-id"></span></p>
+                                      <p><strong>Satuan:</strong> <span id="uom-id"></span></p>
+                                      <p><strong>Tanggal Dibuat:</strong> <span id="create-date"></span></p>
                                       <!-- You can add more brand details here -->
                                     </div>
                                     <div class="modal-footer">
@@ -486,6 +505,13 @@
                                         <td>{{ $moveout->uom }}</td>
                                         <td>{{ $moveout->image }}</td>
                                         <td class="text-center">
+                                            @if($moveout->is_verify != 1)
+                                              <a href="javascript:void(0);" class="edit-button" 
+                                              data-id="{{ $moveout->opname_id }}" 
+                                              title="Edit">
+                                                  <i class="fas fa-edit"></i>
+                                              </a>
+                                            @endif
                                             <a href="javascript:void(0);" class="detail-button" 
                                             data-id="{{ $moveout->opname_id }}" 
                                             title="Detail">
@@ -714,21 +740,35 @@
     <script>
       // Event handler for edit button click
       $(document).on('click', '.edit-button', function() {
-    const opnameId = $(this).data('id'); // Ambil ID dari button
+          const opnameId = $(this).data('id'); // Ambil ID dari button
 
-    $.ajax({
-        url: `/admin/stockopnames/put/${opnameId}`,
-        method: 'GET',
-        success: function(data) {
-            $('#opname_id').val(data.opname_id);
-            $('#edit-qty_physical').val(data.qty_physical);
-            $('#updateModal').modal('show');
-        },
-        error: function(xhr) {
-            alert(`Error fetching data: ${xhr.responseJSON.message}`);
-        }
-    });
-});
+          $.ajax({
+              url: `/admin/stockopnames/put/${opnameId}`,
+              method: 'GET',
+              success: function(data) {
+                  $('#opname_id').val(data.opname_id);
+                  $('#edit-opname_desc').val(data.opname_desc);
+                  $('#edit-so_id').val(data.so_id);
+                  $('#updateModal').modal('show');
+              },
+              error: function(xhr) {
+                  alert(`Error fetching data: ${xhr.responseJSON.message}`);
+              }
+          });
+          $.ajax({
+              url: `/admin/adjuststocks/put/${opnameId}`,
+              method: 'GET',
+              success: function(data) {
+                  $('#opname_id').val(data.opname_id);
+                  $('#edit-condition_id').val(data.condition_id);
+                  $('#edit-image').val(data.image);
+                  $('#updateModal').modal('show');
+              },
+              error: function(xhr) {
+                  alert(`Error fetching data: ${xhr.responseJSON.message}`);
+              }
+          });
+      });
 
 // Submit form dengan konfirmasi SweetAlert
 $('#updateForm').on('submit', function(e) {
@@ -774,30 +814,26 @@ $('#updateForm').on('submit', function(e) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).on('click', '.detail-button', function() {
-        var outId = $(this).data('id');
+        var opnameId = $(this).data('id');
 
         // AJAX request to fetch data from the server
         $.ajax({
-            url: '/fetch-moveout-details/' + outId, // Adjust URL as needed
+            url: '/fetch-stockopname-details/' + opnameId, // Adjust URL as needed
             method: 'GET',
             success: function(response) {
                 // Assuming response is a JSON object containing the necessary data
-                $('#moveout-id').text(response.out_id);
-                $('#moveout-no').text(response.out_no);
-                $('#out-date').text(response.out_date);
-                $('#from-loc').text(response.from_loc);
-                $('#dest-loc').text(response.dest_loc);
-                $('#in-id').text(response.in_id);
-                $('#out-desc').text(response.out_desc);
-                $('#asset-id').text(response.asset_id);
-                $('#asset-name').text(response.asset_name);
+                $('#opname-id').text(response.opname_id);
+                $('#opname-no').text(response.opname_no);
+                $('#loc-id').text(response.loc_id);
+                $('#so-id').text(response.so_id);
+                $('#opname-desc').text(response.opname_desc);
                 $('#asset-tag').text(response.asset_tag);
-                $('#serial-number').text(response.serial_number);
-                $('#asset-brand').text(response.brand);
-                $('#asset-qty').text(response.qty);
-                $('#asset-uom').text(response.uom);
-                $('#asset-cond').text(response.condition);
-                $('#asset-img').text(response.image); // Change this to an <img> tag if needed
+                $('#qty-onhand').text(response.qty_onhand);
+                $('#qty-physical').text(response.qty_physical);
+                $('#qty-difference').text(response.qty_difference);
+                $('#condition-id').text(response.condition_id);
+                $('#uom-id').text(response.uom);
+                $('#create-date').text(response.create_date);
 
                 // Show the modal
                 $('#MoveOutDetailModal').modal('show');

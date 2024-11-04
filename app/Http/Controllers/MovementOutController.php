@@ -3,41 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Master\MasterMoveOut;
+use App\Models\Master\TOutDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MovementOutController extends Controller
 {
     public function Index()
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
-        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
-        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
-        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
-        $moveouts = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
-        ->where('t_out.is_active', 1) // Only include active records
-        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
-        ->paginate(10);
-
-        return view("Admin.moveout", [
-            'reasons' => $reasons,
-            'assets' => $assets,
-            'conditions' => $conditions,
-            'moveouts' => $moveouts
-        ]);
-    }
-
-    public function HalamanMoveOut() 
-    {
-        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
         $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
-        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        
+        $username = auth()->user()->username;
+        $fromLoc = DB::table('m_people')
+                ->where('nip', $username)
+                ->value('loc_id');
+
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $fromLoc)
+                ->value('resto');
+    
+        // Filter assets based on the register_location matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('register_location', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();       
+
         $moveouts = DB::table('t_out')
         ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
         ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
@@ -46,6 +43,7 @@ class MovementOutController extends Controller
         ->paginate(10);
 
         return view("Admin.moveout", [
+            'fromLoc' => $fromLoc,
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
@@ -54,17 +52,94 @@ class MovementOutController extends Controller
         ]);
     }
 
-    public function showPutForm($id)
+    public function HalamanMoveOut() 
     {
-        $moveout = MasterMoveOut::with('tOutDetails')->find($id); // Corrected to match the relationship name
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        
+        $username = auth()->user()->username;
+        $fromLoc = DB::table('m_people')
+                ->where('nip', $username)
+                ->value('loc_id');
+
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $fromLoc)
+                ->value('resto');
     
+        // Filter assets based on the register_location matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('register_location', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();        
+
+        $moveouts = DB::table('t_out')
+        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->where('t_out.is_active', 1) // Only include active records
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->paginate(10);
+
+        return view("Admin.moveout", [
+            'fromLoc' => $fromLoc,
+            'reasons' => $reasons,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'moveouts' => $moveouts,
+            'restos' => $restos
+        ]);
+    }
+
+    // public function showPutForm($outId)
+    // {
+    //     $moveout = MasterMoveOut::where('out_id', $outId)->first(); // Corrected to match the relationship name
+    
+    //     if (!$moveout) {
+    //         return response()->json(['message' => 'Moveout not found'], 404);
+    //     }
+    
+    //     return response()->json($moveout);
+    // }
+
+    // public function showPutFormDetail($outId)
+    // {
+    //     // Ambil hanya kolom yang diperlukan
+    //     $moveoutDetails = TOutDetail::where('out_id', $outId)
+    //         ->select('brand', 'qty', 'condition', 'uom', 'serial_number', 'asset_tag')
+    //         ->get();
+
+    //     if ($moveoutDetails->isEmpty()) {
+    //         // Return a 404 response jika data tidak ditemukan
+    //         return response()->json(['message' => 'Moveout Detail not found'], 404);
+    //     }
+
+    //     // Kembalikan detail moveout sebagai JSON
+    //     return response()->json($moveoutDetails);
+    // }
+
+    public function showPutFormMoveout($outId)
+    {
+        $moveout = MasterMoveOut::find('out_id', $outId)->first();
+        
         if (!$moveout) {
             return response()->json(['message' => 'Moveout not found'], 404);
         }
-    
+        
         return response()->json($moveout);
     }
 
+    public function showPutFormMoveoutDetail($outId)
+    {
+        $moveout = TOutDetail::find('out_id', $outId)->first();
+        
+        if (!$moveout) {
+            return response()->json(['message' => 'Moveout not found'], 404);
+        }
+        
+        return response()->json($moveout);
+    }
 
     public function getMoveOut()
     {
@@ -75,10 +150,16 @@ class MovementOutController extends Controller
 
     public function getAssetDetails($id)
     {
+        // Debugging statement
+        Log::info('Fetching asset details for ID: ' . $id);
+
         $asset = DB::table('table_registrasi_asset')
             ->select('merk', 'qty', 'satuan', 'serial_number', 'register_code')
             ->where('id', $id)
             ->first();
+
+        //Log the fetched asset details
+        Log::info('Asset details fetched: ', (array)$asset);
 
         return response()->json($asset);
     }
@@ -95,6 +176,40 @@ class MovementOutController extends Controller
         ]);
     }
 
+    // public function getOutData($out_id)
+    // {
+    //     $outData = DB::table('t_out')
+    //                 ->where('out_id', $out_id)
+    //                 ->first();
+
+    //     $outDetailData = DB::table('t_out_detail')
+    //                 ->where('out_id', $out_id)
+    //                 ->first();
+
+    //     if ($outData && $outDetailData) {
+    //         return response()->json([
+    //             'out' => $outData,
+    //             'detail' => $outDetailData,
+    //         ]);
+    //     } else {
+    //         return response()->json(['message' => 'Data not found'], 404);
+    //     }
+    // }
+
+    // // Fetch asset details based on asset_id
+    // public function getAssetData($asset_id)
+    // {
+    //     $assetData = DB::table('table_registrasi_asset')
+    //                 ->where('id', $asset_id)
+    //                 ->first();
+
+    //     if ($assetData) {
+    //         return response()->json($assetData);
+    //     } else {
+    //         return response()->json(['message' => 'Data not found'], 404);
+    //     }
+    // }
+
     public function getDetails($id)
     {
         // Fetch data from t_out and t_out_detail based on the out_id
@@ -106,6 +221,7 @@ class MovementOutController extends Controller
             ->where('out_id', $id)
             ->get(); // Assuming you want to retrieve all details related to this out_id
 
+        $firstDetail = $moveOutDetails->first();
         // Combine the results (if necessary)
         $response = [
             'out_id' => $moveOut->out_id,
@@ -114,17 +230,15 @@ class MovementOutController extends Controller
             'from_loc' => $moveOut->from_loc,
             'dest_loc' => $moveOut->dest_loc,
             'in_id' => $moveOut->in_id,
+            'reason_id' => $moveOut->reason_id,
             'out_desc' => $moveOut->out_desc,
-            // Assuming there's a single asset, or you need to modify this to handle multiple assets
-            'asset_id' => $moveOutDetails->first()->asset_id ?? '',
-            'asset_name' => $moveOutDetails->first()->asset_name ?? '',
-            'asset_tag' => $moveOutDetails->first()->asset_tag ?? '',
-            'serial_number' => $moveOutDetails->first()->serial_number ?? '',
-            'brand' => $moveOutDetails->first()->brand ?? '',
-            'qty' => $moveOutDetails->first()->qty ?? '',
-            'uom' => $moveOutDetails->first()->uom ?? '',
-            'condition' => $moveOutDetails->first()->condition ?? '',
-            'image' => $moveOutDetails->first()->image ?? '',
+            'asset_id' => $firstDetail->asset_id ?? '',
+            'asset_tag' => $firstDetail->asset_tag ?? '',
+            'serial_number' => $firstDetail->serial_number ?? '',
+            'brand' => $firstDetail->brand ?? '',
+            'qty' => $firstDetail->qty ?? '',
+            'uom' => $firstDetail->uom ?? '',
+            'condition' => $firstDetail->condition ?? '',
         ];
 
         return response()->json($response);
@@ -181,19 +295,54 @@ public function AddDataMoveOut(Request $request)
         // Menyimpan data moveout ke database
         $moveout->out_no = $out_no_base; // Set out_no untuk pertama
         // Menghasilkan out_id secara otomatis
-        $moveout->out_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-01-' . Carbon::now()->format('mY'); // Misal, untuk out_id
+        $trx_code = DB::table('t_trx')->where('trx_name', 'Asset Movement')->value('trx_code');
+
+            // Format yymmdd untuk tanggal hari ini
+            $today = Carbon::now()->format('ymd');
+
+            // Hitung urutan nomor transaksi untuk hari ini
+            $todayDate = Carbon::now()->format('Y-m-d');
+            $todayCount = MasterMoveOut::whereDate('create_date', $todayDate)->count() + 1;
+            $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+
+            // Format opname_id
+            $moveout->out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number}";
         
         $moveout->save(); // Simpan moveout
 
         // Loop melalui aset untuk menyimpan detail
         foreach ($request->input('asset_id') as $index => $assetId) {
             // Menghasilkan out_det_id secara otomatis
-            $out_det_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-' . str_pad($index + 1, 4, '0', STR_PAD_LEFT) . '-' . Carbon::now()->format('mY');
+            $trx_code = DB::table('t_trx')->where('trx_name', 'Asset Movement')->value('trx_code');
+            
+                // Format yymmdd untuk tanggal hari ini
+                $today = Carbon::now()->format('ymd');
+            
+                // Get the last transaction number used for today from opname_id
+                $lastTransaction = DB::table('t_out_detail')
+                    ->where('out_id', 'like', "{$trx_code}.{$today}.%") // Filter by out_id format
+                    ->orderBy('out_id', 'desc')
+                    ->first();
+            
+                // Calculate the next transaction number
+                if ($lastTransaction) {
+                    // Extract the last transaction number from the out_id
+                    $lastOpnameId = $lastTransaction->out_id;
+                    preg_match('/\.(\d{3})$/', $lastOpnameId, $matches);
+                    $transaction_number = isset($matches[1]) ? intval($matches[1]) + 1 : 1; // Increment the last number or start with 1
+                } else {
+                    $transaction_number = 1; // Start with 1 if no transaction found
+                }
+                
+                $transaction_number_str = str_pad($transaction_number, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+            
+                // Format opname_id untuk setiap detail
+                $out = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number_str}";
 
             // Simpan data detail untuk aset
             DB::table('t_out_detail')->insert([
-                'out_det_id' => $out_det_id,  // Menggunakan out_det_id yang dihasilkan
-                'out_id' => $moveout->out_id,  // Menggunakan out_id yang dihasilkan
+                'out_det_id' => $moveout->out_no,  // Menggunakan out_det_id yang dihasilkan
+                'out_id' => $out,  // Menggunakan out_id yang dihasilkan
                 'asset_id' => $assetId,
                 'asset_tag' => $request->input('register_code')[$index],
                 'serial_number' => $request->input('serial_number')[$index],

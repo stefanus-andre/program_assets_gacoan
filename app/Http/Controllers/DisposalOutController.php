@@ -167,14 +167,49 @@ class DisposalOutController extends Controller
             // Menyimpan data moveout ke database
             $moveout->out_no = $out_no_base; // Set out_no untuk pertama
             // Menghasilkan out_id secara otomatis
-            $moveout->out_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-01-' . Carbon::now()->format('mY'); // Misal, untuk out_id
+            $trx_code = DB::table('t_trx')->where('trx_name', 'Disposal Asset')->value('trx_code');
+
+            // Format yymmdd untuk tanggal hari ini
+            $today = Carbon::now()->format('ymd');
+
+            // Hitung urutan nomor transaksi untuk hari ini
+            $todayDate = Carbon::now()->format('Y-m-d');
+            $todayCount = MasterDisOut::whereDate('create_date', $todayDate)->count() + 1;
+            $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+
+            // Format opname_id
+            $moveout->out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number}";
             
             $moveout->save(); // Simpan moveout
 
             // Loop melalui aset untuk menyimpan detail
             foreach ($request->input('asset_id') as $index => $assetId) {
                 // Menghasilkan out_det_id secara otomatis
-                $out_det_id = str_pad($out_no_base, 2, '0', STR_PAD_LEFT) . '-' . str_pad($index + 1, 4, '0', STR_PAD_LEFT) . '-' . Carbon::now()->format('mY');
+                $trx_code = DB::table('t_trx')->where('trx_name', 'Asset Movement')->value('trx_code');
+            
+                // Format yymmdd untuk tanggal hari ini
+                $today = Carbon::now()->format('ymd');
+            
+                // Get the last transaction number used for today from opname_id
+                $lastTransaction = DB::table('t_out_detail')
+                    ->where('out_id', 'like', "{$trx_code}.{$today}.%") // Filter by out_id format
+                    ->orderBy('out_id', 'desc')
+                    ->first();
+            
+                // Calculate the next transaction number
+                if ($lastTransaction) {
+                    // Extract the last transaction number from the out_id
+                    $lastOpnameId = $lastTransaction->out_id;
+                    preg_match('/\.(\d{3})$/', $lastOpnameId, $matches);
+                    $transaction_number = isset($matches[1]) ? intval($matches[1]) + 1 : 1; // Increment the last number or start with 1
+                } else {
+                    $transaction_number = 1; // Start with 1 if no transaction found
+                }
+                
+                $transaction_number_str = str_pad($transaction_number, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+            
+                // Format opname_id untuk setiap detail
+                $out = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number_str}";
                 // Process the image for each asset if available
                 $imagePath = null;
                 if ($request->hasFile("images.$index")) { // Access the image by index
@@ -185,8 +220,8 @@ class DisposalOutController extends Controller
                 }
                 // Simpan data detail untuk aset
                 DB::table('t_out_detail')->insert([
-                    'out_det_id' => $out_det_id,  // Menggunakan out_det_id yang dihasilkan
-                    'out_id' => $moveout->out_id,  // Menggunakan out_id yang dihasilkan
+                    'out_det_id' => $moveout->out_no,  // Menggunakan out_det_id yang dihasilkan
+                    'out_id' => $out,  // Menggunakan out_id yang dihasilkan
                     'asset_id' => $assetId,
                     'asset_tag' => $request->input('register_code')[$index],
                     'serial_number' => $request->input('serial_number')[$index],
