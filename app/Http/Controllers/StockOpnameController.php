@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Master\MasterStockOpnameModel;
 use App\Models\Master\OpnameDetails;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -11,33 +12,49 @@ use Illuminate\Support\Facades\DB;
 
 class StockOpnameController extends Controller
 {
-    public function Index()
+    public function Index(Request $request)
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $uoms = DB::table('m_uom')->select('uom_id', 'uom_name')->get();
-    
-        // Retrieve loc_id based on the logged-in user's username
+        // Get current user's location
         $username = auth()->user()->username;
         $locId = DB::table('m_people')
                 ->where('nip', $username)
                 ->value('loc_id');
-    
-        // Retrieve, modify, and paginate moveouts
+
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $locId)
+                ->value('resto');
+        
+        // Filter assets based on the register_location matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0)
+            ->get();
+
+        // Get start and end dates from the request, or use null if not provided
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        
+        // Query moveouts, applying date filters if provided
         $moveouts = DB::table('t_opname_header')
         ->leftjoin('t_opname_detail', 't_opname_header.opname_id', '=', 't_opname_detail.opname_id')
         ->leftjoin('m_condition', 'm_condition.condition_id', '=', 't_opname_detail.condition_id')
         ->leftjoin('m_uom', 'm_uom.uom_id', '=', 't_opname_detail.uom')
+        ->where('t_opname_header.is_active', '=', '1')// Only include active records
+        ->when($startDate, function ($query, $startDate) {
+            return $query->where('t_opname_header.create_date', '>=', $startDate); // Filter by start date
+        })
+        ->when($endDate, function ($query, $endDate) {
+            return $query->where('t_opname_header.create_date', '<=', $endDate); // Filter by end date
+        })
         ->select('t_opname_header.*', 't_opname_detail.*', 'm_condition.condition_name', 'm_uom.uom_name')
-        ->where('t_opname_header.is_active', '=', '1')
         ->get();
-            // ->map(function ($moveout) {
-            //     $moveout->relative_qr_code_path = str_replace('http://127.0.0.1:8000/', '', $moveout->qr_code_path);
-            //     return $moveout;
-            // });
-    
+
         $perPage = 10;
         $currentPage = request()->get('page', 1);
         $paginatedMoveouts = new \Illuminate\Pagination\LengthAwarePaginator(
@@ -59,7 +76,7 @@ class StockOpnameController extends Controller
         ]);
     }
 
-    public function IndexA()
+    public function IndexA(Request $request)
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
@@ -67,19 +84,41 @@ class StockOpnameController extends Controller
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $uoms = DB::table('m_uom')->select('uom_id', 'uom_name')->get();
     
-        // Retrieve loc_id based on the logged-in user's username
+        // Get current user's location
         $username = auth()->user()->username;
         $locId = DB::table('m_people')
                 ->where('nip', $username)
                 ->value('loc_id');
-    
-        // Retrieve, modify, and paginate moveouts
+
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $locId)
+                ->value('resto');
+        
+        // Filter assets based on the register_location matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0)
+            ->get();
+
+        // Get start and end dates from the request, or use null if not provided
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        
+        // Query moveouts, applying date filters if provided
         $moveouts = DB::table('t_opname_header')
         ->leftjoin('t_opname_detail', 't_opname_header.opname_id', '=', 't_opname_detail.opname_id')
         ->leftjoin('m_condition', 'm_condition.condition_id', '=', 't_opname_detail.condition_id')
         ->leftjoin('m_uom', 'm_uom.uom_id', '=', 't_opname_detail.uom')
         ->select('t_opname_header.*', 't_opname_detail.*', 'm_condition.condition_name', 'm_uom.uom_name')
         ->where('t_opname_header.is_active', '=', '1')
+        ->when($startDate, function ($query, $startDate) {
+            return $query->where('t_opname_header.create_date', '>=', $startDate); // Filter by start date
+        })
+        ->when($endDate, function ($query, $endDate) {
+            return $query->where('t_opname_header.create_date', '<=', $endDate); // Filter by end date
+        })
+        ->select('t_opname_header.*', 't_opname_detail.*', 'm_condition.condition_name', 'm_uom.uom_name')
         ->get();
             // ->map(function ($moveout) {
             //     $moveout->relative_qr_code_path = str_replace('http://127.0.0.1:8000/', '', $moveout->qr_code_path);
@@ -120,6 +159,17 @@ class StockOpnameController extends Controller
         $locId = DB::table('m_people')
                 ->where('nip', $username)
                 ->value('loc_id');
+                
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $locId)
+                ->value('resto');
+    
+        // Filter assets based on the location_now matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();       
     
         // Retrieve, modify, and paginate moveouts
         $moveouts = DB::table('t_opname_header')
@@ -163,11 +213,23 @@ class StockOpnameController extends Controller
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $uoms = DB::table('m_uom')->select('uom_id', 'uom_name')->get();
     
+        
         // Retrieve loc_id based on the logged-in user's username
         $username = auth()->user()->username;
         $locId = DB::table('m_people')
                 ->where('nip', $username)
                 ->value('loc_id');
+                
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $locId)
+                ->value('resto');
+    
+        // Filter assets based on the location_now matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();       
     
         // Retrieve, modify, and paginate moveouts
         $moveouts = DB::table('t_opname_header')
@@ -201,6 +263,182 @@ class StockOpnameController extends Controller
             'uoms' => $uoms,
             'moveouts' => $paginatedMoveouts
         ]);
+    }
+    
+    public function filter(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+    
+        // Ambil input tanggal dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Ubah tanggal menjadi waktu mulai (00:00:00) dan akhir (23:59:59)
+        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();  // 2024-11-06 00:00:00
+        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();        // 2024-11-06 23:59:59
+    
+        // Query untuk filter berdasarkan create_date
+        $results = MasterStockOpnameModel::whereBetween('create_date', [$startDate, $endDate]);
+        
+        // Eksekusi query dan ambil hasilnya
+        $results = $results->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $username = auth()->user()->username;
+        $locId = DB::table('m_people')
+            ->where('nip', $username)
+            ->value('loc_id');
+        
+        $registerLocation = DB::table('master_resto')
+            ->where('store_code', $locId)
+            ->value('resto');
+
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+
+        $moveouts = DB::table('t_opname_header')
+        ->leftjoin('t_opname_detail', 't_opname_header.opname_id', '=', 't_opname_detail.opname_id')
+        ->leftjoin('m_condition', 'm_condition.condition_id', '=', 't_opname_detail.condition_id')
+        ->leftjoin('m_uom', 'm_uom.uom_id', '=', 't_opname_detail.uom')
+        ->select('t_opname_header.*', 't_opname_detail.*', 'm_condition.condition_name', 'm_uom.uom_name')
+        ->where('t_opname_header.is_active', '=', '1')
+        ->paginate(10);
+        
+        // Paginate the results
+
+        // Kembalikan hasil filter dan data lainnya ke tampilan Blade
+        return view('admin.stockopname', [
+            'results' => $results,
+            'reasons' => $reasons,
+            'conditions' => $conditions,
+            'moveouts' => $moveouts,
+            'locId' => $locId,
+            'assets' => $assets
+        ]);
+    }
+
+    public function filterA(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+    
+        // Ambil input tanggal dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Ubah tanggal menjadi waktu mulai (00:00:00) dan akhir (23:59:59)
+        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();  // 2024-11-06 00:00:00
+        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();        // 2024-11-06 23:59:59
+    
+        // Query untuk filter berdasarkan create_date
+        $results = MasterStockOpnameModel::whereBetween('create_date', [$startDate, $endDate]);
+        
+        // Eksekusi query dan ambil hasilnya
+        $results = $results->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $username = auth()->user()->username;
+        $locId = DB::table('m_people')
+            ->where('nip', $username)
+            ->value('loc_id');
+        
+        $registerLocation = DB::table('master_resto')
+            ->where('store_code', $locId)
+            ->value('resto');
+
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+
+        $moveouts = DB::table('t_opname_header')
+        ->leftjoin('t_opname_detail', 't_opname_header.opname_id', '=', 't_opname_detail.opname_id')
+        ->leftjoin('m_condition', 'm_condition.condition_id', '=', 't_opname_detail.condition_id')
+        ->leftjoin('m_uom', 'm_uom.uom_id', '=', 't_opname_detail.uom')
+        ->select('t_opname_header.*', 't_opname_detail.*', 'm_condition.condition_name', 'm_uom.uom_name')
+        ->where('t_opname_header.is_active', '=', '1')
+        ->paginate(10);
+        
+        // Paginate the results
+
+        // Kembalikan hasil filter dan data lainnya ke tampilan Blade
+        return view('admin.adjuststock', [
+            'results' => $results,
+            'reasons' => $reasons,
+            'conditions' => $conditions,
+            'moveouts' => $moveouts,
+            'locId' => $locId,
+            'assets' => $assets
+        ]);
+    }
+
+    public function previewPDF($opname_id)
+    {
+        // Ambil data berdasarkan out_id
+        $data = DB::table('t_opname_header')
+            ->join('t_opname_detail', 't_opname_header.opname_id', '=', 't_opname_detail.opname_id')
+            ->leftJoin('master_resto as origin', 't_opname_header.loc_id', '=', 'origin.store_code')
+            ->leftJoin('table_registrasi_asset', 't_opname_detail.asset_id', '=', 'table_registrasi_asset.id')
+            ->leftJoin('m_condition', 't_opname_detail.condition_id', '=', 'm_condition.condition_id')
+            ->leftJoin('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_id')
+            ->leftJoin('m_type', 'table_registrasi_asset.type_asset', '=', 'm_type.type_id')
+            ->where('t_opname_header.opname_id', $opname_id)
+            ->select(
+                't_opname_header.*', 
+                't_opname_detail.*', 
+                'origin.resto as origin_store_code', 
+                'table_registrasi_asset.asset_name', 
+                'table_registrasi_asset.category_asset', 
+                'table_registrasi_asset.serial_number', 
+                'table_registrasi_asset.type_asset',
+                'm_condition.condition_name',
+                'm_type.type_name',
+                'm_category.cat_name'
+            )
+            ->first();
+
+        // Jika data tidak ditemukan, tampilkan halaman 404
+        if (!$data) {
+            abort(404, 'MoveOut not found');
+        }
+
+        // Buat PDF menggunakan data yang ditemukan
+        $pdf = Pdf::loadView('Admin.pdf-moveout', compact('data'));
+
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
     public function showPutFormStockOpname($opnameId)

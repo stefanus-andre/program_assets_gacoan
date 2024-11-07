@@ -264,7 +264,7 @@
 
                     <!-- Modal add -->
                     <!-- Modal Add Data Asset -->
-                    <div class="modal fade" id="addDataMoveOut" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="addDataMoveOut" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-md">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -518,9 +518,25 @@
                         </div>
                     </div>
 
-
                     <div class="card-body">
                       <div class="table-responsive product-table" style="max-width: 100%; overflow-x: auto;">
+                        <form action="{{ route('moveout.filter') }}" method="GET">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="start_date">Start Date</label>
+                                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="end_date">End Date</label>
+                                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <a href="{{ route('Admin.moveout') }}" class="btn btn-secondary ml-2">Reset</a>
+                                </div>
+                            </div>
+                        </form>
                         <div class="d-flex justify-content-between mb-3 mt-3">
                             <h5>Movement Out Data</h5> <!-- Add a heading for the table if needed -->
                             <!-- Search Input Field aligned to the right -->
@@ -528,6 +544,9 @@
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search for assets..." />
                             </div>
                         </div>
+                      
+                        @if(isset($results))
+                        {{-- @if($moveouts->isNotEmpty()) --}}
                         <table class="table table-striped display" id="coba" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
@@ -576,11 +595,18 @@
                                             title="Detail">
                                                 <i class="fas fa-book"></i>
                                             </a>
+                                            <a href="{{ route('moveout.preview', $moveout->out_id) }}" target="_blank"><i class="fas fa-print mx-1"></i></a>
+                                            {{-- <a href="{{ route('moveout.print', $moveout->out_id) }}" class="btn btn-primary">Print PDF</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <p class="text-center mt-3 mb-2">No data found within this date range.</p>
+                    @endif
+                    {{-- @else
+                      <p class="text-center mt-3 mb-2">No data found within this date range.</p>
+                  @endif --}}
                         <div class="d-flex justify-content-center align-items-center mt-4">
                           <div>
                               <!-- Previous Button -->
@@ -1090,23 +1116,16 @@ Swal.fire({
 </script>
 
 <script>
-document.querySelectorAll('.asset-select').forEach(function(select) {
-    select.addEventListener('change', function () {
-        const assetId = this.value;
-        const container = this.closest('.asset-fields');
+document.addEventListener('change', function (e) {
+    if (e.target.classList.contains('asset-select')) {
+        const assetId = e.target.value;
+        const container = e.target.closest('.asset-fields');
 
         if (assetId) {
             fetch(`/get-asset-details/${assetId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Log the response to see the structure
-
-                    // Check if the expected properties exist
+                    // Check if data exists and update fields if available
                     if (data) {
                         container.querySelector('input[name="merk[]"]').value = data.merk || '';
                         container.querySelector('input[name="qty[]"]').value = data.qty || '';
@@ -1126,7 +1145,7 @@ document.querySelectorAll('.asset-select').forEach(function(select) {
             container.querySelector('input[name="serial_number[]"]').value = '';
             container.querySelector('input[name="register_code[]"]').value = '';
         }
-    });
+    }
 });
 </script>
 <script>
@@ -1146,6 +1165,25 @@ document.querySelectorAll('.asset-select').forEach(function(select) {
       }
     });
   });
+</script>
+<script>
+  function convertDateFormat() {
+    let startDate = document.getElementById('start_date');
+    let endDate = document.getElementById('end_date');
+
+    // Menyusun tanggal dalam format yyyy-mm-dd
+    startDate.value = formatDate(startDate.value);
+    endDate.value = formatDate(endDate.value);
+}
+
+function formatDate(dateString) {
+    let dateParts = dateString.split('/');
+    // pastikan dateParts[2] ada dalam format 'yy' atau 'yyyy'
+    if (dateParts.length === 3) {
+        return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    }
+    return dateString;
+}
 </script>
   
     <!-- login js-->

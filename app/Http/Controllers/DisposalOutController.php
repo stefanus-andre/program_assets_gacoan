@@ -3,51 +3,217 @@
 namespace App\Http\Controllers;
 
 use App\Models\Master\MasterDisOut;
+use App\Models\Master\TOutDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DisposalOutController extends Controller
 {
-    public function Index()
+    public function Index(Request $request)
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        
+        $username = auth()->user()->username;
+        $fromLoc = DB::table('m_people')
+                ->where('nip', $username)
+                ->value('loc_id');
+
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $fromLoc)
+                ->value('resto');
+    
+        // Filter assets based on the location_now matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();   
+
+        // Get start and end dates from the request, or use null if not provided
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
         $moveouts = DB::table('t_out')
         ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
         ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
         ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->where('t_out.out_id', 'like', 'DA%')// Only include active records
+        ->when($startDate, function ($query, $startDate) {
+            return $query->where('t_out.create_date', '>=', $startDate); // Filter by start date
+        })
+        ->when($endDate, function ($query, $endDate) {
+            return $query->where('t_out.create_date', '<=', $endDate); // Filter by end date
+        })
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
         ->paginate(10);
 
         return view("Admin.disout", [
+            'fromLoc' => $fromLoc,
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
-            'moveouts' => $moveouts
+            'approvals' => $approvals,
+            'moveouts' => $moveouts,
+            'restos' => $restos
         ]);
     }
 
-    public function HalamanDisOut() 
+    public function HalamanDisOut(Request $request) 
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        
+        $username = auth()->user()->username;
+        $fromLoc = DB::table('m_people')
+                ->where('nip', $username)
+                ->value('loc_id');
+
+        $registerLocation = DB::table('master_resto')
+                ->where('store_code', $fromLoc)
+                ->value('resto');
+    
+        // Filter assets based on the location_now matching the fetched resto
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();      
+
+        $moveoutsQuery = DB::table('t_out')
+        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->where('t_out.out_id', 'like', 'DA%');
+
+        // Apply date range filter if provided
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $startDate = $request->input('start_date') . ' 00:00:00'; // mulai dari awal hari
+            $endDate = $request->input('end_date') . ' 23:59:59'; // sampai akhir hari
+            $moveoutsQuery->whereBetween('t_out.out_date', [$startDate, $endDate]);
+        }
+    
+        // Paginate the results
+        $moveouts = $moveoutsQuery->paginate(10);
+
+        return view("Admin.disout", [
+            'fromLoc' => $fromLoc,
+            'reasons' => $reasons,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'approvals' => $approvals,
+            'moveouts' => $moveouts,
+            'restos' => $restos
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+    
+        // Ambil input tanggal dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Ubah tanggal menjadi waktu mulai (00:00:00) dan akhir (23:59:59)
+        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();  // 2024-11-06 00:00:00
+        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();        // 2024-11-06 23:59:59
+    
+        // Query untuk filter berdasarkan create_date
+        $results = MasterDisOut::whereBetween('create_date', [$startDate, $endDate]);
+    
+        // Eksekusi query dan ambil hasilnya
+        $results = $results->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $username = auth()->user()->username;
+        $fromLoc = DB::table('m_people')
+            ->where('nip', $username)
+            ->value('loc_id');
+        
+        $registerLocation = DB::table('master_resto')
+            ->where('store_code', $fromLoc)
+            ->value('resto');
+
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();
+
         $moveouts = DB::table('t_out')
         ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
         ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
         ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->where('t_out.out_id', 'like', 'DA%')
         ->paginate(10);
 
-        return view("Admin.disout", [
+        // Kembalikan hasil filter dan data lainnya ke tampilan Blade
+        return view('admin.disout', [
+            'results' => $results,
+            'fromLoc' => $fromLoc,
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
-            'moveouts' => $moveouts
+            'moveouts' => $moveouts,
+            'restos' => $restos
         ]);
+    }
+
+    public function previewPDF($out_id)
+    {
+        // Ambil data berdasarkan out_id
+        $data = DB::table('t_out')
+            ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+            ->leftJoin('master_resto as origin', 't_out.from_loc', '=', 'origin.store_code')
+            ->leftJoin('master_resto as destination', 't_out.dest_loc', '=', 'destination.store_code')
+            ->leftJoin('table_registrasi_asset', 't_out_detail.asset_id', '=', 'table_registrasi_asset.id')
+            ->leftJoin('m_condition', 't_out_detail.condition', '=', 'm_condition.condition_id')
+            ->leftJoin('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_id')
+            ->leftJoin('m_type', 'table_registrasi_asset.type_asset', '=', 'm_type.type_id')
+            ->where('t_out.out_id', $out_id)
+            ->select(
+                't_out.*', 
+                't_out_detail.*', 
+                'origin.resto as origin_store_code', 
+                'destination.resto as destination_store_code',
+                'table_registrasi_asset.asset_name', 
+                'table_registrasi_asset.category_asset', 
+                'table_registrasi_asset.serial_number', 
+                'table_registrasi_asset.type_asset',
+                'm_condition.condition_name',
+                'm_type.type_name',
+                'm_category.cat_name'
+            )
+            ->first();
+
+        // Jika data tidak ditemukan, tampilkan halaman 404
+        if (!$data) {
+            abort(404, 'MoveOut not found');
+        }
+
+        // Buat PDF menggunakan data yang ditemukan
+        $pdf = Pdf::loadView('Admin.pdf-disposal', compact('data'));
+
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
     public function showPutForm($id)
@@ -62,6 +228,30 @@ class DisposalOutController extends Controller
         return response()->json(['status' => 'success', 'data' => $moveout]);
     }
 
+    public function showPutFormDisout($outId)
+    {
+        $moveout = MasterDisOut::find('out_id', $outId)->first();
+        
+        if (!$moveout) {
+            return response()->json(['message' => 'Moveout not found'], 404);
+        }
+        
+        return response()->json($moveout);
+    }
+
+    public function showPutFormDisoutDetail($outId)
+    {
+        Log::info("showPutFormMoveoutDetail called with out_id: $outId");
+
+        $moveout = TOutDetail::where('out_id', $outId)->first();
+        
+        if (!$moveout) {
+            Log::info("No details found for out_id: $outId");
+            return response()->json(['message' => 'Moveout not found'], 404);
+        }
+        
+        return response()->json($moveout);
+    }
 
     public function getDisOut()
     {

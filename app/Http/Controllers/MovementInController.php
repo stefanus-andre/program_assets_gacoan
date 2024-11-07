@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Master\MasterDelivery;
 use App\Models\Master\MasterMoveIn;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -11,50 +12,168 @@ use Illuminate\Support\Facades\DB;
 
 class MovementInController extends Controller
 {
-    public function Index()
+    public function Index(Request $request)
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        
+        // Get start and end dates from the request, or use null if not provided
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
         $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.appr_1', '=', 'mc_approval.approval_id')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.appr_1', '=', 'mc_approval.approval_id')
         ->select('t_out.*', 't_in.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_out.appr_3')
         ->where('t_out.appr_3', '=', '2')
+            ->when($startDate, function ($query, $startDate) {
+                return $query->where('t_out.create_date', '>=', $startDate); // Filter by start date
+            })
+            ->when($endDate, function ($query, $endDate) {
+                return $query->where('t_out.create_date', '<=', $endDate); // Filter by end date
+            })
+            ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
         ->paginate(10);
 
         return view("Admin.movein", [
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
+            'approvals' => $approvals,
+            'restos' => $restos,
+            'moveins' => $moveins
+        ]);
+    }
+
+    public function HalamanMoveIn(Request $request)
+    {
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        
+        $moveinsQuery = DB::table('t_out')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.appr_1', '=', 'mc_approval.approval_id')
+        ->select('t_out.*', 't_in.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_out.appr_3')
+        ->where('t_out.out_id', 'like', 'AM%')
+        ->where('t_out.appr_3', '=', '2');
+
+        // Apply date range filter if provided
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $startDate = $request->input('start_date') . ' 00:00:00'; // mulai dari awal hari
+            $endDate = $request->input('end_date') . ' 23:59:59'; // sampai akhir hari
+            $moveinsQuery->whereBetween('t_out.out_date', [$startDate, $endDate]);
+        }
+    
+        // Paginate the results
+        $moveins = $moveinsQuery->paginate(10);
+
+        return view("Admin.movein", [
+            'reasons' => $reasons,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'restos' => $restos,
             'approvals' => $approvals,
             'moveins' => $moveins
         ]);
     }
 
-    public function HalamanMoveIn() 
+    public function filter(Request $request)
     {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+    
+        // Ambil input tanggal dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Ubah tanggal menjadi waktu mulai (00:00:00) dan akhir (23:59:59)
+        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();  // 2024-11-06 00:00:00
+        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();        // 2024-11-06 23:59:59
+    
+        // Query untuk filter berdasarkan create_date
+        $results = MasterMoveIn::whereBetween('create_date', [$startDate, $endDate]);
+    
+        // Eksekusi query dan ambil hasilnya
+        $results = $results->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
-        $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.appr_1', '=', 'mc_approval.approval_id')
-        ->select('t_out.*', 't_in.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_out.appr_3')
-        ->where('t_out.appr_3', '=', '2')
-        ->paginate(10);
 
-        return view("Admin.movein", [
+        $moveinsQuery = DB::table('t_out')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.appr_1', '=', 'mc_approval.approval_id')
+        ->select('t_out.*', 't_in.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_out.appr_3')
+        ->where('t_out.out_id', 'like', 'AM%')
+        ->where('t_out.appr_3', '=', '2');
+        
+        // Paginate the results
+        $moveins = $moveinsQuery->paginate(10);
+
+        // Kembalikan hasil filter dan data lainnya ke tampilan Blade
+        return view('admin.movein', [
+            'results' => $results,
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
             'approvals' => $approvals,
-            'moveins' => $moveins
+            'moveins' => $moveins,
+            'restos' => $restos
         ]);
+    }
+
+    public function previewPDF($out_id)
+    {
+        // Ambil data berdasarkan out_id
+        $data = DB::table('t_out')
+            ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+            ->leftJoin('master_resto as origin', 't_out.from_loc', '=', 'origin.store_code')
+            ->leftJoin('master_resto as destination', 't_out.dest_loc', '=', 'destination.store_code')
+            ->leftJoin('table_registrasi_asset', 't_out_detail.asset_id', '=', 'table_registrasi_asset.id')
+            ->leftJoin('m_condition', 't_out_detail.condition', '=', 'm_condition.condition_id')
+            ->leftJoin('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_id')
+            ->leftJoin('m_type', 'table_registrasi_asset.type_asset', '=', 'm_type.type_id')
+            ->where('t_out.out_id', $out_id)
+            ->select(
+                't_out.*', 
+                't_out_detail.*', 
+                'origin.resto as origin_store_code', 
+                'destination.resto as destination_store_code',
+                'table_registrasi_asset.asset_name', 
+                'table_registrasi_asset.category_asset', 
+                'table_registrasi_asset.serial_number', 
+                'table_registrasi_asset.type_asset',
+                'm_condition.condition_name',
+                'm_type.type_name',
+                'm_category.cat_name'
+            )
+            ->first();
+
+        // Jika data tidak ditemukan, tampilkan halaman 404
+        if (!$data) {
+            abort(404, 'MoveOut not found');
+        }
+
+        // Buat PDF menggunakan data yang ditemukan
+        $pdf = PDF::loadView('Admin.pdf-moveout', compact('data'));
+
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
     }
 
     public function showPutForm($id)
@@ -88,39 +207,39 @@ class MovementInController extends Controller
     }
 
     public function getDetails($id)
-{
-    // Fetch data from t_in and t_in_detail based on the out_id
-    $moveOut = DB::table('t_in')
-        ->where('in_id', $id)
-        ->first();
+    {
+        // Fetch data from t_in and t_in_detail based on the out_id
+        $moveOut = DB::table('t_in')
+            ->where('in_id', $id)
+            ->first();
 
-    $moveOutDetails = DB::table('t_in_detail')
-        ->where('in_id', $id)
-        ->get(); // Assuming you want to retrieve all details related to this in_id
+        $moveOutDetails = DB::table('t_in_detail')
+            ->where('in_id', $id)
+            ->get(); // Assuming you want to retrieve all details related to this in_id
 
-    // Combine the results (if necessary)
-    $response = [
-        'in_id' => $moveOut->in_id,
-        'in_no' => $moveOut->in_no,
-        'in_date' => $moveOut->in_date,
-        'from_loc' => $moveOut->from_loc,
-        'dest_loc' => $moveOut->dest_loc,
-        'in_id' => $moveOut->in_id,
-        'out_desc' => $moveOut->out_desc,
-        // Assuming there's a single asset, or you need to modify this to handle multiple assets
-        'asset_id' => $moveOutDetails->first()->asset_id ?? '',
-        'asset_name' => $moveOutDetails->first()->asset_name ?? '',
-        'asset_tag' => $moveOutDetails->first()->asset_tag ?? '',
-        'serial_number' => $moveOutDetails->first()->serial_number ?? '',
-        'brand' => $moveOutDetails->first()->brand ?? '',
-        'qty' => $moveOutDetails->first()->qty ?? '',
-        'uom' => $moveOutDetails->first()->uom ?? '',
-        'condition' => $moveOutDetails->first()->condition ?? '',
-        'image' => $moveOutDetails->first()->image ?? '',
-    ];
+        // Combine the results (if necessary)
+        $response = [
+            'in_id' => $moveOut->in_id,
+            'in_no' => $moveOut->in_no,
+            'in_date' => $moveOut->in_date,
+            'from_loc' => $moveOut->from_loc,
+            'dest_loc' => $moveOut->dest_loc,
+            'in_id' => $moveOut->in_id,
+            'out_desc' => $moveOut->out_desc,
+            // Assuming there's a single asset, or you need to modify this to handle multiple assets
+            'asset_id' => $moveOutDetails->first()->asset_id ?? '',
+            'asset_name' => $moveOutDetails->first()->asset_name ?? '',
+            'asset_tag' => $moveOutDetails->first()->asset_tag ?? '',
+            'serial_number' => $moveOutDetails->first()->serial_number ?? '',
+            'brand' => $moveOutDetails->first()->brand ?? '',
+            'qty' => $moveOutDetails->first()->qty ?? '',
+            'uom' => $moveOutDetails->first()->uom ?? '',
+            'condition' => $moveOutDetails->first()->condition ?? '',
+            'image' => $moveOutDetails->first()->image ?? '',
+        ];
 
-    return response()->json($response);
-}
+        return response()->json($response);
+    }
 
     public function AddDataMoveOut(Request $request)
     {

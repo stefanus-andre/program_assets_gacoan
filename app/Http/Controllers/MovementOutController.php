@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Master\MasterAsset;
 use App\Models\Master\MasterMoveOut;
+use App\Models\Master\MasterRegistrasiModel;
 use App\Models\Master\TOutDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -12,13 +15,15 @@ use Illuminate\Support\Facades\Log;
 
 class MovementOutController extends Controller
 {
-    public function Index()
+    public function Index(Request $request)
     {
+        // Fetch reasons, restos, approvals, and conditions
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
         $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
         $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         
+        // Get current user's location
         $username = auth()->user()->username;
         $fromLoc = DB::table('m_people')
                 ->where('nip', $username)
@@ -27,20 +32,32 @@ class MovementOutController extends Controller
         $registerLocation = DB::table('master_resto')
                 ->where('store_code', $fromLoc)
                 ->value('resto');
-    
+        
         // Filter assets based on the register_location matching the fetched resto
         $assets = DB::table('table_registrasi_asset')
             ->select('id', 'asset_name')
-            ->where('register_location', $registerLocation)
-            ->where('qty', '>', 0) 
-            ->get();       
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0)
+            ->get();
 
+        // Get start and end dates from the request, or use null if not provided
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        
+        // Query moveouts, applying date filters if provided
         $moveouts = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
-        ->where('t_out.is_active', 1) // Only include active records
-        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
-        ->paginate(10);
+            ->leftJoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+            ->leftJoin('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+            ->where('t_out.out_id', 'like', 'AM%')
+            ->where('t_out.is_active', 1) // Only include active records
+            ->when($startDate, function ($query, $startDate) {
+                return $query->where('t_out.create_date', '>=', $startDate); // Filter by start date
+            })
+            ->when($endDate, function ($query, $endDate) {
+                return $query->where('t_out.create_date', '<=', $endDate); // Filter by end date
+            })
+            ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+            ->paginate(10);
 
         return view("Admin.moveout", [
             'fromLoc' => $fromLoc,
@@ -52,7 +69,7 @@ class MovementOutController extends Controller
         ]);
     }
 
-    public function HalamanMoveOut() 
+    public function HalamanMoveOut(Request $request)
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
         $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
@@ -68,19 +85,29 @@ class MovementOutController extends Controller
                 ->where('store_code', $fromLoc)
                 ->value('resto');
     
-        // Filter assets based on the register_location matching the fetched resto
+        // Filter assets based on the location_now matching the fetched resto
         $assets = DB::table('table_registrasi_asset')
             ->select('id', 'asset_name')
-            ->where('register_location', $registerLocation)
+            ->where('location_now', $registerLocation)
             ->where('qty', '>', 0) 
             ->get();        
 
-        $moveouts = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
-        ->where('t_out.is_active', 1) // Only include active records
-        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
-        ->paginate(10);
+        $moveoutsQuery = DB::table('t_out')
+            ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+            ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+            ->where('t_out.out_id', 'like', 'AM%')
+            ->where('t_out.is_active', 1)
+            ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+            ->where('t_out.out_id', 'like', 'AM%');
+
+        // Apply date range filter if provided
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $moveoutsQuery->whereBetween(DB::raw('DATE(t_out.create_date)'), [$request->start_date, $request->end_date]);
+        }
+    
+        // Paginate the results
+        $moveouts = $moveoutsQuery->paginate(10);
+
 
         return view("Admin.moveout", [
             'fromLoc' => $fromLoc,
@@ -90,7 +117,129 @@ class MovementOutController extends Controller
             'moveouts' => $moveouts,
             'restos' => $restos
         ]);
+        
     }
+
+    public function filter(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+    
+        // Ambil input tanggal dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Ubah tanggal menjadi waktu mulai (00:00:00) dan akhir (23:59:59)
+        $startDate = \Carbon\Carbon::parse($startDate)->startOfDay();  // 2024-11-06 00:00:00
+        $endDate = \Carbon\Carbon::parse($endDate)->endOfDay();        // 2024-11-06 23:59:59
+    
+        // Query untuk filter berdasarkan create_date
+        $results = MasterMoveOut::whereBetween('create_date', [$startDate, $endDate]);
+    
+        // Eksekusi query dan ambil hasilnya
+        $results = $results->get();
+
+        // Ambil data lain yang dibutuhkan untuk tampilan
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $restos = DB::table('master_resto')->select('store_code', 'resto')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $username = auth()->user()->username;
+        $fromLoc = DB::table('m_people')
+            ->where('nip', $username)
+            ->value('loc_id');
+        
+        $registerLocation = DB::table('master_resto')
+            ->where('store_code', $fromLoc)
+            ->value('resto');
+
+        $assets = DB::table('table_registrasi_asset')
+            ->select('id', 'asset_name')
+            ->where('location_now', $registerLocation)
+            ->where('qty', '>', 0) 
+            ->get();
+
+        $moveouts = DB::table('t_out')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->where('t_out.out_id', 'like', 'AM%')
+        ->where('t_out.is_active', 1) // Only include active records
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name')
+        ->paginate(10);
+
+        // Kembalikan hasil filter dan data lainnya ke tampilan Blade
+        return view('admin.moveout', [
+            'results' => $results,
+            'fromLoc' => $fromLoc,
+            'reasons' => $reasons,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'moveouts' => $moveouts,
+            'restos' => $restos
+        ]);
+    }
+
+    public function printPDF($id)
+    {
+        // Ambil data dari tabel t_out dan t_out_detail berdasarkan ID
+        $moveout = MasterMoveOut::with('details')->findOrFail($id);
+
+        // Generate PDF
+        $pdf = Pdf::loadView('Admin.pdf-moveout', compact('moveout'));
+
+        // Return PDF response untuk di-download atau dilihat
+        return $pdf->download('moveout_' . $moveout->out_no . '.pdf');
+    }
+
+    public function previewPDF($out_id)
+    {
+        // Ambil data berdasarkan out_id
+        $data = DB::table('t_out')
+            ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+            ->leftJoin('master_resto as origin', 't_out.from_loc', '=', 'origin.store_code')
+            ->leftJoin('master_resto as destination', 't_out.dest_loc', '=', 'destination.store_code')
+            ->leftJoin('table_registrasi_asset', 't_out_detail.asset_id', '=', 'table_registrasi_asset.id')
+            ->leftJoin('m_condition', 't_out_detail.condition', '=', 'm_condition.condition_id')
+            ->leftJoin('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_id')
+            ->leftJoin('m_type', 'table_registrasi_asset.type_asset', '=', 'm_type.type_id')
+            ->where('t_out.out_id', $out_id)
+            ->select(
+                't_out.*', 
+                't_out_detail.*', 
+                'origin.resto as origin_store_code', 
+                'destination.resto as destination_store_code',
+                'table_registrasi_asset.asset_name', 
+                'table_registrasi_asset.category_asset', 
+                'table_registrasi_asset.serial_number', 
+                'table_registrasi_asset.type_asset',
+                'm_condition.condition_name',
+                'm_type.type_name',
+                'm_category.cat_name'
+            )
+            ->first();
+
+        // Jika data tidak ditemukan, tampilkan halaman 404
+        if (!$data) {
+            abort(404, 'MoveOut not found');
+        }
+
+        // Buat PDF menggunakan data yang ditemukan
+        $pdf = PDF::loadView('Admin.pdf-moveout', compact('data'));
+
+        return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
+    }
+
+    // public function downloadPDF()
+    // {
+    //     $data = $this->getData();
+    //     $pdf = PDF::loadView('Admin.pdf-moveout', compact('data'));
+
+    //     // Unduh PDF
+    //     return $pdf->download('moveout.pdf');
+    // }
 
     // public function showPutForm($outId)
     // {
@@ -132,9 +281,12 @@ class MovementOutController extends Controller
 
     public function showPutFormMoveoutDetail($outId)
     {
-        $moveout = TOutDetail::find('out_id', $outId)->first();
+        Log::info("showPutFormMoveoutDetail called with out_id: $outId");
+
+        $moveout = TOutDetail::where('out_id', $outId)->first();
         
         if (!$moveout) {
+            Log::info("No details found for out_id: $outId");
             return response()->json(['message' => 'Moveout not found'], 404);
         }
         
@@ -150,18 +302,19 @@ class MovementOutController extends Controller
 
     public function getAssetDetails($id)
     {
-        // Debugging statement
-        Log::info('Fetching asset details for ID: ' . $id);
+        $asset = MasterRegistrasiModel::find($id);
 
-        $asset = DB::table('table_registrasi_asset')
-            ->select('merk', 'qty', 'satuan', 'serial_number', 'register_code')
-            ->where('id', $id)
-            ->first();
-
-        //Log the fetched asset details
-        Log::info('Asset details fetched: ', (array)$asset);
-
-        return response()->json($asset);
+        if ($asset) {
+            return response()->json([
+                'merk' => $asset->merk,
+                'qty' => $asset->qty,
+                'satuan' => $asset->satuan,
+                'serial_number' => $asset->serial_number,
+                'register_code' => $asset->register_code,
+            ]);
+        } else {
+            return response()->json([], 404); // Not found
+        }
     }
 
     public function getMoveoutDetails($id)
@@ -292,27 +445,21 @@ public function AddDataMoveOut(Request $request)
         $maxMoveoutId = MasterMoveOut::max('out_no');
         $out_no_base = $maxMoveoutId ? $maxMoveoutId + 1 : 1;
 
-        // Menyimpan data moveout ke database
-        $moveout->out_no = $out_no_base; // Set out_no untuk pertama
-        // Menghasilkan out_id secara otomatis
+        // Set out_no untuk pertama
+        $moveout->out_no = $out_no_base; 
+        // Format out_id
         $trx_code = DB::table('t_trx')->where('trx_name', 'Asset Movement')->value('trx_code');
+        $today = Carbon::now()->format('ymd');
+        $todayCount = MasterMoveOut::whereDate('create_date', Carbon::now())->count() + 1;
+        $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
+        $moveout->out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number}";
 
-            // Format yymmdd untuk tanggal hari ini
-            $today = Carbon::now()->format('ymd');
-
-            // Hitung urutan nomor transaksi untuk hari ini
-            $todayDate = Carbon::now()->format('Y-m-d');
-            $todayCount = MasterMoveOut::whereDate('create_date', $todayDate)->count() + 1;
-            $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
-
-            // Format opname_id
-            $moveout->out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number}";
-        
-        $moveout->save(); // Simpan moveout
+        // Simpan moveout
+        $moveout->save(); 
 
         // Loop melalui aset untuk menyimpan detail
         foreach ($request->input('asset_id') as $index => $assetId) {
-            // Menghasilkan out_det_id secara otomatis
+            // Format out_id untuk detail
             $trx_code = DB::table('t_trx')->where('trx_name', 'Asset Movement')->value('trx_code');
             
                 // Format yymmdd untuk tanggal hari ini
@@ -326,8 +473,8 @@ public function AddDataMoveOut(Request $request)
             
                 // Calculate the next transaction number
                 if ($lastTransaction) {
-                    // Extract the last transaction number from the out_id
-                    $lastOpnameId = $lastTransaction->out_id;
+                    // Extract the last transaction number from the opname_id
+                    $lastOpnameId = $lastTransaction->opname_id;
                     preg_match('/\.(\d{3})$/', $lastOpnameId, $matches);
                     $transaction_number = isset($matches[1]) ? intval($matches[1]) + 1 : 1; // Increment the last number or start with 1
                 } else {
@@ -337,12 +484,12 @@ public function AddDataMoveOut(Request $request)
                 $transaction_number_str = str_pad($transaction_number, 3, '0', STR_PAD_LEFT); // Format as 001, 002, etc.
             
                 // Format opname_id untuk setiap detail
-                $out = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number_str}";
+                $out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number_str}";
 
             // Simpan data detail untuk aset
             DB::table('t_out_detail')->insert([
-                'out_det_id' => $moveout->out_no,  // Menggunakan out_det_id yang dihasilkan
-                'out_id' => $out,  // Menggunakan out_id yang dihasilkan
+                'out_det_id' => $moveout->out_no,  // Menggunakan out_no yang dihasilkan
+                'out_id' => $out_id,  // Menggunakan out_id dari MasterMoveOut
                 'asset_id' => $assetId,
                 'asset_tag' => $request->input('register_code')[$index],
                 'serial_number' => $request->input('serial_number')[$index],

@@ -441,6 +441,23 @@
 
                     <div class="card-body">
                       <div class="table-responsive product-table" style="max-width: 100%; overflow-x: auto;">
+                        <form action="{{ route('adjuststock.filter') }}" method="GET">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="start_date">Start Date</label>
+                                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="end_date">End Date</label>
+                                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <a href="{{ route('Admin.adjuststock') }}" class="btn btn-secondary ml-2">Reset</a>
+                                </div>
+                            </div>
+                        </form>
                         <div class="d-flex justify-content-between mb-3 mt-3">
                             <h5>Adjustment Stock Data</h5> <!-- Add a heading for the table if needed -->
                             <!-- Search Input Field aligned to the right -->
@@ -448,6 +465,7 @@
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search for assets..." />
                             </div>
                         </div>
+                        @if(isset($results))
                         <table class="table table-striped display" id="coba" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
@@ -465,7 +483,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($moveouts as $moveout)
+                                @foreach($results as $moveout)
                                     <tr class="text-center">
                                       {{-- <td>
                                         <img src="{{ asset($moveout->relative_qr_code_path) }}" alt="QR Code" style="width: 100px; height: 100px;">
@@ -498,6 +516,8 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <p class="text-center mt-3 mb-2">No data found within this date range.</p>
+                    @endif
                         <div class="d-flex justify-content-center align-items-center mt-4">
                           <div>
                               <!-- Previous Button -->

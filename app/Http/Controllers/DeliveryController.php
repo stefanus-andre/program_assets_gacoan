@@ -21,11 +21,11 @@ class DeliveryController extends Controller
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $delivery = DB::table('t_transit')->select('transit_id')->get();
         $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
-        ->join('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
-        ->join('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
+        ->leftjoin('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
+        ->leftjoin('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
         ->select('t_out.*', 't_in.*', 't_in_detail.*', 't_transit.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_in.is_confirm')
         ->where('t_out.appr_3', '=', '2')
         ->paginate(10);
@@ -48,11 +48,11 @@ class DeliveryController extends Controller
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $delivery = DB::table('t_transit')->select('transit_id')->get();
         $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
-        ->join('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
-        ->join('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
+        ->leftjoin('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
+        ->leftjoin('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
         ->select('t_out.*', 't_in.*', 't_in_detail.*', 't_transit.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_in.is_confirm')
         ->where('t_out.appr_3', '=', '2')
         ->paginate(10);
@@ -75,11 +75,11 @@ class DeliveryController extends Controller
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $delivery = DB::table('t_transit')->select('transit_id')->get();
         $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
-        ->join('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
-        ->join('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
+        ->leftjoin('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
+        ->leftjoin('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
         ->select('t_out.*', 't_in.*', 't_in_detail.*', 't_transit.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_in.is_confirm')
         ->whereIn('t_in.is_confirm', [6, 7, 3])
         ->paginate(10);
@@ -102,11 +102,11 @@ class DeliveryController extends Controller
         $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
         $delivery = DB::table('t_transit')->select('transit_id')->get();
         $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
-        ->join('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
-        ->join('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
+        ->leftjoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftjoin('t_in', 't_out.out_id', '=', 't_in.out_id')
+        ->leftjoin('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
+        ->leftjoin('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
+        ->leftjoin('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
         ->select('t_out.*', 't_in.*', 't_in_detail.*', 't_transit.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_in.is_confirm')
         ->whereIn('t_in.is_confirm', [6, 7, 3])
         ->paginate(10);
@@ -265,7 +265,7 @@ class DeliveryController extends Controller
         ]);
 
         // Cek apakah MoveOut dengan id yang benar ada
-        $movein = MasterMoveIn::find($id); // Langsung gunakan find jika ID adalah primary key
+        $movein = MasterMoveIn::find($id);
 
         if (!$movein) {
             return response()->json(['status' => 'error', 'message' => 'movein not found.'], 404);
@@ -273,18 +273,40 @@ class DeliveryController extends Controller
 
         // Update data movein
         $movein->is_confirm = $request->is_confirm;
-         // Salin data dari t_out_detail ke t_in_detail
+
+        // Ambil nip dari pengguna yang sedang login
+        $nip = auth()->user()->nip; // Sesuaikan dengan cara mendapatkan user yang sedang login
+
+        // Ambil loc_id berdasarkan nip dari tabel m_people
+        $locId = DB::table('m_people')->where('nip', $nip)->value('loc_id');
+
+        if (!$locId) {
+            return response()->json(['status' => 'error', 'message' => 'Location ID not found for the logged-in user.'], 404);
+        }
+
+        // Ambil store_code berdasarkan loc_id dari tabel master_resto
+        $storeCode = DB::table('master_resto')->where('loc_id', $locId)->value('store_code');
+
+        if (!$storeCode) {
+            return response()->json(['status' => 'error', 'message' => 'Store code not found for the location ID.'], 404);
+        }
+
+        // Update location_now pada tabel table_registrasi_asset
+        DB::table('table_registrasi_asset')->where('id', $movein->asset_id)->update([
+            'location_now' => $storeCode,  // Mengupdate location_now dengan store_code
+        ]);
+
+        // Salin data dari t_out_detail ke t_in_detail
         $moveinDetails = DB::table('t_out')->where('in_id', $movein->in_id)->get();
 
         foreach ($moveinDetails as $detail) {
-            // Pembaruan yang benar menggunakan where untuk membatasi update pada baris yang tepat
             DB::table('t_out')->where('in_id', $detail->in_id)->update([
                 'in_id' => $movein->in_id,  // Menghubungkan dengan data baru di t_in
                 'is_confirm' => $request->is_confirm,  // Mengupdate dengan status baru
             ]);
         }
 
-        if ($movein->save()) { // Menggunakan save() yang lebih aman daripada update()
+        if ($movein->save()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'moveout updated successfully.',

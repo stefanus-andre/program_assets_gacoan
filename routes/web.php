@@ -138,8 +138,8 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/moveouts', [MovementOutController::class, 'Index'])->name('Admin.moveout');
     Route::get('/admin/moveouts/edit/{id}', [MovementOutController::class, 'showEditForm'])->name('edit.moveout');
     Route::get('/admin/moveouts/put/{id}', [MovementOutController::class, 'getDetails']);
-    Route::get('/out-data/{out_id}', 'MovementController@getOutData');
-    Route::get('/asset-data/{asset_id}', 'MovementController@getAssetData');
+    Route::get('/out-data/{out_id}', 'MovementOutController@getOutData');
+    Route::get('/asset-data/{asset_id}', 'MovementOutController@getAssetData');
     Route::get('/admin/moveouts/put/{outId}', [MovementOutController::class, 'showPutFormMoveout']);
     Route::get('/admin/moveoutdetails/put/{outId}', [MovementOutController::class, 'showPutFormMoveoutDetail']);
     Route::put('/admin/moveouts/edit/{id}', [MovementOutController::class, 'updateDataMoveOut'])->name('update.moveout');
@@ -150,6 +150,11 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/moveout/{id}', [MovementOutController::class, 'getMoveOutById']);
     Route::get('/moveout/{id}/edit', 'MovementOutController@edit');
     Route::get('/assets/{id}', 'AssetController@show');
+    Route::get('admin/moveouts/print/{id}', [MovementOutController::class, 'printPDF'])->name('moveout.print');
+    Route::get('/admin/moveout/preview', 'MovementOutController@previewPDF')->name('moveout.preview');
+    // Route::get('/admin/moveout/download', 'MovementOutController@downloadPDF')->name('moveout.download');
+    Route::get('/admin/moveout/pdf-moveout/{out_id}', [MovementOutController::class, 'previewPDF'])->name('moveout.preview');
+    Route::get('/admin/moveout/filter', [MovementOutController::class, 'filter'])->name('moveout.filter');
     
     Route::get('/admin/movein', [MovementInController::class, 'HalamanMoveIn']);
     Route::get('/admin/movein', [MovementInController::class, 'HalamanMoveIn'])->name('Admin.movein');
@@ -164,6 +169,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/fetch-movein-details/{id}', [MovementInController::class, 'getDetails']);
     Route::get('/movein/{id}/edit', 'MoveInController@edit');
     Route::get('/assets/{id}', 'AssetController@show');
+    Route::get('/admin/movein/filter', [MovementInController::class, 'filter'])->name('movein.filter');
     
     Route::get('/admin/data-movement', [MovementController::class, 'HalamanMove']);
     Route::get('/admin/data-movement', [MovementController::class, 'HalamanMove'])->name('Admin.data-movement');
@@ -245,20 +251,22 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/disout/{id}', [DisposalOutController::class, 'getDisOutById']);
     Route::get('/disout/{id}/edit', 'DisposalController@edit');
     Route::get('/assets/{id}', 'AssetController@show');
+    Route::get('/admin/disout/filter', [DisposalOutController::class, 'filter'])->name('disout.filter');
     
-    Route::get('/admin/disin', [DisposalInController::class, 'HalamanMoveIn']);
-    Route::get('/admin/disin', [DisposalInController::class, 'HalamanMoveIn'])->name('Admin.movein');
-    Route::post('/add-disin', [DisposalInController::class, 'AddDataMoveIn'])->name('add.movein');
-    Route::get('/get-disin', [DisposalInController::class, 'GetMoveIn'])->name('get.movein');
-    Route::get('/admin/disins', [DisposalInController::class, 'Index'])->name('Admin.movein');
-    Route::get('/admin/disins/edit/{id}', [DisposalInController::class, 'showEditForm'])->name('edit.movein');
-    Route::put('/admin/disins/edit/{id}', [DisposalInController::class, 'updateDataMoveIn'])->name('update.movein');
-    Route::delete('/admin/disins/delete/{id}', [DisposalInController::class, 'deleteDataMoveIn'])->name('delete.movein');
+    Route::get('/admin/disin', [DisposalInController::class, 'HalamanDisIn']);
+    Route::get('/admin/disin', [DisposalInController::class, 'HalamanDisIn'])->name('Admin.disin');
+    Route::post('/add-disin', [DisposalInController::class, 'AddDataDisIn'])->name('add.disin');
+    Route::get('/get-disin', [DisposalInController::class, 'GetDisIn'])->name('get.disin');
+    Route::get('/admin/disins', [DisposalInController::class, 'Index'])->name('Admin.disin');
+    Route::get('/admin/disins/edit/{id}', [DisposalInController::class, 'showEditForm'])->name('edit.disin');
+    Route::put('/admin/disins/edit/{id}', [DisposalInController::class, 'updateDataDisIn'])->name('update.disin');
+    Route::delete('/admin/disins/delete/{id}', [DisposalInController::class, 'deleteDataDisIn'])->name('delete.disin');
     Route::get('/get-asset-details/{id}', [DisposalInController::class, 'getAssetDetails']);
-    Route::get('/admin/disins/detail/{id}', [DisposalInController::class, 'getMoveinDetail']);
+    Route::get('/admin/disins/detail/{id}', [DisposalInController::class, 'getDisInDetail']);
     Route::get('/fetch-disin-details/{id}', [DisposalInController::class, 'getDetails']);
-    Route::get('/disin/{id}/edit', 'MoveInController@edit');
+    Route::get('/disin/{id}/edit', 'DisposalInController@edit');
     Route::get('/assets/{id}', 'AssetController@show');
+    Route::get('/admin/disin/filter', [DisposalInController::class, 'filter'])->name('disin.filter');
     
     Route::get('/admin/data-disposal', [DisposalController::class, 'HalamanDisposal']);
     Route::get('/admin/data-disposal', [DisposalController::class, 'HalamanDisposal'])->name('Admin.data-disposal');
@@ -340,6 +348,8 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/stockopname/{id}', [StockOpnameController::class, 'getStockOpnameById']);
     Route::get('/stockopname/{id}/edit', 'StockOpnameController@edit');
     Route::get('/assets/{id}', 'AssetController@show');
+    Route::get('/admin/stockopname/filter', [StockOpnameController::class, 'filter'])->name('stockopname.filter');
+    Route::get('/admin/stockopname/pdf-stockopname/{opname_id}', [StockOpnameController::class, 'previewPDF'])->name('stockopname.preview');
     
     // Adjustment Stock Opname
     Route::get('/admin/adjuststock', [StockOpnameController::class, 'HalamanAdjustStock']);
@@ -357,6 +367,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/adjuststock/{id}', [StockOpnameController::class, 'getAdjustStockById']);
     Route::get('/adjuststock/{id}/edit', 'StockOpnameController@edit');
     Route::get('/assets/{id}', 'AssetController@show');
+    Route::get('/admin/adjuststock/filter', [StockOpnameController::class, 'filterA'])->name('adjuststock.filter');
 
     // Route::get('/admin/regist', [AssetsController::class, 'index'])->name('admin.assets');
     // Route::post('/admin/regist', [AssetsController::class, 'addDataAssets'])->name('add-asset');

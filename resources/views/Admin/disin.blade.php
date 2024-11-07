@@ -213,13 +213,13 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3>Movement In Name List</h3>
+                  <h3>Disposal In Name List</h3>
                 </div>
                 <div class="col-sm-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                     <li class="breadcrumb-item">ASMI</li>
-                    <li class="breadcrumb-item active">Movement In Name List</li>
+                    <li class="breadcrumb-item active">Disposal In Name List</li>
                   </ol>
                 </div>
               </div>
@@ -233,19 +233,19 @@
               <div class="col-sm-12">
                 <div class="card">
                   <div class="card-header pb-0">
-                    <h5>Movement In Name List</h5>
+                    <h5>Disposal In Name List</h5>
                     <span>adalah daftar atau kumpulan aset yang dimiliki oleh seseorang, organisasi, atau perusahaan. Daftar ini biasanya mencakup rincian tentang setiap aset, seperti jenis aset, nilai, lokasi, dan informasi relevan lainnya.</span>
                   </div>
-					<div class="card-body"> 
-						<div class="btn-showcase">
-                            <div class="button_between">
-                                {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveIn">+ Add Data moveout</button> --}}
-                                {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
-                                <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                Download PDF Data</button> --}}
-                            </div>
-						  </div>
-						</div>
+                  <div class="card-body"> 
+                    <div class="btn-showcase">
+                                    <div class="button_between">
+                                        {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveIn">+ Add Data moveout</button> --}}
+                                        {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
+                                        <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                        Download PDF Data</button> --}}
+                                    </div>
+                      </div>
+                    </div>
 
 
                     <!-- Button trigger modal -->
@@ -447,6 +447,23 @@
 
                     <div class="card-body">
                       <div class="table-responsive product-table" style="max-width: 100%; overflow-x: auto;">
+                        <form action="{{ route('disin.filter') }}" method="GET">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="start_date">Start Date</label>
+                                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="end_date">End Date</label>
+                                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <a href="{{ route('Admin.disin') }}" class="btn btn-secondary ml-2">Reset</a>
+                                </div>
+                            </div>
+                        </form>
                         <div class="d-flex justify-content-between mb-3 mt-3">
                             <h5>Movement In Data</h5> <!-- Add a heading for the table if needed -->
                             <!-- Search Input Field aligned to the right -->
@@ -454,6 +471,7 @@
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search for assets..." />
                             </div>
                         </div>
+                        @if(isset($results))
                         <table class="table table-striped display" id="coba" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
@@ -469,7 +487,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($moveins as $movein)
+                                @foreach($results as $movein)
                                     <tr class="text-center">
                                         <td>{{ $movein->in_no }}</td>
                                         <td>{{ $movein->in_date }}</td>
@@ -494,11 +512,14 @@
                                             title="Detail">
                                                 <i class="fas fa-book"></i>
                                             </a>
+                                            <a href="{{ route('disout.preview', $disout->out_id) }}" target="_blank"><i class="fas fa-print mx-1"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <p class="text-center mt-3 mb-2">No data found within this date range.</p>
+                    @endif
                         <div class="d-flex justify-content-center align-items-center mt-4">
                           <div>
                               <!-- Previous Button -->
