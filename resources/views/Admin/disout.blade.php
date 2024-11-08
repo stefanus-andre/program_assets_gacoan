@@ -387,7 +387,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-out_date">Tanggal Movement Out:</label>
-                                                      <input type="date" name="out_date" id="edit-out_date" class="form-control" required>
+                                                      <input type="date" name="out_date" id="edit-out_date" class="form-control" required readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-from_loc">Lokasi Asal:</label>
@@ -395,7 +395,7 @@
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-dest_loc">Lokasi Tujuan:</label>
-                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required readonly>
+                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-out_desc">Deskripsi Movement Out:</label>
@@ -412,7 +412,7 @@
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-asset_id">Data Asset:</label>
-                                                      <select name="asset_id" id="edit-asset_id" class="form-control" required>
+                                                      <select name="asset_id" id="edit-asset_id" class="form-control" required readonly>
                                                           <option value="">Pilih Asset</option>
                                                           @foreach($assets as $asset)
                                                               <option value="{{ $asset->id }}">{{ $asset->asset_name }}</option>

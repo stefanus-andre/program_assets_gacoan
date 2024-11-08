@@ -762,7 +762,8 @@
       // Event handler for edit button click
       $(document).on('click', '.edit-button', function() {
           const opnameId = $(this).data('id'); // Ambil ID dari button
-
+          $('#out_id').val(outId);
+          
           $.ajax({
               url: `/admin/stockopnames/put/${opnameId}`,
               method: 'GET',

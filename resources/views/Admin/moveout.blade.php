@@ -387,7 +387,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-out_date">Tanggal Movement Out:</label>
-                                                      <input type="date" name="out_date" id="edit-out_date" class="form-control" required>
+                                                      <input type="date" name="out_date" id="edit-out_date" class="form-control" required readonly>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-from_loc">Lokasi Asal:</label>
@@ -395,7 +395,7 @@
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-dest_loc">Lokasi Tujuan:</label>
-                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required readonly>
+                                                      <input type="text" name="dest_loc" id="edit-dest_loc" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-out_desc">Deskripsi Movement Out:</label>
@@ -412,7 +412,7 @@
                                                   </div>
                                                   <div class="col-sm-12 mb-2">
                                                       <label for="edit-asset_id">Data Asset:</label>
-                                                      <select name="asset_id" id="edit-asset_id" class="form-control" required>
+                                                      <select name="asset_id" id="edit-asset_id" class="form-control" required readonly>
                                                           <option value="">Pilih Asset</option>
                                                           @foreach($assets as $asset)
                                                               <option value="{{ $asset->id }}">{{ $asset->asset_name }}</option>
@@ -545,7 +545,7 @@
                             </div>
                         </div>
                       
-                        @if(isset($results))
+                        @if(isset($moveouts))
                         {{-- @if($moveouts->isNotEmpty()) --}}
                         <table class="table table-striped display" id="coba" style="width: 100%;">
                             <thead>
@@ -579,7 +579,7 @@
                                             <a href="javascript:void(0);" class="edit-button" 
                                             data-id="{{ $moveout->out_id }}" 
                                             title="Edit">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-edit"></i> {{ $moveout->out_id }}
                                             </a>
                                             <form class="delete-form" action="{{ url('admin/moveouts/delete', $moveout->out_id) }}" method="POST" style="display:inline;">
                                               @csrf
@@ -936,6 +936,7 @@
           method: 'GET',
           success: function(data) {
               $('#out_id').val(data.out_id);
+              console.log('Out ID set to:', data.out_id);
               $('#edit-from_loc').val(data.from_loc);
               $('#edit-dest_loc').val(data.dest_loc);
               $('#edit-reason_id').val(data.reason_id);
@@ -947,11 +948,15 @@
               alert(`Error fetching data: ${xhr.responseJSON.message}`);
           }
       });
+
+      console.log('Second AJAX Request - outId:', outId);
       $.ajax({
           url: `/admin/moveoutdetails/put/${outId}`,
           method: 'GET',
           success: function(data) {
+              console.log('Moveoutdetails Data:', data);
               $('#out_id').val(data.out_id);
+              console.log('Out ID set to:', data.out_id);
               $('#edit-asset_id').val(data.asset_id);
               $('#edit-asset_tag').val(data.asset_tag);
               $('#edit-serial_number').val(data.serial_number);
@@ -970,40 +975,28 @@
 // Submit form dengan konfirmasi SweetAlert
 $('#updateForm').on('submit', function(e) {
 e.preventDefault();
+const outId = $('#out_id').val(); // Retrieve out_id from the hidden input
 
-Swal.fire({
-    title: 'Apakah Anda yakin?',
-    text: "Data yang sudah diubah tidak akan bisa diperbaiki.",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Ya, Simpan Perubahan',
-    cancelButtonText: 'Batal'
-}).then((result) => {
-    if (result.isConfirmed) {
+// Check if out_id is set correctly
+if (!outId || outId === '0') {
+    alert('Error: out_id is missing or invalid.');
+    return;
+}
         $.ajax({
-            url: `/admin/moveouts/edit/${$('#out_id').val()}`,
+            url: `/admin/moveouts/edit/${$outId}`,
             method: 'PUT',
             data: $(this).serialize(),
             success: function(response) {
-                if (response.status === 'success') {
-                    Swal.fire(
-                        'Tersimpan!',
-                        'Data telah berhasil diubah.',
-                        'success'
-                    ).then(() => {
-                        window.location.href = response.redirect_url;
-                    });
-                }
-            },
-            error: function(jqXHR) {
-                const message = jqXHR.responseJSON?.message || 'Gagal mengupdate data.';
-                Swal.fire('Error', message, 'error');
+              if (response.status === 'success') {
+                  alert('Data telah berhasil diubah.');
+                  window.location.href = response.redirect_url;
+              }
+          },
+          error: function(jqXHR) {
+              const message = jqXHR.responseJSON?.message || 'Gagal mengupdate data.';
+              alert(`Error: ${message}`);
             }
         });
-    }
-});
 });
 </script>
   

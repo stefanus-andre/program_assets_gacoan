@@ -465,30 +465,39 @@ class DisposalOutController extends Controller
 
     public function updateDataDisOut(Request $request, $id)
     {
-        // Validasi input
-        $request->validate([
-            'out_no' => 'required|string|max:255',
-        ]);
-
-        // Cek apakah MoveOut dengan id yang benar ada
-        $moveout = MasterDisOut::find($id); // Langsung gunakan find jika ID adalah primary key
+        
+        
+        // Temukan data yang akan diupdate
+        $moveout = MasterMoveOut::where('out_id', $id)->first();
 
         if (!$moveout) {
-            return response()->json(['status' => 'error', 'message' => 'move$moveout not found.'], 404);
+            return response()->json(['message' => 'Data not found'], 404);
         }
+    
+        $destLoc = $request->input('dest_loc');
+        $outDesc = $request->input('out_desc');
+        $reasonId = $request->input('reason_id');
+        $conditionId = $request->input('condition_id');
+        // Update data dengan opname_desc, qty_onhand tetap, dan qty_difference yang baru dihitung
+        $moveout->update([
+            'dest_loc' => $destLoc,
+            'out_desc' => $outDesc,
+            'reason_id' => $reasonId
+        ]);
 
-        // Update data move$moveout
-        $moveout->out_no = $request->out_no;
-        
-        if ($moveout->save()) { // Menggunakan save() yang lebih aman daripada update()
-            return response()->json([
-                'status' => 'success',
-                'message' => 'move$moveout updated successfully.',
-                'redirect_url' => route('Admin.disout'), // Sesuaikan dengan route index Anda
+        $moveoutDetail = TOutDetail::where('out_id', $id)->first();
+
+        if ($moveoutDetail) {
+            // Update kolom is_verify di tabel header
+            $moveoutDetail->update([
+                'condition' => $conditionId
             ]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Failed to update move$moveout.'], 500);
         }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data disout berhasil diubah',
+            'redirect_url' => route('Admin.disout') // Pastikan ini sesuai dengan rute yang ada
+        ]);
     }
 
     public function edit($id)

@@ -281,12 +281,9 @@ class MovementOutController extends Controller
 
     public function showPutFormMoveoutDetail($outId)
     {
-        Log::info("showPutFormMoveoutDetail called with out_id: $outId");
-
         $moveout = TOutDetail::where('out_id', $outId)->first();
         
         if (!$moveout) {
-            Log::info("No details found for out_id: $outId");
             return response()->json(['message' => 'Moveout not found'], 404);
         }
         
@@ -542,30 +539,36 @@ public function AddDataMoveOut(Request $request)
 
     public function updateDataMoveOut(Request $request, $id)
     {
-        // Validasi input
-        $request->validate([
-            'out_no' => 'required|string|max:255',
+        $moveoutAja = MasterMoveOut::where('out_id', $id)->first();
+
+        if (!$moveoutAja) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+    
+        $destLoc = $request->input('dest_loc');
+        $outDesc = $request->input('out_desc');
+        $reasonId = $request->input('reason_id');
+        $conditionId = $request->input('condition_id');
+        // Update data dengan opname_desc, qty_onhand tetap, dan qty_difference yang baru dihitung
+        $moveoutAja->update([
+            'dest_loc' => $destLoc,
+            'out_desc' => $outDesc,
+            'reason_id' => $reasonId
         ]);
 
-        // Cek apakah MoveOut dengan id yang benar ada
-        $moveout = MasterMoveOut::find($id); // Langsung gunakan find jika ID adalah primary key
+        $moveoutDetail = TOutDetail::where('out_id', $id)->first();
 
-        if (!$moveout) {
-            return response()->json(['status' => 'error', 'message' => 'move$moveout not found.'], 404);
-        }
-
-        // Update data move$moveout
-        $moveout->out_no = $request->out_no;
-        
-        if ($moveout->save()) { // Menggunakan save() yang lebih aman daripada update()
-            return response()->json([
-                'status' => 'success',
-                'message' => 'move$moveout updated successfully.',
-                'redirect_url' => route('Admin.moveout'), // Sesuaikan dengan route index Anda
+        if ($moveoutDetail) {
+            // Update kolom is_verify di tabel header
+            $moveoutDetail->update([
+                'condition' => $conditionId
             ]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Failed to update move$moveout.'], 500);
         }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data moveout berhasil diubah',
+            'redirect_url' => route('Admin.moveout') // Pastikan ini sesuai dengan rute yang ada
+        ]);
     }
 
     public function edit($id)

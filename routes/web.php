@@ -142,7 +142,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/asset-data/{asset_id}', 'MovementOutController@getAssetData');
     Route::get('/admin/moveouts/put/{outId}', [MovementOutController::class, 'showPutFormMoveout']);
     Route::get('/admin/moveoutdetails/put/{outId}', [MovementOutController::class, 'showPutFormMoveoutDetail']);
-    Route::put('/admin/moveouts/edit/{id}', [MovementOutController::class, 'updateDataMoveOut'])->name('update.moveout');
+    Route::put('/admin/moveouts/edit/{outId}', [MovementOutController::class, 'updateDataMoveOut'])->name('update.moveout');
     Route::delete('/admin/moveouts/delete/{id}', [MovementOutController::class, 'deleteDataMoveOut'])->name('delete.moveout');
     Route::get('/get-asset-details/{id}', [MovementOutController::class, 'getAssetDetails']);
     Route::get('/admin/moveouts/detail/{id}', [MovementOutController::class, 'getMoveoutDetail']);
