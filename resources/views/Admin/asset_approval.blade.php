@@ -311,75 +311,7 @@
                     </div>
 
                             <!-- Update Modal -->
-                            <div id="updateModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-md">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Update Asset</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                          </button>
-                                      </div>
-                                      <form id="updateForm">
-                                          @csrf
-                                          @method('PUT') <!-- Method override untuk PUT -->
-                                          <div class="modal-body">
-                                              <div class="row">
-                                                  <div class="col-sm-12">
-                                                      <label for="asset_code">Assets Code : </label>
-                                                      <input type="text" name="asset_code" id="asset_code" class="form-control" required>
-                                                  </div>
-                                                  <div class="col-sm-12">
-                                                      <label for="asset_model">Assets Model : </label>
-                                                      <input type="text" name="asset_model" id="asset_model" class="form-control" required>
-                                                  </div>
-                                                  <div class="col-sm-12">
-                                                    <label for="priority_id">Priority: </label>
-                                                    <select name="priority_id" id="priority_id" class="form-control" required>
-                                                        <option value="">Select Priority</option>
-                                                        @foreach($priorities as $priority)
-                                                            <option value="{{ $priority->priority_id }}">{{ $priority->priority_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                  </div>
-                                                  <div class="col-sm-12">
-                                                      <label for="cat_id">Category : </label>
-                                                      <select name="cat_id" id="cat_id" class="form-control" required>
-                                                          <option value="">Select Category</option>
-                                                          @foreach($categories as $category)
-                                                              <option value="{{ $category->cat_id }}">{{ $category->cat_name }}</option>
-                                                          @endforeach
-                                                      </select>
-                                                    </div>
-                                                  <div class="col-sm-12">
-                                                      <label for="type_id">Type : </label>
-                                                      <select name="type_id" id="type_id" class="form-control" required>
-                                                          <option value="">Select Type</option>
-                                                          @foreach($tipies as $type)
-                                                              <option value="{{ $type->type_id }}">{{ $type->type_name }}</option>
-                                                          @endforeach
-                                                      </select>
-                                                    </div>
-                                                  <div class="col-sm-12">
-                                                      <label for="uom_id">Uom : </label>
-                                                      <select name="uom_id" id="uom_id" class="form-control" required>
-                                                          <option value="">Select Uom</option>
-                                                          @foreach($uomies as $uom)
-                                                              <option value="{{ $uom->uom_id }}">{{ $uom->uom_name }}</option>
-                                                          @endforeach
-                                                      </select>
-                                                    </div>
-                                                  <input type="hidden" name="asset_id" id="asset_id">
-                                              </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn btn-primary">Save changes</button>
-                                          </div>
-                                      </form>
-                                  </div>
-                              </div>
-                          </div>
+                          
 
 
                         <div class="modal fade" id="detailDataAsset" tabindex="-1" role="dialog" aria-labelledby="detailDataAssetLabel" aria-hidden="true">
@@ -434,8 +366,6 @@
                                       <th>ID Asset</th>
                                       <th>Asset Code</th>
                                       <th>Asset Model</th>
-                                      <th>Asset Status</th>
-                                      <th>Asset Quantity</th>
                                       <th>Asset Image</th>
                                       <th>Priority</th>
                                       <th>Category</th>
@@ -537,8 +467,6 @@
                                 <td>${asset.asset_id}</td> <!-- Tampilkan ID asset -->
                                 <td>${asset.asset_code}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.asset_model}</td> <!-- Tampilkan Nama asset -->
-                                <td>${asset.asset_status}</td> <!-- Tampilkan Nama asset -->
-                                <td>${asset.asset_quantity}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.asset_image}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.priority_id}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.cat_id}</td> <!-- Tampilkan Nama asset -->
@@ -608,18 +536,19 @@
             const priorityId = $(this).data('priority'); // Ambil asset_code dari atribut data
             const catId = $(this).data('cat'); // Ambil asset_code dari atribut data
             const typeId = $(this).data('type'); // Ambil asset_code dari atribut data
+            const uomId = $(this).data('uom');
 
             // Isi input dengan data
             $('#asset_id').val(assetId);
-            $('#asset_code').val(assetCode);
-            $('#asset_status').val(assetStatus);
-            $('#asset_quantity').val(assetQuantity);
-            $('#asset_model').val(assetModel);
-            $('#asset_image').val(assetImage);
-            $('#priority_id').val(priorityId);
-            $('#type_id').val(typeId);
-            $('#cat_id').val(catId);
-            $('#uom_id').val(uomId);
+            $('#edit-asset_code').val(assetCode);
+            $('#edit-asset_status').val(assetStatus);
+            $('#edit-asset_quantity').val(assetQuantity);
+            $('#edit-asset_model').val(assetModel);
+            $('#edit-asset_image').val(assetImage);
+            $('#edit-priority_id').val(priorityId);
+            $('#edit-type_id').val(typeId);
+            $('#edit-cat_id').val(catId);
+            $('#edit-uom_id').val(uomId);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

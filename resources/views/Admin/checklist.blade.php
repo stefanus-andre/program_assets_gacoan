@@ -308,7 +308,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="checklist_name">Checklist Name : </label>
-                                                      <input type="text" name="checklist_name" id="edit_checklist_name" class="form-control" required>
+                                                      <input type="text" name="checklist_name" id="edit-checklist_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="checklist_id" id="checklist_id">
                                               </div>
@@ -591,7 +591,7 @@
 
             // Isi input dengan data
             $('#checklist_id').val(checklistId);
-            $('#edit_checklist_name').val(checklistName);
+            $('#edit-checklist_name').val(checklistName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

@@ -312,11 +312,11 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="group_name">Group User Name : </label>
-                                                      <input type="text" name="group_name" id="edit_group_name" class="form-control" required>
+                                                      <input type="text" name="group_name" id="edit-group_name" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="group_roles">Group User Roles : </label>
-                                                      <input type="text" name="group_roles" id="edit_group_roles" class="form-control" required>
+                                                      <input type="text" name="group_roles" id="edit-group_roles" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="group_id" id="group_id">
                                               </div>
@@ -606,8 +606,8 @@
 
             // Isi input dengan data
             $('#group_id').val(groupuserId);
-            $('#edit_group_name').val(groupuserName);
-            $('#edit_group_roles').val(groupuserRoles);
+            $('#edit-group_name').val(groupuserName);
+            $('#edit-group_roles').val(groupuserRoles);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

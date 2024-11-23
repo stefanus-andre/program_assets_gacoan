@@ -44,6 +44,56 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
+  <style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Hide default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+/* Before Toggle */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* Checked state */
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+  </style>
   <body>
     <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
@@ -230,7 +280,7 @@
                     <!-- Modal add -->
                     <!-- Modal Add Data Asset -->
                     <div class="modal fade" id="addDataUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                        <div class="modal-dialog modal-md">
+                        <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Add Data User</h5>
@@ -261,6 +311,30 @@
                                         <label for="email">Email:</label>
                                         <input type="email" name="email" id="email" class="form-control" placeholder="Enter email" required>
                                     </div>
+                                    <div class="col-sm-12">
+                                        <label for="location_now">Location Now:</label>
+                                        <select name="location_now" id="location_now" class="form-control">
+                                          <option value="" selected disabled> --- Select Location ---</option>
+                                           @foreach($restos as $location)
+                                          <option value="{{ $location->id}}">{{ $location->name_store_street}}</option>
+                                           @endforeach
+                                        </select>
+                                    </div>
+                                    <br><br>
+                                  <div class="col-xs-12 col-sm-12 col-md-12">
+                                      <div class="form-group">
+                                          <strong>Role Permission : </strong>
+                                          <br/>
+                                          @foreach($permission as $value)
+                                              <label class="switch">
+                                                  <input type="checkbox" name="permission[{{$value->id}}]" value="{{$value->id}}">
+                                                  <span class="slider"></span>
+                                              </label>
+                                              <span>{{ $value->name }}</span>
+                                              <br/>
+                                          @endforeach
+                                      </div>
+                                  </div>
                                 </div>
                             </form>
                             </div>
@@ -274,7 +348,7 @@
 
                             <!-- Update Modal -->
                             <div id="updateModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-md">
+                              <div class="modal-dialog modal-xl">
                                   <div class="modal-content">
                                       <div class="modal-header">
                                           <h5 class="modal-title" id="exampleModalLabel">Update User</h5>
@@ -289,7 +363,7 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="username">Username:</label>
-                                                    <input type="text" name="username" id="username" class="form-control" required>
+                                                    <input type="text" name="username" id="edit-username" class="form-control" required>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <label for="password">Password:</label>
@@ -304,8 +378,17 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <label for="email">Email:</label>
-                                                    <input type="email" name="email" id="email" class="form-control" required>
+                                                    <input type="email" name="email" id="edit-email" class="form-control" required>
                                                 </div>
+                                                <div class="col-sm-12">
+                                                  <label for="location_now">Location Now:</label>
+                                                  <select name="location_now" id="location_now" class="form-control">
+                                                    <option value="" selected disabled>{{ $location->name_store_street }}</option>
+                                                    @foreach($restos as $location)
+                                                    <option value="{{ $location->id}}">{{ $location->name_store_street}}</option>
+                                                    @endforeach
+                                                  </select>
+                                              </div>
                                                 <input type="hidden" name="id" id="id">
                                             </div>
                                         </div>
@@ -332,6 +415,7 @@
                                       <p><strong>Username:</strong> <span id="user-username"></span></p>
                                       <p><strong>Password:</strong> <span id="user-password"></span></p>
                                       <p><strong>Email:</strong> <span id="user-email"></span></p>
+                                      <p><strong>Location Now:</strong> <span id="user-location"></span></p>
                                       <!-- You can add more brand details here -->
                                     </div>
                                     <div class="modal-footer">
@@ -379,6 +463,7 @@
                                 <tr class="text-center">
                                     <th>Username</th>
                                     <th>Password</th>
+                                    <th>Location Now</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -387,6 +472,7 @@
                                     <tr class="text-center">
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->password }}</td>
+                                        <td>{{ $user->name_store_street }}</td>
                                         <td class="text-center">
                                             <a href="javascript:void(0);" class="edit-button" 
                                             data-id="{{ $user->id }}" 
@@ -401,6 +487,7 @@
                                             data-username="{{ $user->username }}" 
                                             data-password="{{ $user->password }}" 
                                             data-email="{{ $user->email }}" 
+                                            data-location="{{ $user->location_now }}"
                                             title="Detail">
                                                 <i class="fas fa-book"></i>
                                             </a>
@@ -569,6 +656,7 @@
                 var username = $('#username').val();
                 var email = $('#email').val();
                 var password = $('#password').val();
+                var location_now = $('#location_now').val();
 
                 // Kirimkan data menggunakan Ajax
                 $.ajax({
@@ -577,7 +665,8 @@
                     data: {
                     username: username,
                     email: email,
-                    password: password
+                    password: password,
+                    location_now: location_now
                 }, // Kirim data dari form
                 success: function(response) {
                       console.log(response);
@@ -602,15 +691,18 @@
     <script>
         $(document).on('click', '.edit-button', function() {
             const userId = $(this).data('id'); // Ambil id dari atribut data
-            const username = $(this).data('name'); // Ambil username dari atribut data
+            const username = $(this).data('username'); // Ambil username dari atribut data
             const email = $(this).data('email'); // Ambil username dari atribut data
             const password = $(this).data('password'); // Ambil username dari atribut data
+            const locationNow = $(this).data('location_now'); // Ambil username dari atribut data
+
 
             // Isi input dengan data
             $('#id').val(userId);
-            $('#username').val(username);
-            $('#email').val(email);
+            $('#edit-username').val(username);
+            $('#edit-email').val(email);
             $('#password').val(password);
+            $('#location_now').val(locationNow);
 
             // Tampilkan modal
             $('#updateModal').modal('show');
@@ -647,12 +739,14 @@
               var userName = $(this).data('username');
               var passWord = $(this).data('password');
               var eMail = $(this).data('email');
+              var locationNow = $(this).data('location');
               
               // Set the data into the modal
               $('#user-id').text(userId);
               $('#user-username').text(userName);
               $('#user-password').text(passWord);
               $('#user-email').text(eMail);
+              $('#user-location').text(locationNow);
               
               // Show the modal
               $('#userDetailModal').modal('show');

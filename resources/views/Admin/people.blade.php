@@ -340,39 +340,39 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="people_nickname">People Nickname : </label>
-                                                      <input type="text" name="people_nickname" id="edit_people_nickname" class="form-control" required>
+                                                      <input type="text" name="people_nickname" id="people_nickname" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="people_fullname">People Fullname : </label>
-                                                      <input type="text" name="people_fullname" id="edit_people_fullname" class="form-control" required>
+                                                      <input type="text" name="people_fullname" id="people_fullname" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="people_email">People Email : </label>
-                                                      <input type="text" name="people_email" id="edit_people_email" class="form-control" required>
+                                                      <input type="text" name="people_email" id="people_email" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="people_whatsapp">People Whatsapp : </label>
-                                                      <input type="text" name="people_whatsapp" id="edit_people_whatsapp" class="form-control" required>
+                                                      <input type="text" name="people_whatsapp" id="people_whatsapp" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="division_id">People Division Id : </label>
-                                                      <input type="text" name="division_id" id="edit_division_id" class="form-control" required>
+                                                      <input type="text" name="division_id" id="division_id" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="dept_id">People Departement Id : </label>
-                                                      <input type="text" name="dept_id" id="edit_dept_id" class="form-control" required>
+                                                      <input type="text" name="dept_id" id="dept_id" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="joblevel_id">People Job Level Id : </label>
-                                                      <input type="text" name="joblevel_id" id="edit_joblevel_id" class="form-control" required>
+                                                      <input type="text" name="joblevel_id" id="joblevel_id" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="region_id">People Region Id : </label>
-                                                      <input type="text" name="region_id" id="edit_region_id" class="form-control" required>
+                                                      <input type="text" name="region_id" id="region_id" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="loc_id">People Location Id : </label>
-                                                      <input type="text" name="loc_id" id="edit_loc_id" class="form-control" required>
+                                                      <input type="text" name="loc_id" id="loc_id" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="people_id" id="people_id">
                                               </div>
@@ -733,15 +733,15 @@
 
             // Isi input dengan data
             $('#people_id').val(peopleId);
-            $('#edit_people_nickname').val(peopleNickname);
-            $('#edit_people_fullname').val(peopleFullname);
-            $('#edit_people_email').val(peopleEmail);
-            $('#edit_people_whatsapp').val(peopleWhatsapp);
-            $('#edit_division_id').val(divisionId);
-            $('#edit_dept_id').val(deptId);
-            $('#edit_joblevel_id').val(joblevelId);
-            $('#edit_region_id').val(regionId);
-            $('#edit_loc_id').val(locId);
+            $('#people_nickname').val(peopleNickname);
+            $('#people_fullname').val(peopleFullname);
+            $('#people_email').val(peopleEmail);
+            $('#people_whatsapp').val(peopleWhatsapp);
+            $('#division_id').val(divisionId);
+            $('#dept_id').val(deptId);
+            $('#joblevel_id').val(joblevelId);
+            $('#region_id').val(regionId);
+            $('#loc_id').val(locId);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

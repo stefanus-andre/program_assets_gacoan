@@ -5,13 +5,16 @@ namespace App\Exports;
 use App\Models\Master\MasterRegistrasiModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Exports\QrCode;
+use Illuminate\Support\Facades\DB;
 
 class AssetExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
         // Fetch all assets with QR code paths from the database
-        $dataAsset = MasterRegistrasiModel::all();
+        $dataAsset = DB::table('table_registrasi_asset')->select('id', 'register_code','asset_name', 'serial_number', 'type_asset', 'category_asset', 'prioritas','merk', 'qty','satuan',
+       'width', 'height', 'depth', 'register_location','layout', 'register_date','supplier', 'status', 'purchase_number','purchase_date', 'warranty', 'periodic_maintenance')->get();
 
         foreach ($dataAsset as $Asset) {
             if (!empty($Asset->asset_code)) {
@@ -34,6 +37,7 @@ class AssetExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
+            'No',
             'Register Code',
             'Asset Name',
             'Serial Number',
@@ -43,6 +47,9 @@ class AssetExport implements FromCollection, WithHeadings
             'Merk',
             'Qty',
             'Satuan',
+            'Width',
+            'Height',
+            'Depth',
             'Register Location',
             'Layout',
             'Register Date',

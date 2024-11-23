@@ -29,7 +29,7 @@
                   <li class="menu-box"> 
                     <ul>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/dashboard"><i data-feather="pie-chart"></i><span>Dashboard</span></a></li>
-                        <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li> -->
+                        {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li> --}}
                         {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/halaman_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="#"><i data-feather="arrow-right"></i><span>Assets Movement</span></a></li> --}}
                         <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="cast"></i><span>Schedule Maintenance</span></a></li> -->
@@ -56,9 +56,10 @@
                               <li><a href="datatable-data-source.html">Data Sources</a></li>
                             </ul>
                           </li> --}}
+                          {{-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li> --}}
                           <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li>
                           <li><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-reg"><span>Approval OPS SM</span></a></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li>
+                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li> -->
                         </ul>
                       
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="server"></i><span>Asset Transfer</span></a>
@@ -72,7 +73,7 @@
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirm"><span>Confirm Asset</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-movement"><span>Data Movement</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-head"><span>Review Ops Head</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-mnr"><span>Review MnR Area</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-mnr"><span>Review MnR Area</span></a></li> 
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-taf"><span>Review TAF Accounting</span></a></li>
                           </ul>
                         </li>
@@ -94,20 +95,42 @@
 
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="archive"></i><span>Stock Opname</span></a>
                         <ul class="sidebar-submenu">
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/Halaman_stock_opname"><span>Data Stock Opname</span></a></li>
-                          <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-movement"><span>Data Movement</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/delivery-movement"><span>Doc Delivery Order</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-move-am"><span>Approval OPS AM</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-move-rm"><span>Approval OPS RM</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-move-sdgasset"><span>Approval SDG Assets</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirm-assets-move"><span>Confirm Movement OPS SM</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/review-move-head"><span>Review Ops Head</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/review-move-mnr"><span>Review MnR Area</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/review-move-taf"><span>Review TAF Accounting</span></a></li> -->
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/stockopname"><span>Data Stock Opname</span></a></li>
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/adjuststock"><span>Adjustment Stock</span></a></li>
                         </ul>
                       </li>
                     </ul>
                   </li>
+
+
+                  
+                  <li class="sidebar-main-title">          
+                    <h6>Maintenance</h6>
+                  </li>
+                  <li class="menu-box"> 
+                    <ul>
+                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clock"></i><span>Schedule</span></a>
+                        <ul class="sidebar-submenu">
+                          <li><a class="sidebar-link sidebar-title link-nav" href="#"><span> Data Schedule</span></a></li></li>
+                        </ul>
+                        
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="trello"></i><span>Preventive Maintenance</span></a>
+                        <ul class="sidebar-submenu">
+                          <li><a class="sidebar-link sidebar-title link-nav" href="#"><span> Data Preventive Schedule</span></a></li></li>
+                        </ul>
+
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="edit"></i><span>Corrective Maintenance</span></a>
+                        <ul class="sidebar-submenu">
+                          <li><a class="sidebar-link sidebar-title link-nav" href="#"><span> Data Corrective Schedule</span></a></li></li>
+                        </ul>
+
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="check-circle"></i><span>Checklist</span></a>
+                        <ul class="sidebar-submenu">
+                          <li><a class="sidebar-link sidebar-title link-nav" href="#"><span> Data Checklist Schedule</span></a></li></li>
+                        </ul>
+                    </ul>
+                  </li>
+
 
                   <li class="sidebar-main-title">          
                     <h6>Master Data</h6>
@@ -141,7 +164,8 @@
                           
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/people"><span>People</span></a></li>
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/type"><span>Tipe Maintenance</span></a></li>
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/type"><span>Tipe Asset</span></a></li>
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/tipe_maintenance"><span>Tipe Maintenance Asset</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/periodic"><span>Periodic Maintenance</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/priority"><span>Prioritas</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/reason"><span>Alasan Mutasi</span></a></li>
@@ -187,6 +211,45 @@
                         </ul>
                     </ul>
                   </li>
+
+
+
+                  <li class="sidebar-main-title">          
+                    <h6>Report</h6>
+                  </li>
+                  <li class="menu-box"> 
+                    <ul>
+                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>Report</span></a>
+                        <ul class="sidebar-submenu">
+                          {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                            <ul class="nav-sub-childmenu submenu-content">
+                              <li><a href="bootstrap-basic-table.html">Basic Tables</a></li>
+                              <li><a href="table-components.html">Table components</a></li>
+                            </ul>
+                          </li>
+                          <li><a class="submenu-title" href="javascript:void(0)">Data Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                            <ul class="nav-sub-childmenu submenu-content">
+                              <li><a href="datatable-basic-init.html">Basic Table</a></li>
+                              <li><a href="datatable-API.html">Data API</a></li>
+                              <li><a href="datatable-data-source.html">Data Sources</a></li>
+                            </ul>
+                          </li> --}}
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/registrasi_asset_report"><span>Registrasi Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/mutasi_stock_asset"><span>Mutasi Stock Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/kartu_stock_asset"><span>Kartu Stock Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/checklist_asset"><span>Checklist Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/maintenance_asset"><span>Maintenance Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/history_maintenance_asset"><span>History Maintenance Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_asset_per_location"><span>Stock Asset Per Location</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/garansi_asset"><span>Garansi Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/disposal_asset"><span>Disposal Asset</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_opname"><span>Stock Opname</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/trend_issue_maintenace"><span>Trend Issue Maintenance</span></a></li></li>
+                        </ul>
+                    </ul>
+                  </li> 
+
+
 				        {{-- <li class="sidebar-main-title">          
                     <h6>Registrasi Asset    </h6>
                   </li>

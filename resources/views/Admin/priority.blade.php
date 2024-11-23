@@ -312,11 +312,11 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="priority_code">Priority Code : </label>
-                                                      <input type="text" name="priority_code" id="edit_priority_code" class="form-control" required>
+                                                      <input type="text" name="priority_code" id="edit-priority_code" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="priority_name">Priority Name : </label>
-                                                      <input type="text" name="priority_name" id="edit_priority_name" class="form-control" required>
+                                                      <input type="text" name="priority_name" id="edit-priority_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="priority_id" id="priority_id">
                                               </div>
@@ -614,8 +614,8 @@
 
             // Isi input dengan data
             $('#priority_id').val(priorityId);
-            $('#edit_priority_code').val(priorityCode);
-            $('#edit_priority_name').val(priorityName);
+            $('#edit-priority_code').val(priorityCode);
+            $('#edit-priority_name').val(priorityName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

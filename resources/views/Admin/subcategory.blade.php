@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="subcat_code">Sub Category Code : </label>
-                                                    <input type="text" name="subcat_code" id="edit_subcat_code" class="form-control" required>
+                                                    <input type="text" name="subcat_code" id="edit-subcat_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="subcat_name">Sub Category Name : </label>
-                                                      <input type="text" name="subcat_name" id="edit_subcat_name" class="form-control" required>
+                                                      <input type="text" name="subcat_name" id="edit-subcat_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="subcat_id" id="subcat_id">
                                               </div>
@@ -613,8 +613,8 @@
 
             // Isi input dengan data
             $('#subcat_id').val(subcategoryId);
-            $('#edit_subcat_code').val(subcategoryCode);
-            $('#edit_subcat_name').val(subcategoryName);
+            $('#edit-subcat_code').val(subcategoryCode);
+            $('#edit-subcat_name').val(subcategoryName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

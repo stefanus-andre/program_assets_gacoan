@@ -316,15 +316,15 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="supplier_code">Supplier Code : </label>
-                                                      <input type="text" name="supplier_code" id="edit_supplier_code" class="form-control" required>
+                                                      <input type="text" name="supplier_code" id="edit-supplier_code" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="supplier_name">Supplier Name : </label>
-                                                      <input type="text" name="supplier_name" id="edit_supplier_name" class="form-control" required>
+                                                      <input type="text" name="supplier_name" id="edit-supplier_name" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="supplier_address">Supplier Address : </label>
-                                                      <input type="text" name="supplier_address" id="edit_supplier_address" class="form-control" required>
+                                                      <input type="text" name="supplier_address" id="edit-supplier_address" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="supplier_id" id="supplier_id">
                                               </div>
@@ -595,7 +595,7 @@
 
                 // Kirimkan data menggunakan Ajax
                 $.ajax({
-                    url: '/add-supplier' + $('#supplier_id').val(), // Pastikan ini adalah URL yang benar
+                    url: '/add-supplier', // Pastikan ini adalah URL yang benar
                     method: 'POST', // Pastikan ini menggunakan metode PUT
                     data: {
                     supplier_code: supplierCode,
@@ -631,9 +631,9 @@
 
             // Isi input dengan data
             $('#supplier_id').val(supplierId);
-            $('#edit_supplier_code').val(supplierCode);
-            $('#edit_supplier_name').val(supplierName);
-            $('#edit_supplier_address').val(supplierAddress);
+            $('#edit-supplier_code').val(supplierCode);
+            $('#edit-supplier_name').val(supplierName);
+            $('#edit-supplier_address').val(supplierAddress);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

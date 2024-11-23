@@ -10,7 +10,7 @@
   <meta name="author" content="pixelstrap">
   <link rel="icon" href="{{ asset('assets/images/favicon/favicon.png')}}" type="image/x-icon">
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon/favicon.png')}}" type="image/x-icon">
-  <title>ESS - Employee Self Service</title>
+  <title>ASMI - Asset System Management Integration</title>
   <!-- Google font-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -239,14 +239,14 @@
                             <div class="btn-showcase">
                                 <div class="button_between">
                                     <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataAsset">+ Add Data Asset</button>
-                                    {{-- Uncomment if needed
+                                 
                                     <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> 
                                         <i class="fa fa-file-excel-o"></i> Import Data Excel 
                                     </button>
-                                    <button class="btn btn-square btn-primary" type="button"> 
-                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download PDF Data
-                                    </button>
-                                    --}}
+                                    <a href="{{ url('/admin/regist/export-master-asset') }}" class="btn btn-square btn-primary" role="button">
+    <i class="fa fa-file-excel-o" aria-hidden="true"></i> Download Excel Data
+</a>
+                                  
                                 </div>
                             </div>
 
@@ -266,7 +266,7 @@
                             <!-- Modal add -->
                             <!-- Modal Add Data Asset -->
                             <div class="modal fade" id="addDataAsset" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                                <div class="modal-dialog modal-md">
+                                <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Add Data Asset</h5>
@@ -286,14 +286,14 @@
                                                 <label for="asset_model">Asset Model : </label>
                                                 <input type="text" name="asset_model" id="asset_model" class="form-control" placeholder="Enter Asset Model" required>
                                                 </div>
-                                                <div class="col-sm-12">
+                                                <!-- <div class="col-sm-12">
                                                 <label for="asset_status">Asset Status : </label>
                                                 <input type="text" name="asset_status" id="asset_status" class="form-control" placeholder="Enter Asset Status" required>
                                                 </div>
                                                 <div class="col-sm-12">
                                                 <label for="asset_quantity">Asset Quantity : </label>
                                                 <input type="text" name="asset_quantity" id="asset_quantity" class="form-control" placeholder="Enter Asset Quantity" required>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-sm-12">
                                                     <label for="asset_image">Asset Image: </label>
                                                     <input type="file" name="asset_image" id="asset_image" class="form-control" required accept="image/*">
@@ -347,7 +347,7 @@
 
                             <!-- Update Modal -->
                             <div id="updateModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-md">
+                              <div class="modal-dialog modal-xl">
                                   <div class="modal-content">
                                       <div class="modal-header">
                                           <h5 class="modal-title" id="exampleModalLabel">Update Asset</h5>
@@ -368,14 +368,14 @@
                                                       <label for="edit-asset_model">Assets Model : </label>
                                                       <input type="text" name="asset_model" id="edit-asset_model" class="form-control" required>
                                                   </div>
-                                                  <div class="col-sm-12">
+                                                  <!-- <div class="col-sm-12">
                                                       <label for="edit-asset_status">Assets Status : </label>
                                                       <input type="text" name="asset_status" id="edit-asset_status" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="edit-asset_quantity">Assets Quantity : </label>
                                                       <input type="text" name="asset_quantity" id="edit-asset_quantity" class="form-control" required>
-                                                  </div>
+                                                  </div> -->
                                                   <div class="col-sm-12">
                                                     <label for="edit-asset_image">Asset Image: </label>
                                                     <input type="file" name="asset_image" id="edit-asset_image" class="form-control" accept="image/*">
@@ -467,9 +467,10 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                        <form action="" method="post" enctype="multipart/form-data">
+                                        <form action="{{ url('/admin/regist/import-master-asset')}}" method="post" enctype="multipart/form-data">
+                                          @csrf
                                             <label for="import-data">Import Data Excel : </label>
-                                            <input type="file" name="data_excel" id="data_excel" class="form-control" placeholder="Upload File Excel">
+                                            <input type="file" name="file" id="file" class="form-control" placeholder="Upload File Excel">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -491,11 +492,16 @@
                                 <table class="table table-striped display" id="coba" style="width: 100%;">
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Asset Code</th>
                                             <th>Asset Model</th>
-                                            <th>Status</th>
+                                            <th>Prioritas</th>
+                                            <th>Kategori</th>
+                                            <th>Tipe</th>
+                                            <th>Satuan</th>
+                                            <!-- <th>Status</th>
                                             <th>Quantity</th>
-                                            <th>Priority</th>
+                                            <th>Priority</th> -->
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -504,19 +510,7 @@
                                             <tr>
                                                 <td>{{ $asset->asset_code }}</td>
                                                 <td>{{ $asset->asset_model }}</td>
-                                                <td>{{ $asset->asset_status }}</td>
-                                                <td>{{ $asset->asset_quantity }}</td>
-                                                <td>
-                                                    @if($asset->priority_name == 'Priority')
-                                                        <span class="badge badge-danger text-white">{{ $asset->priority_name }}</span> <!-- Priority: Red label -->
-                                                    @elseif($asset->priority_name == 'Basic')
-                                                        <span class="badge badge-success text-white">{{ $asset->priority_name }}</span> <!-- Basic: Green label -->
-                                                    @elseif($asset->priority_name == 'Not Priority')
-                                                        <span class="badge badge-warning text-white">{{ $asset->priority_name }}</span> <!-- Not Priority: Yellow label -->
-                                                    @else
-                                                        <span class="badge badge-primary text-white">No Priority</span> <!-- No Priority: Blue label -->
-                                                    @endif
-                                                </td>
+                                                
                                                 <td>
                                                   <a href="javascript:void(0);" class="edit-button" 
                                                   data-id="{{ $asset->asset_id }}" 
@@ -654,6 +648,7 @@
 
     
     {{-- Get Data asset --}}
+    
     <script>
 
       
@@ -700,13 +695,10 @@
                                 <td>${asset.asset_id}</td> <!-- Tampilkan ID asset -->
                                 <td>${asset.asset_code}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.asset_model}</td> <!-- Tampilkan Nama asset -->
-                                <td>${asset.asset_status}</td> <!-- Tampilkan Nama asset -->
-                                <td>${asset.asset_quantity}</td> <!-- Tampilkan Nama asset -->
-                                <td>${asset.asset_image}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.priority_id}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.cat_id}</td> <!-- Tampilkan Nama asset -->
                                 <td>${asset.type_id}</td> <!-- Tampilkan Nama asset -->
-                                <td>${asset.uom_id}</td> <!-- Tampilkan Nama asset -->
+                                <td>${asset.uom_id}</td> <!-- Tampilkan Nama asset -->                        
                                 <td>
                                 <a href="javascript:void(0);" class="edit-button" data-id="${asset.asset_id}" data-name="${asset.asset_code}" title="Edit">
                                     <i class="fas fa-edit"></i>
@@ -770,7 +762,7 @@
       $(document).ready(function() {
           $(document).on('click', '.edit-button', function() {
               const assetId = $(this).data('id');
-              const assetCode = $(this).data('code');
+              const assetCode = $(this).data('asset-code');
               const assetModel = $(this).data('model');
               const assetQuantity = $(this).data('quantity');
               const assetStatus = $(this).data('status');
@@ -794,24 +786,24 @@
               $('#updateModal').modal('show');
           });
   
-          // $('#updateForm').on('submit', function(e) {
-          //     e.preventDefault();
+          $('#updateForm').on('submit', function(e) {
+              e.preventDefault();
   
-          //     $.ajax({
-          //         url: '/admin/regists/edit/' + $('#asset_id').val(),
-          //         method: 'PUT',
-          //         data: $(this).serialize(),
-          //         success: function(response) {
-          //             if (response.status === 'success') {
-          //                 window.location.href = response.redirect_url;
-          //             }
-          //         },
-          //         error: function(jqXHR) {
-          //             const message = jqXHR.responseJSON?.message || 'Failed to update Asset.';
-          //             alert(message);
-          //         }
-          //     });
-          // });
+              $.ajax({
+                  url: '/admin/regists/edit/' + $('#asset_id').val(),
+                  method: 'PUT',
+                  data: $(this).serialize(),
+                  success: function(response) {
+                      if (response.status === 'success') {
+                          window.location.href = response.redirect_url;
+                      }
+                  },
+                  error: function(jqXHR) {
+                      const message = jqXHR.responseJSON?.message || 'Failed to update Asset.';
+                      alert(message);
+                  }
+              });
+          });
       });
   </script>
 

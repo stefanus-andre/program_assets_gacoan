@@ -339,40 +339,40 @@
                                           <div class="modal-body">
                                               <div class="row">
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_code">Location Code : </label>
-                                                      <input type="text" name="loc_code" id="edit_loc_code" class="form-control" required>
+                                                      <label for="loc_code">Location Code : </label>
+                                                      <input type="text" name="loc_code" id="loc_code" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_name">Location Name : </label>
-                                                      <input type="text" name="loc_name" id="edit_loc_name" class="form-control" required>
+                                                      <label for="loc_name">Location Name : </label>
+                                                      <input type="text" name="loc_name" id="loc_name" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_city">Location City : </label>
-                                                      <input type="text" name="loc_city" id="edit_loc_city" class="form-control" required>
+                                                      <label for="loc_city">Location City : </label>
+                                                      <input type="text" name="loc_city" id="loc_city" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_address">Location Address : </label>
-                                                      <input type="text" name="loc_address" id="edit_loc_address" class="form-control" required>
+                                                      <label for="loc_address">Location Address : </label>
+                                                      <input type="text" name="loc_address" id="loc_address" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_distric">Location Distric : </label>
-                                                      <input type="text" name="loc_distric" id="edit_loc_distric" class="form-control" required>
+                                                      <label for="loc_distric">Location Distric : </label>
+                                                      <input type="text" name="loc_distric" id="loc_distric" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_vilage">Location Village : </label>
-                                                      <input type="text" name="loc_vilage" id="edit_loc_vilage" class="form-control" required>
+                                                      <label for="loc_vilage">Location Village : </label>
+                                                      <input type="text" name="loc_vilage" id="loc_vilage" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_region_id">Location Region : </label>
-                                                      <input type="text" name="region_id" id="edit_region_id" class="form-control" required>
+                                                      <label for="region_id">Location Region : </label>
+                                                      <input type="text" name="region_id" id="region_id" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_latitude">Location Latitude : </label>
-                                                      <input type="text" name="loc_latitude" id="edit_loc_latitude" class="form-control" required>
+                                                      <label for="loc_latitude">Location Latitude : </label>
+                                                      <input type="text" name="loc_latitude" id="loc_latitude" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
-                                                      <label for="edit_loc_longitude">Location Longitude : </label>
-                                                      <input type="text" name="loc_longitude" id="edit_loc_longitude" class="form-control" required>
+                                                      <label for="loc_longitude">Location Longitude : </label>
+                                                      <input type="text" name="loc_longitude" id="loc_longitude" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="loc_id" id="loc_id">
                                               </div>
@@ -608,7 +608,7 @@
     <!-- Theme js-->
     <script src="{{asset('assets/js/script.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-    <!-- <script src="{{asset('assets/js/data-asset.js')}}"></script> -->
+    <script src="{{asset('assets/js/data-asset.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
@@ -732,7 +732,7 @@
             const locationLongitude = $(this).data('longitude'); // Ambil loc_name dari atribut data
 
             // Isi input dengan data
-            $('#edit_loc_id').val(locationId);
+            $('#loc_id').val(locationId);
             $('#loc_code').val(locatioCode);
             $('#loc_name').val(locationName);
             $('#loc_city').val(locationCity);

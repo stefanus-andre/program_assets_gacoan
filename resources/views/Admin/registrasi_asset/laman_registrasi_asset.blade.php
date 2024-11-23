@@ -48,6 +48,13 @@
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+    <style>
+      #coba {
+        table-layout: fixed !important;
+        word-wrap: break-word;
+      }
+    </style>
+
   </head>
   <body>
     <!-- tap on top starts-->
@@ -144,14 +151,24 @@
               </li>
               <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
               <li class="profile-nav onhover-dropdown p-0 me-0">
-                <div class="d-flex profile-media"><img class="b-r-50" src="{{asset('assets/images/dashboard/profile.jpg')}}">
+              <div class="d-flex profile-media"><img class="b-r-50" src="{{asset('assets/images/dashboard/profile.jpg')}}">
+                  <?php $session = session(); ?>
+                  <div class="flex-grow-1"><span>{{ Auth::user()->username }}</span>
+                    <p class="mb-0 font-roboto">{{ Auth::user()->role}}<i class="middle fa fa-angle-down"></i></p>
+                  </div>
               
                 </div>
                 <ul class="profile-dropdown onhover-show-div">
                   <li><a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a></li>
                   <!-- <li><a href="email_inbox.html"><i data-feather="mail"></i><span>Inbox</span></a></li>
                   <li><a href="kanban.html"><i data-feather="file-text"></i><span>Taskboard</span></a></li> -->
-                  <>
+                  <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
+                      <i data-feather="log-out"></i><span>Log Out</span></a></li>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                </ul>
                   <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
                     @csrf
                     <li>
@@ -211,7 +228,7 @@
 					<div class="card-body"> 
 						<div class="btn-showcase">
               <div class="button_between">
-				        <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataAsset">+ Add Data Asset</button>
+              <a href="{{ route('laman_tambah_registrasi_asset') }}" class="btn btn-square btn-primary">Add Data Asset</a>
 				        <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
                 <a href="{{ url('/admin/registrasi_asset/export_data_asset') }}" class="btn btn-square btn-primary" role="button">
     <i class="fa fa-file-excel-o" aria-hidden="true"></i> Download Excel Data
@@ -239,123 +256,133 @@
       <div class="modal-body">
         <form id="addAssetForm" enctype="multipart/form-data">
         <div class="row">
-          <div class="col-sm-6">
-              <label for="register_code">Register Code : </label>
-              <input type="text" name="register_code" id="register_code" class="form-control" placeholder="Masukkkan Kode Registrasi..." required>
-            </div>
             <div class="col-sm-6">
-              <label for="asset_name">Asset Name : </label>
-              <!-- <input type="text" name="periodic_maintenance" id="periodic_maintenance" class="form-control" placeholder="Masukkan Periodic Maintenance" required> -->
-              <select name="asset_name" id="asset_name" class="form-control">
-                <option value="" selected disabled> --- Pilih Asset Name ---</option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="serial_number">Serial Number : </label>
-              <input type="text" name="serial_number" id="serial_number" class="form-control" placeholder="Masukkan Serial Number" required>
-            </div>
-            <div class="col-sm-6">
-              <label for="type_asset">Type Asset : </label>
-              <select name="type_asset" id="type_asset" class="form-control">
-                <option value="" selected disabled></option>
-                <!-- <option value="sparepart">Sparepart</option>
-                <option value="unit">Unit</option> -->
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="category_asset">Category Asset : </label>
-              <!-- <input type="text" name="category_asset" id="category_asset" class="form-control" placeholder="Masukkan Category Asset" required> -->
-              <select name="category_asset" id="category_asset" class="form-control">
-                <option value="" selected disabled> --- PILIH CATEGORY ASSET ---- </option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="prioritas">Prioritas : </label>
-              <!-- <input type="text" name="prioritas" id="prioritas" class="form-control" placeholder="Masukkan Prioritas" required> -->
-               <select name="prioritas" id="prioritas" class="form-control">
-                <option value="" selected disabled> --- PILIH PRIORITAS ---- </option>
-               </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="merk">Merk : </label>
-              <select name="merk" id="merk" class="form-control">
-                <option value="" selected disabled> --- Pilih Merk ---</option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="qty">Quantity : </label>
-              <input type="number" name="qty" id="qty" class="form-control" placeholder="Masukkan Quantity" required
-              min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
-            </div>
-            <div class="col-sm-6">
-              <label for="satuan">Satuan : </label>
-              <!-- <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Masukkan Satuan" required> -->
-               <select name="satuan" id="satuan" class="form-control">
-                <option value="" selected disabled> --- PILIH SATUAN ---- </option>o
-               </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="region">Pilih Region: </label>
-              <select name="region" id="region" class="form-control" required>
-                  <option value="" selected disabled> --- Pilih Region ----</option>
-              </select>
-          </div>
-            <div class="col-sm-6">
-                <label for="register_location">Register Location :</label>
-                <!-- <input type="text" name="register_location" id="register_location" class="form-control" placeholder="Masukkan Register Location" required> -->
-                 <select name="register_location" id="register_location" class="form-control">
-                  <option value=""> --- Pilih Register Location ---- </option>
-                 </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="layout">Layout : </label>
-              <!-- <input type="text" name="layout" id="layout" class="form-control" placeholder="Masukkan Layout" required> -->
-              <select name="layout" id="layout" class="form-control">
-                <option value="" selected disabled> --- Pilih Layout ---</option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="asset_model">Status : </label>
-              <select name="status" id="status" class="form-control">
-                <option value=""></option>
-                <option value="PRIORITY">PRIORITY</option>
-                <option value="NOT PRIORITY">NOT PRIORITY</option>
-                <option value="BASIC">BASIC</option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="register_date">Register Date : </label>
-              <input type="date" name="register_date" id="register_date" class="form-control" placeholder="Masukkan Register Date" required>
-            </div>
-            <div class="col-sm-6">
-              <label for="supplier">Supplier : </label>
-              <!-- <input type="text" name="supplier" id="supplier" class="form-control" placeholder="Masukkan Supplier" required> -->
-              <select name="supplier" id="supplier" class="form-control">
-                <option value="" selected disabled> --- Pilih Supplier ---</option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="purchase_number">Purchase Number : </label>
-              <input type="text" name="purchase_number" id="purchase_number" class="form-control" placeholder="Masukkan Purchase Number" required>
-            </div>
-            <div class="col-sm-6">
-              <label for="purchase_date">Purchase Date : </label>
-              <input type="date" name="purchase_date" id="purchase_date" class="form-control" placeholder="Masukkan Purchase Date" required>
-            </div>
-              <input type="hidden" name="approve_status" id="approve_status" class="form-control">
-            <div class="col-sm-6">
-              <label for="warranty">Warranty : </label>
-              <select name="warranty" id="warranty" class="form-control">
-                <option value=""> --- PILIH WARRANTY ---- </option>
-              </select>
-            </div>
-            <div class="col-sm-6">
-              <label for="periodic_maintenance">Periodic Maintenace : </label>
-              <!-- <input type="text" name="periodic_maintenance" id="periodic_maintenance" class="form-control" placeholder="Masukkan Periodic Maintenance" required> -->
-              <select name="periodic_maintenance" id="periodic_maintenance" class="form-control">
-                <option value="" selected disabled> --- Pilih Periodic Maintenance ---</option>
-              </select>
-            </div>
+                <label for="register_code">Register Code : </label>
+                <input type="text" name="register_code" id="register_code" class="form-control" placeholder="Masukkkan Kode Registrasi..." required>
+              </div>
+              <div class="col-sm-6">
+                <label for="asset_name">Asset Name : </label>
+                <!-- <input type="text" name="periodic_maintenance" id="periodic_maintenance" class="form-control" placeholder="Masukkan Periodic Maintenance" required> -->
+                <select name="asset_name" id="asset_name" class="form-control">
+                  <option value="" selected disabled> --- Pilih Asset Name ---</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="serial_number">Serial Number : </label>
+                <input type="text" name="serial_number" id="serial_number" class="form-control" placeholder="Masukkan Serial Number" required>
+              </div>
+              <div class="col-sm-6">
+                <label for="type_asset">Type Asset : </label>
+                <select name="type_asset" id="type_asset" class="form-control">
+                  <option value="" selected disabled></option>
+                  <!-- <option value="sparepart">Sparepart</option>
+                  <option value="unit">Unit</option> -->
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="category_asset">Category Asset : </label>
+                <!-- <input type="text" name="category_asset" id="category_asset" class="form-control" placeholder="Masukkan Category Asset" required> -->
+                <select name="category_asset" id="category_asset" class="form-control">
+                  <option value="" selected disabled> --- PILIH CATEGORY ASSET ---- </option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="prioritas">Prioritas : </label>
+                <!-- <input type="text" name="prioritas" id="prioritas" class="form-control" placeholder="Masukkan Prioritas" required> -->
+                <select name="prioritas" id="prioritas" class="form-control">
+                  <option value="" selected disabled> --- PILIH PRIORITAS ---- </option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="merk">Merk : </label>
+                <select name="merk" id="merk" class="form-control">
+                  <option value="" selected disabled> --- Pilih Merk ---</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="qty">Quantity : </label>
+                <input type="number" name="qty" id="qty" class="form-control" placeholder="Masukkan Quantity" required
+                min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+              </div>
+              <div class="col-sm-6">
+                <label for="satuan">Satuan : </label>
+                <!-- <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Masukkan Satuan" required> -->
+                <select name="satuan" id="satuan" class="form-control">
+                  <option value="" selected disabled> --- PILIH SATUAN ---- </option>o
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="width">Width : </label>
+                <input type="number" name="width" id="width" class="form-control" placeholder="Masukkan Width Barang" required
+                min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+              </div>
+              <div class="col-sm-6">
+                <label for="height">Height : </label>
+                <input type="number" name="height" id="height" class="form-control" placeholder="Masukkan Height Barang" required
+                min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+              </div>
+              <div class="col-sm-6">
+                <label for="depth">Depth : </label>
+                <input type="number" name="depth" id="depth" class="form-control" placeholder="Masukkan Depth Barang" required
+                min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+              </div>
+         
+              <div class="col-sm-6">
+                  <label for="register_location">Register Location :</label>
+                  <!-- <input type="text" name="register_location" id="register_location" class="form-control" placeholder="Masukkan Register Location" required> -->
+                  <select name="register_location" id="register_location" class="form-control">
+                    <option value=""> --- Pilih Register Location ---- </option>
+                  </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="layout">Layout : </label>
+                <!-- <input type="text" name="layout" id="layout" class="form-control" placeholder="Masukkan Layout" required> -->
+                <select name="layout" id="layout" class="form-control">
+                  <option value="" selected disabled> --- Pilih Layout ---</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="asset_model">Status : </label>
+                <select name="status" id="status" class="form-control">
+                  <option value=""></option>
+                  <option value="PRIORITY">PRIORITY</option>
+                  <option value="NOT PRIORITY">NOT PRIORITY</option>
+                  <option value="BASIC">BASIC</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="register_date">Register Date : </label>
+                <input type="date" name="register_date" id="register_date" class="form-control" placeholder="Masukkan Register Date" required>
+              </div>
+              <div class="col-sm-6">
+                <label for="supplier">Supplier : </label>
+                <!-- <input type="text" name="supplier" id="supplier" class="form-control" placeholder="Masukkan Supplier" required> -->
+                <select name="supplier" id="supplier" class="form-control">
+                  <option value="" selected disabled> --- Pilih Supplier ---</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="purchase_number">Purchase Number : </label>
+                <input type="text" name="purchase_number" id="purchase_number" class="form-control" placeholder="Masukkan Purchase Number" required>
+              </div>
+              <div class="col-sm-6">
+                <label for="purchase_date">Purchase Date : </label>
+                <input type="date" name="purchase_date" id="purchase_date" class="form-control" placeholder="Masukkan Purchase Date" required>
+              </div>
+                <input type="hidden" name="approve_status" id="approve_status" class="form-control">
+              <div class="col-sm-6">
+                <label for="warranty">Warranty : </label>
+                <select name="warranty" id="warranty" class="form-control">
+                  <option value=""> --- PILIH WARRANTY ---- </option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="periodic_maintenance">Periodic Maintenace : </label>
+                <!-- <input type="text" name="periodic_maintenance" id="periodic_maintenance" class="form-control" placeholder="Masukkan Periodic Maintenance" required> -->
+                <select name="periodic_maintenance" id="periodic_maintenance" class="form-control">
+                  <option value="" selected disabled> --- Pilih Periodic Maintenance ---</option>
+                </select>
+              </div>
               </div>
         </form>
       </div>
@@ -441,16 +468,38 @@
                 <option value="" selected disabled> --- PILIH SATUAN ---- </option>o
                </select>
             </div>
+
             <div class="col-sm-6">
-              <label for="region">Pilih Region: </label>
-              <select name="region" id="edit-region" class="form-control" required>
-                  <option value="" selected disabled> --- Pilih Region ----</option>
-              </select>
-          </div>
+              <label for="satuan">Satuan : </label>
+              <!-- <input type="text" name="satuan" id="satuan" class="form-control" placeholder="Masukkan Satuan" required> -->
+               <select name="satuan" id="edit-satuan" class="form-control">
+                <option value="" selected disabled> --- PILIH SATUAN ---- </option>o
+               </select>
+            </div>
+
+            </div>
+            <div class="col-sm-6">
+              <label for="edit-width">Width : </label>
+              <input type="number" name="width" id="edit-width" class="form-control" placeholder="Masukkan Width Barang" required
+              min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+            </div>
+            <div class="col-sm-6">
+              <label for="edit-height">Height : </label>
+              <input type="number" name="height" id="edit-height" class="form-control" placeholder="Masukkan Height Barang" required
+              min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+            </div>
+            <div class="col-sm-6">
+              <label for="edit-depth">Depth : </label>
+              <input type="number" name="depth" id="edit-depth" class="form-control" placeholder="Masukkan Depth Barang" required
+              min="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="1" />
+            </div>
+
+
+
           <div class="col-sm-6">
     <label for="register_location">Register Location:</label>
     <select name="register_location" id="edit-register_location" class="form-control">
-        <option value="">--- Pilih Register Location ----</option>
+      
     </select>
 </div>
 
@@ -504,29 +553,24 @@
               </select>
             </div>
               </div>
-            </form>
+           
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary" id="submitUpdate">Update Asset</button>
             </div>
+            </form>
             </div>
         </div>
     </div>
 </div>
-
-      
-
-
-
-
 
 
   <div class="modal fade" id="detailDataAsset" tabindex="-1" role="dialog" aria-labelledby="detailDataAssetLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailDataAssetLabel">Detail Barang Asset</h5>
+                <h5 class="modal-title" id="detailDataAssetLabel"><b>Detail Barang Asset</b></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -553,10 +597,10 @@
             </div>
             <div class="modal-body">
                 <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                   {{ csrf_field() }}
+                @csrf
                     <div class="form-group">
                         <label for="data_excel">Import Data Excel:</label>
-                        <input type="file" name="data_excel" id="data_excel" class="form-control" placeholder="Upload File Excel" required accept=".xlsx,.xls">
+                        <input type="file" name="file" class="form-control" placeholder="Upload File Excel" required accept=".xlsx,.xls">
                     </div>
             </div>
             <div class="modal-footer">
@@ -576,34 +620,37 @@
     </div>
 </div>
 
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
 
                     <div class="card-body">
                     <div class="table-responsive product-table">
                       <table class="display" id="coba">
                         <thead>
                           <tr>
-                            <th>ID Asset</th>
-                            <th>QRCode</th>
-                            <th>Register Code</th>
+                            <th style="width: 10px;">Asset Tag</th>
                             <th>Asset Name</th>
                             <th>Serial Number</th>
                             <th>Type Asset</th>
                             <th>Category Asset</th>
-                            <th>Prioritas</th>
+                            <th>Priority</th>
                             <th>Merk</th>
-                            <th>Quantity</th>
                             <th>Satuan</th>
                             <th>Register Location</th>
                             <th>Layout</th>
                             <th>Register Date</th>
                             <th>Supplier</th>
-                            <th>Status</th>
-                            <th>Purchase Number</th>
+                            <th>Condition</th>
                             <th>Purchase Date</th>
                             <th>Warranty</th>
                             <th>Periodic Maintenance</th>
                             <th>Data Registrasi Asset Status</th>
-                            <th>Approve Status</th>
                             <th>Action</th>
                             <!-- <th>Type</th>
                             <th>Brand</th>

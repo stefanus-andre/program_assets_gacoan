@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="cat_code">Category Code : </label>
-                                                    <input type="text" name="cat_code" id="edit_cat_code" class="form-control" required>
+                                                    <input type="text" name="cat_code" id="edit-cat_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="cat_name">Category Name : </label>
-                                                      <input type="text" name="cat_name" id="edit_cat_name" class="form-control" required>
+                                                      <input type="text" name="cat_name" id="edit-cat_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="cat_id" id="cat_id">
                                               </div>
@@ -407,7 +407,7 @@
                                         <a href="javascript:void(0);" class="detail-button" data-id="{{ $category->cat_id }}" data-code="{{ $category->cat_code }}" data-name="{{ $category->cat_name }}" title="Detail">
                                             <i class="fas fa-book"></i>
                                         </a>
-                                        <form class="delete-form" action="{{ url('admin/categories/delete', $category->cat_id) }}" method="POST" style="display:inline;">
+                                        <form class="delete-form" action="{{ url('admin/categorys/delete', $category->cat_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;">
@@ -608,8 +608,8 @@
 
             // Isi input dengan data
             $('#cat_id').val(categoryId);
-            $('#edit_cat_name').val(categoryName);
-            $('#edit_cat_code').val(categoryCode);
+            $('#edit-cat_name').val(categoryName);
+            $('#edit-cat_code').val(categoryCode);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

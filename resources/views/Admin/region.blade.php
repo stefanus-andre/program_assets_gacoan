@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="region_code">Region Code : </label>
-                                                    <input type="text" name="region_code" id="edit_region_code" class="form-control" required>
+                                                    <input type="text" name="region_code" id="region_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="region_name">Region Name : </label>
-                                                      <input type="text" name="region_name" id="edit_region_name" class="form-control" required>
+                                                      <input type="text" name="region_name" id="region_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="region_id" id="region_id">
                                               </div>
@@ -610,12 +610,11 @@
         $(document).on('click', '.edit-button', function() {
             const regionId = $(this).data('id'); // Ambil region_id dari atribut data
             const regionName = $(this).data('name'); // Ambil region_name dari atribut data
-            const regionCode = $(this).data('code'); // Ambil region_name dari atribut data
 
             // Isi input dengan data
             $('#region_id').val(regionId);
-            $('#edit_region_code').val(regionCode);
-            $('#edit_region_name').val(regionName);
+            $('#region_code').val(regionCode);
+            $('#region_name').val(regionName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

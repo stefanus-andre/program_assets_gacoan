@@ -319,11 +319,11 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="warranty_name">Warranty Name : </label>
-                                                      <input type="text" name="warranty_name" id="edit_warranty_name" class="form-control" required>
+                                                      <input type="text" name="warranty_name" id="edit-warranty_name" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="warranty_day">Warranty Day : </label>
-                                                      <input type="text" name="warranty_day" id="edit_warranty_day" class="form-control" required>
+                                                      <input type="text" name="warranty_day" id="edit-warranty_day" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="warranty_id" id="warranty_id">
                                               </div>
@@ -621,8 +621,8 @@
 
             // Isi input dengan data
             $('#warranty_id').val(warrantyId);
-            $('#edit_warranty_name').val(warrantyName);
-            $('#edit_warranty_day').val(warrantyDay);
+            $('#edit-warranty_name').val(warrantyName);
+            $('#edit-warranty_day').val(warrantyDay);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

@@ -24,9 +24,9 @@ class LocationController extends Controller
 
     public function HalamanLocation() 
     {
-        $location = DB::table('m_location')->select('m_location.*')->paginate(10);
+        $locations = DB::table('m_location')->select('m_location.*')->paginate(10);
 
-        return view("Admin.location", ['location' => $location]);
+        return view("Admin.location", ['locations' => $locations]);
     }
 
     public function getLocation()

@@ -73,5 +73,7 @@ class MasterMoveOut extends Model
             $model->modified_by = Auth::user()->username ?? 'system'; // Mengisi modified_by dengan username user yang login
         });
     }
+
+    
     
 }

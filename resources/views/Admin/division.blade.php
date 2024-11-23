@@ -308,7 +308,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="division_name">Division Name : </label>
-                                                      <input type="text" name="division_name" id="edit_division_name" class="form-control" required>
+                                                      <input type="text" name="division_name" id="division_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="division_id" id="division_id">
                                               </div>
@@ -591,7 +591,7 @@
 
             // Isi input dengan data
             $('#division_id').val(divisionId);
-            $('#edit_division_name').val(divisionName);
+            $('#division_name').val(divisionName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

@@ -307,7 +307,7 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="repair_name">Repair Name : </label>
-                                                      <input type="text" name="repair_name" id="edit_repair_name" class="form-control" required>
+                                                      <input type="text" name="repair_name" id="repair_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="repair_id" id="repair_id">
                                               </div>
@@ -507,7 +507,7 @@
         $(document).ready(function() {
             // Mengambil data repair menggunakan Ajax
             $.ajax({
-                url: "{{ url('/admin/get-repair') }}", // Route untuk get_repair
+                url: "{{ route('get.repair') }}", // Route untuk get_repair
                 method: "GET",
                 success: function(data) {
                     let rows = '';
@@ -590,7 +590,7 @@
 
             // Isi input dengan data
             $('#repair_id').val(repairId);
-            $('#edit_repair_name').val(repairName);
+            $('#repair_name').val(repairName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');
@@ -601,7 +601,7 @@
             e.preventDefault(); // Cegah form reload halaman
 
             $.ajax({
-                url: '/admin/repairs/edit/' + $('#repair_id').val(),
+                url: '/admin/reapirs/edit/' + $('#repair_id').val(),
                 method: 'PUT', // Menggunakan PUT untuk memperbarui data
                 data: $(this).serialize(), // Serialisasi data form untuk dikirim
                 success: function(response) {

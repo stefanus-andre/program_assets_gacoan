@@ -282,7 +282,7 @@
                                         </div>
                                         <div class="col-sm-12">
                                         <label for="periodic_mtc_day">Periodic Mtc Day : </label>
-                                        <input type="text" name="periodic_mtc_day" id="periodic_mtc_day" class="form-control" placeholder="Enter Periodic Name" required>
+                                        <input type="number" name="periodic_mtc_day" id="periodic_mtc_day" class="form-control" placeholder="Enter Periodic Name" value="1" required>
                                         </div>
                                     </div>
                                 </form>
@@ -312,11 +312,11 @@
                                               <div class="row">
                                                   <div class="col-sm-12">
                                                       <label for="periodic_mtc_name">Periodic Mtc Name : </label>
-                                                      <input type="text" name="periodic_mtc_name" id="edit_periodic_mtc_name" class="form-control" required>
+                                                      <input type="text" name="periodic_mtc_name" id="edit-periodic_mtc_name" class="form-control" required>
                                                   </div>
                                                   <div class="col-sm-12">
                                                       <label for="periodic_mtc_day">Periodic Mtc Day : </label>
-                                                      <input type="text" name="periodic_mtc_day" id="edit_periodic_mtc_day" class="form-control" required>
+                                                      <input type="number" name="periodic_mtc_day" id="edit-periodic_mtc_day" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="periodic_mtc_id" id="periodic_mtc_id">
                                               </div>
@@ -614,8 +614,8 @@
 
             // Isi input dengan data
             $('#periodic_mtc_id').val(periodicId);
-            $('#edit_periodic_mtc_name').val(periodicName);
-            $('#edit_periodic_mtc_day').val(periodicDay);
+            $('#edit-periodic_mtc_name').val(periodicName);
+            $('#edit-periodic_mtc_day').val(periodicDay);
 
             // Tampilkan modal
             $('#updateModal').modal('show');

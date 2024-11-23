@@ -312,11 +312,11 @@
                                               <div class="row">
                                                 <div class="col-sm-12">
                                                     <label for="type_code">Type Code : </label>
-                                                    <input type="text" name="type_code" id="edit_type_code" class="form-control" required>
+                                                    <input type="text" name="type_code" id="type_code" class="form-control" required>
                                                 </div>
                                                   <div class="col-sm-12">
                                                       <label for="type_name">Type Name : </label>
-                                                      <input type="text" name="type_name" id="edit_type_name" class="form-control" required>
+                                                      <input type="text" name="type_name" id="type_name" class="form-control" required>
                                                   </div>
                                                   <input type="hidden" name="type_id" id="type_id">
                                               </div>
@@ -379,7 +379,7 @@
                     <div class="card-body">
                       <div class="table-responsive product-table" style="max-width: 100%; overflow-x: auto;">
                         <div class="d-flex justify-content-between mb-3 mt-3">
-                            <h5>Tipe Maintenance Data</h5> <!-- Add a heading for the table if needed -->
+                            <h5>Tipe Asset</h5> <!-- Add a heading for the table if needed -->
                             <!-- Search Input Field aligned to the right -->
                             <div class="input-group" style="width: 250px;">
                                 <input type="text" id="searchInput" class="form-control" placeholder="Search for assets..." />
@@ -388,8 +388,8 @@
                         <table class="table table-striped display" id="coba" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Kode Tipe Maintenance</th>
-                                    <th>Nama Tipe Maintenance</th>
+                                    <th>Kode Tipe Asset</th>
+                                    <th>Nama Tipe Asset</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -612,8 +612,8 @@
 
             // Isi input dengan data
             $('#type_id').val(TypeId);
-            $('#edit_type_code').val(typeCode);
-            $('#edit_type_name').val(typeName);
+            $('#type_code').val(typeCode);
+            $('#type_name').val(typeName);
 
             // Tampilkan modal
             $('#updateModal').modal('show');
