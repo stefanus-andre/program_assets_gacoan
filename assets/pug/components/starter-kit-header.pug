@@ -1,0 +1,136 @@
+// Page Header Start
+.page-header
+  .header-wrapper.row.m-0
+    form(action='#', method='get').form-inline.search-full.col
+      .form-group.w-100
+        .Typeahead.Typeahead--twitterUsers
+          .u-posRelative
+            input.demo-input.Typeahead-input.form-control-plaintext.w-100(type='text' placeholder='Search In Enzo ..' name='q' title='' autofocus)
+            .spinner-border.Typeahead-spinner(role='status')
+              span.sr-only Loading...
+            i(data-feather='x').close-search
+          .Typeahead-menu
+    .header-logo-wrapper.col-auto.p-0
+      .logo-wrapper
+        a(href='index.html')
+          img.img-fluid(src='../assets/images/logo/login.png', alt='')
+      .toggle-sidebar
+        i.status_toggle.middle(data-feather='align-center').sidebar-toggle
+    .left-header.col.horizontal-wrapper.ps-0
+      .input-group
+        .input-group-prepend
+          span.input-group-text.mobile-search
+            i.fa.fa-search
+        input.form-control(type='text' placeholder='Search Here........' )
+    .nav-right.col-8.pull-right.right-header.p-0
+      ul.nav-menus              
+        li.onhover-dropdown
+          .notification-box
+            i.fa.fa-bell-o  
+            span.badge.rounded-pill.badge-primary 4                                
+          ul.notification-dropdown.onhover-show-div
+            li
+              i(data-feather='bell')             
+              h6.f-18.mb-0 Notifications
+            li
+              a(href="../template/email_read.html")
+                p
+                  i.fa.fa-circle-o.me-3.font-primary 
+                  | Delivery processing 
+                  span.pull-right 10 min.
+            li
+              a(href="../template/email_read.html")
+                p
+                  i.fa.fa-circle-o.me-3.font-success
+                  | Order Complete
+                  span.pull-right 1 hr
+            li
+              a(href="../template/email_read.html")
+                p
+                  i.fa.fa-circle-o.me-3.font-info
+                  | Tickets Generated
+                  span.pull-right 3 hr
+            li
+              a(href="../template/email_read.html") 
+                p
+                  i.fa.fa-circle-o.me-3.font-danger
+                  | Delivery Complete
+                  span.pull-right 6 hr
+            li
+              a.btn.btn-primary(href="../template/email_read.html") Check all notification
+        li.onhover-dropdown
+          i.fa.fa-comment-o
+          ul.chat-dropdown.onhover-show-div
+            li
+              i(data-feather='message-square')
+              h6.f-18.mb-0 Message Box                                    
+            li
+              .d-flex
+                img.img-fluid.rounded-circle.me-3(src='../assets/images/user/1.jpg', alt='')
+                .status-circle.online
+                .flex-grow-1
+                  a(href="../template/chat.html") 
+                    span Ain Chavez
+                    p Do you want to go see movie?
+                p.f-12.font-success 1 mins ago
+            li
+              .d-flex
+                img.img-fluid.rounded-circle.me-3(src='../assets/images/user/2.png', alt='')
+                .status-circle.online
+                .flex-grow-1
+                  a(href="../template/chat.html") 
+                    span Kori Thomas
+                    p What`s the project report update?
+                p.f-12.font-success 3 mins ago
+            li
+              .d-flex
+                img.img-fluid.rounded-circle.me-3(src='../assets/images/dashboard/admins.png', alt='')
+                .status-circle.offline
+                .flex-grow-1
+                  a(href="../template/chat.html") 
+                    span Ain Chavez
+                    p Thank you for rating us.
+                p.f-12.font-danger 9 mins ago
+            li.text-center 
+              a.btn.btn-primary(href="../template/chat.html") View All     
+        li
+          .mode
+            i.fa.fa-moon-o
+        li.maximize
+          a.text-dark(href='#!', onclick='javascript:toggleFullScreen()')
+            i(data-feather="maximize")
+        li.profile-nav.onhover-dropdown.p-0.me-0
+          .d-flex.profile-media
+            img.b-r-50(src='../assets/images/dashboard/profile.jpg', alt='')
+            .flex-grow-1
+              span Emay Walter
+              p.mb-0.font-roboto Admin 
+                i.middle.fa.fa-angle-down
+          ul.profile-dropdown.onhover-show-div
+            li
+              a(href='../template/user-profile.html')
+                i(data-feather='user')
+                span Account 
+            li
+              a(href='../template/email_inbox.html')
+                i(data-feather='mail')
+                span Inbox
+            li
+              a(href='../template/kanban.html')
+                i(data-feather='file-text')
+                span Taskboard
+            li
+              a(href='../template/login.html')
+                i(data-feather='log-in') 
+                span Log in
+
+    script.result-template(type='text/x-handlebars-template').
+      <div class="ProfileCard u-cf">                        
+      <div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
+      <div class="ProfileCard-details">
+      <div class="ProfileCard-realName">{{name}}</div>
+      </div>
+      </div>
+    script.empty-template(type='text/x-handlebars-template').
+      <div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div>
+// Page Header Ends                              

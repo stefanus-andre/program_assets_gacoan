@@ -1,0 +1,1222 @@
+/**=====================
+  50. Dashboard 2 CSS Start
+==========================**/
+// total erning //
+.chart_data_left {
+  .card-body {
+    .chart-main {
+      .d-flex {
+        padding: 45px 40px;
+        .earnings-small-chart {
+          align-items: center;
+          margin-bottom: -25px;
+          .small-bar {
+            position: relative;
+            svg {
+              position: absolute;
+              bottom: 23px;
+              width: 100%;
+              height: 95%;
+            }
+            .flot-chart-container {
+              height: 74px;
+              width: 100px;
+              .chartist-tooltip {
+                position: absolute;
+                opacity: 0;
+                .chartist-tooltip-value {
+                  font-size: 10px;
+                  padding: 5px;
+                  color: $white;
+                  background-color: rgba(0, 0, 0, 0.5);
+                  border-radius: 4px;
+                }
+                &.tooltip-show {
+                  opacity: 1;
+                }
+              }
+            }
+            .small-chart {
+              svg {
+                .ct-series-a {
+                  .ct-point,
+                  .ct-line,
+                  .ct-bar,
+                  .ct-slice-donut {
+                    stroke: var(--theme-default);
+                  }
+                }
+                .ct-series-b {
+                  .ct-point,
+                  .ct-line,
+                  .ct-bar,
+                  .ct-slice-donut {
+                    stroke: rgba($primary-color, 0.1);
+                  }
+                }
+              }
+              .chartist-tooltip {
+                .chartist-tooltip-value {
+                  background-color: var(--theme-default);
+                  box-shadow: 1px 1.732px 8px 0px rgba($primary-color, 0.5);
+                }
+              }
+            }
+            .small-chart1 {
+              .chartist-tooltip {
+                .chartist-tooltip-value {
+                  background-color: var(--theme-secondary);
+                  box-shadow: 1px 1.732px 8px 0px rgba($secondary-color, 0.5);
+                }
+              }
+              svg {
+                .ct-series-a {
+                  .ct-point,
+                  .ct-line,
+                  .ct-bar,
+                  .ct-slice-donut {
+                    stroke: var(--theme-secondary);
+                  }
+                }
+                .ct-series-b {
+                  .ct-point,
+                  .ct-line,
+                  .ct-bar,
+                  .ct-slice-donut {
+                    stroke: rgba($secondary-color, 0.1);
+                  }
+                }
+              }
+            }
+          }
+        }
+        .flex-grow-1 {
+          .right-chart-content {
+            margin-left: 10px;
+          }
+          .badge{
+            padding: 4px 5px 3px;
+          }
+        }
+      }
+    }
+  }
+}
+.chart_data_right {
+  .card-body {
+    .knob-block {
+      margin-bottom: -5px;
+      input {
+        height: 40% !important;
+        width: 100% !important;
+        left: 50% !important;
+        top: 6% !important;
+        transform: translate(-50%) !important;
+        margin-left: 0 !important;
+        margin-top: 17px !important;
+        color: $dark-light !important;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+      .chart-overflow {
+        overflow: hidden;
+        text-align: center;
+      }
+    }
+    .chart-main {
+      .d-flex {
+        padding: 35px;
+        .flex-grow-1 {
+          .right-chart-content {
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+.chart_data_left,
+.chart_data_right {
+  .card-body {
+    .chart-main {
+      .d-flex {
+        border-right: 1px solid $light-gray;
+        .flex-grow-1 {
+          h4 {
+            font-size: 22px;
+            font-weight: 500;
+          }
+          p {
+            color: $light-text;
+            font-size: 14px;
+          }
+          .right-chart-content {
+            .badge {
+              margin-left: 18px;
+            }
+          }
+        }
+        &.border-none {
+          border-right: none !important;
+        }
+      }
+    }
+  }
+}
+// goal view
+.goal-view {
+  .profit-goal {
+    padding-left: 26px;
+    padding-right: 26px;
+    h4 {
+      font-size: 22px;
+      font-weight: 500;
+    }
+    .badge {
+      font-size: 12px;
+    }
+    p {
+      color: $light-text;
+    }
+  }
+  ul.goal-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-top: 1px solid $light-gray;
+    li {
+      text-align: center;
+      width: 100%;
+      padding: 30px;
+      &:first-child {
+        border-right: 1px solid $light-gray;
+      }
+      h4 {
+        font-size: 20px;
+        color: $primary-color;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      p {
+        margin-bottom: unset;
+        font-size: 18px;
+        color: $light-text;
+        font-weight: 500;
+      }
+    }
+  }
+  .card-body {
+    overflow: hidden;
+  }
+  #goal-rview {
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: -33px;
+  }
+}
+// browser-statistics //
+.browser-statistics {
+  .btn {
+    background-color: rgba($primary-color, 0.1) !important;
+    border-color: rgba($primary-color, 0.1) !important;
+    color: $primary-color;
+    margin-top: 18px;
+    &:hover {
+      background-color: $primary-color !important;
+      color: $white;
+    }
+  }
+  .apexcharts-title-text {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .apexcharts-subtitle-text {
+    font-size: 13px;
+    fill: $light-text;
+    font-weight: 400;
+  }
+}
+// product delivery
+.pro-delivery {
+  .jvectormap-zoomin,
+  .jvectormap-zoomout {
+    display: none;
+  }
+}
+// total profit chart
+.total-profit-chart {
+  .center-content {
+    ul.profit-list {
+      display: flex;
+      align-items: center;
+      li {
+        i {
+          color: $primary-color;
+        }
+        span {
+          font-size: 13px;
+          color: $light-text;
+          margin-left: 10px;
+        }
+        &:nth-child(n + 2) {
+          margin-left: 30px;
+          i {
+            color: rgba($primary-color, 0.1);
+          }
+        }
+      }
+    }
+  }
+  .profit-goal {
+    padding-left: 35px;
+    padding-right: 35px;
+    h4 {
+      font-size: 22px;
+      font-weight: 500;
+    }
+    .badge {
+      font-size: 12px;
+    }
+  }
+}
+// selling-product
+.selling-product {
+  .ratio_100 {
+    .bg-size {
+      &:before {
+        padding-top: 100%;
+        content: "";
+        display: block;
+      }
+    }
+  }
+  .product-block {
+    > div {
+      &:nth-child(n + 3) {
+        margin-top: 30px;
+      }
+    }
+    .product-detail {
+      h6 {
+        font-size: 13px;
+      }
+    }
+  }
+  .product-box {
+    background-color: $body-color;
+    position: relative;
+    .left-badge,
+    .right-badge {
+      position: absolute;
+      top: 10px;
+    }
+    .left-badge {
+      left: 20px;
+    }
+    .right-badge {
+      right: 20px;
+    }
+    .product-detail {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      p {
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: $light-text;
+      }
+      h6 {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-bottom: unset;
+      }
+      .btn {
+        margin-top: 20px;
+        background-color: rgba($primary-color, 0.1) !important;
+        border-color: rgba($primary-color, 0.1) !important;
+        color: $primary-color;
+        border-radius: 10px;
+        padding: 0;
+        padding-right: 15px;
+        overflow: hidden;
+        span {
+          background-color: $primary-color;
+          color: $white;
+          padding: 15px;
+          margin-right: 15px;
+        }
+        &:hover {
+          background-color: $primary-color !important;
+          color: $white;
+        }
+      }
+    }
+    .img-wrraper {
+      img {
+        transition: all 0.5s ease;
+      }
+    }
+    &:hover {
+      .img-wrraper {
+        img {
+          transform: scale(1.02);
+        }
+      }
+    }
+  }
+}
+// best seller
+.best-seller {
+  h4 {
+    font-size: 18px;
+    color: $primary-color;
+    margin-bottom: unset;
+  }
+  table {
+    tr {
+      p {
+        font-family: $font-roboto;
+        color: $light-text;
+      }
+      th,
+      td {
+        padding-top: 14px;
+        padding-bottom: 14px;
+        &:first-child {
+          padding-left: 30px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 30px;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:hover {
+          background-color: rgba($primary-color, 0.1);
+          td {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+  .card-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+  }
+}
+// announcement-sec
+.announcement-sec {
+  height: 290px;
+  color: $white;
+  background-color: $primary-color;
+  position: relative;
+  z-index: 2;
+  .real-date-time {
+    background-color: rgba($white, 0.1);
+    width: fit-content;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-top: 25px;
+    .real-date {
+      margin-bottom: 5px;
+    }
+  }
+  .announcement-buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    .btn {
+      background-color: $white !important;
+      color: $primary-color;
+      border-radius: 15px;
+      border-bottom-right-radius: 5px;
+    }
+    .iocn-bell {
+      background-color: rgba($white, 0.1);
+      border-radius: 15px;
+      padding: 0.6rem 1rem;
+      border-bottom-left-radius: 5px;
+      position: relative;
+      transition: all 0.5s ease;
+      i {
+        animation: tada 1.5s ease infinite;
+      }
+      .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        color: $primary-color;
+        padding: 4px 5px;
+        font-size: 9px;
+      }
+      &:hover {
+        background-color: $white;
+        i {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  .card-body {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .shap-block {
+    .shap1,
+    .shap2,
+    .shap3,
+    .shap4,
+    .shap5,
+    .shap6,
+    .shap7 {
+      position: absolute;
+      color: $white;
+      font-size: 21px;
+      &.opicity-50 {
+        opacity: 0.5;
+      }
+      &.opicity-10 {
+        opacity: 0.1;
+      }
+    }
+    .shap1 {
+      top: 23%;
+      right: 34%;
+      animation: zoom 5s infinite linear;
+    }
+    .shap2 {
+      bottom: 28%;
+      right: 41%;
+      animation: zoom 8s infinite linear;
+    }
+    .shap3 {
+      bottom: 5%;
+      right: 52%;
+      animation: zoom 4s infinite linear;
+    }
+    .shap4,
+    .shap5 {
+      top: 7%;
+      right: 52%;
+      width: 7px;
+      height: 7px;
+      border-radius: 3px;
+      background-color: transparent;
+      border: 1px solid $white;
+      animation: move 5s infinite linear;
+    }
+    .shap5 {
+      top: 0;
+      right: 22%;
+    }
+    .shap6,
+    .shap7 {
+      bottom: 5%;
+      right: 35%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $white;
+      animation: move 8s infinite linear;
+    }
+    .shap7 {
+      bottom: 60%;
+      right: 60%;
+      animation: move 9s infinite linear;
+    }
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: rotate(0deg) translateX(10px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(80deg) translateX(10px) rotate(-80deg);
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.5) rotate(45deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+// dashboard 02 responsive css
+@media screen and (max-width: 1740px) {
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 45px 30px;
+        }
+      }
+    }
+  }
+  .announcement-sec {
+    height: 270px;
+  }
+  .best-seller {
+    table {
+      th,
+      td {
+        &:first-child {
+          min-width: 140px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1770px) and (min-width: 1661px) {
+  .default-dash, .default-dash2{
+    .card{
+      .card-header{
+        .card-header-right{
+          top: 26px;
+        }
+      }
+    }  
+  }
+  .goal-view {
+    ul.goal-list {
+      li {
+        padding: 30px 24px;
+      }
+    }
+  }
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          .flex-grow-1 {
+            .right-chart-content {
+              .badge {
+                margin-left: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          .flex-grow-1 {
+            p {
+              font-size: 13px;
+            }
+            .right-chart-content {
+              margin-left: 0;
+              .badge {
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1365px) and (min-width: 1200px) {
+  .selling-product {
+    .product-box {
+      position: unset;
+    }
+  }
+}
+@media screen and (max-width: 1366px) and (min-width: 1200px) {
+  .selling-product {
+    .product-box {
+      .product-detail {
+        .btn {
+          padding-right: 8px;
+          margin-top: 12px;
+          span {
+            padding: 10px;
+            margin-right: 10px !important;
+          }
+        }
+      }
+      .right-badge {
+        right: 20px !important;
+      }
+    }
+  }
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 20px 12px !important;
+        }
+      }
+    }
+  }
+  .best-seller {
+    table {
+      tr {
+        th ,
+        td {
+          padding: 11px 6px;
+          &:first-child {
+            padding-left: 15px !important;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1470px) and (min-width: 1367px) {
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 33px 12px !important;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1470px) and (min-width: 1200px) {
+  .chart_data_left, .chart_data_right{
+    .card-body{
+      .chart-main{
+        .d-flex{
+          .flex-grow-1{
+            .badge{
+              padding: 4px 3px 3px;
+            }
+          }
+        }
+      }
+    }
+  }     
+  .chart_data_right {
+    .card-body {
+      .knob-block {
+        input {
+          margin-top: 15px !important;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1840px) {
+  .selling-product {
+    .product-box {
+      .product-detail {
+        h6 {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1780px) and (min-width: 1366px) {
+  .default-dash2 {
+    .des-xxl-60 {
+      max-width: 60%;
+      flex: 0 0 60%;
+    }
+    .des-xxl-40 {
+      max-width: 40%;
+      flex: 0 0 40%;
+    }
+  }
+  .best-seller {
+    table {
+      tr {
+        td,
+        th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1660px) and (min-width: 1200px) {
+  .goal-view {
+    ul.goal-list {
+      li {
+        padding: 15px;
+        h4 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+    .profit-goal {
+      padding-left: 20px;
+      padding-right: 20px;
+      h4 {
+        font-size: 16px;
+      }
+      .badge {
+        font-size: 10px;
+        padding: 5px 8px;
+      }
+    }
+  }
+
+  .default-dash2 {
+    .card {
+      .card-header {
+        &.dflex {
+          display: block;
+        }
+      }
+    }
+  }
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 33px 20px;
+          .earnings-small-chart {
+            .small-bar {
+              .flot-chart-container {
+                width: 68px;
+              }
+            }
+          }
+          .flex-grow-1 {
+            .right-chart-content {
+              margin-left: unset;
+            }
+          }
+        }
+      }
+    }
+  }
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 30px 20px;
+          .flex-grow-1 {
+            .right-chart-content {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+      .knob-block {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  .chart_data_left,
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          .flex-grow-1 {
+            h4 {
+              font-size: 18px;
+            }
+            .right-chart-content {
+              .badge {
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pro-delivery {
+    #world-map2 {
+      height: 370px;
+    }
+  }
+  .announcement-sec {
+    height: 260px;
+  }
+  .browser-statistics {
+    .btn {
+      margin-top: 5px;
+    }
+  }
+  .total-profit-chart {
+    .profit-goal {
+      padding-left: 20px;
+      padding-right: 20px;
+      h4 {
+        font-size: 16px;
+      }
+      .badge {
+        font-size: 10px;
+        padding: 5px 8px;
+      }
+    }
+  }
+
+  .best-seller {
+    table {
+      tr {
+        th,
+        td {
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            padding-right: 20px;
+          }
+        }
+      }
+    }
+    .card-body {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+  }
+  .selling-product {
+    .product-box {
+      .product-detail {
+        bottom: 12px;
+        p {
+          font-size: 12px;
+        }
+        h6 {
+          font-size: 13px;
+          padding-right: 10px;
+          padding-left: 10px;
+        }
+      }
+      .right-badge {
+        top: 10px;
+        right: 10px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1199px) {
+  .best-seller{
+    table{
+      tr{
+        td{
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+      }
+    }
+  }
+  .order-xl1 {
+    order: 1;
+  }
+  .default-dash, .default-dash2{
+    .card{
+      .card-header{
+        .card-header-right{
+          top: 26px;
+        }
+      }
+    }  
+  }
+  .best-seller {
+    table {
+      tr {
+        td {
+          &:nth-child(2),
+          &:nth-child(3) {
+            min-width: 150px;
+          }
+        }
+      }
+    }
+  }
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 35px 25px;
+        }
+      }
+    }
+  }
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 25px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) and (min-width: 1007px) {
+  .des-xl-50 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .selling-product {
+    .ratio_100 {
+      .bg-size {
+        &::before {
+          padding-top: 118%;
+        }
+      }
+    }
+    .product-box {
+      .product-detail {
+        h6 {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .goal-view {
+    ul.goal-list{
+      li{
+        p{
+          font-size: 14px;
+        }
+      }
+    }
+    .profit-goal {
+      padding-left: 20px;
+      padding-inline-end: 20px;
+    }
+  }
+  .total-profit-chart {
+    .profit-goal {
+      padding-left: 20px;
+      padding-inline-end: 20px;
+    }
+  }
+  .best-seller {
+    table {
+      tr {
+        th,
+        td {
+          &:first-child {
+            padding-left: 20px;
+          }
+          &:last-child {
+            padding-right: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .chart_data_left,
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          .flex-grow-1 {
+            h4 {
+              font-size: 16px;
+            }
+            .right-chart-content {
+              .badge {
+                margin-left: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .chart_data_left {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 20px 10px;
+          .earnings-small-chart {
+            .small-bar {
+              .flot-chart-container {
+                width: 75px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        .d-flex {
+          padding: 20px;
+        }
+      }
+      .knob-block {
+        width: 55px;
+        height: 55px;
+        input {
+          font-size: 80% !important;
+          margin-top: 12px !important;
+        }
+      }
+    }
+  }
+
+  .selling-product {
+    .ratio_100 {
+      margin-bottom: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      .bg-size {
+        &:before {
+          padding-top: 100%;
+        }
+      }
+    }
+
+    .product-box {
+      .product-detail {
+        bottom: 20px;
+        .btn {
+          margin-top: 15px;
+          span {
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
+  .goal-view {
+    .profit-goal {
+      h4 {
+        font-size: 16px;
+      }
+    }
+  }
+  .total-profit-chart {
+    .profit-goal {
+      h4 {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .browser-statistics {
+    .btn {
+      margin-top: unset;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .chart_data_left,
+  .chart_data_right {
+    .card-body {
+      .chart-main {
+        > div {
+          &:nth-child(n + 2) {
+            border-top: 1px solid $light-gray;
+          }
+        }
+      }
+    }
+  }
+  .selling-product {
+    .ratio_100 {
+      .bg-size {
+        &:before {
+          padding-top: 70%;
+        }
+      }
+    }
+  }
+  .announcement-sec {
+    .announcement-buttons {
+      .iocn-bell {
+        padding: 8px 15px;
+      }
+    }
+  }
+  .goal-view {
+    ul {
+      &.goal-list {
+        li {
+          h4 {
+            font-size: 16px;
+          }
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .chart_data_right .knob-block > div:not(.chart-clock-main) canvas {
+    width: 55px !important;
+    height: 55px !important;
+  }
+  .selling-product {
+    .product-block {
+      > div {
+        width: 100%;
+        &:nth-child(n + 2) {
+          margin-top: 30px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 420px) {
+  .selling-product {
+    .ratio_100 {
+      .bg-size {
+        &:before {
+          padding-top: 100%;
+        }
+      }
+    }
+  }
+  .goal-view {
+    ul {
+      &.goal-list {
+        li {
+          padding: 15px;
+        }
+      }
+    }
+  }
+  .browser-statistics {
+    .btn {
+      margin-top: unset;
+    }
+  }
+}
+
+/**=====================
+  50. Dashboard 2  CSS End
+==========================**/

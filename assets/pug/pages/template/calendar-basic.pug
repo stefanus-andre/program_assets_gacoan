@@ -1,0 +1,69 @@
+- var theme_customizer      = true;
+- var calendar              = true;
+- var sidebar               = true;
+- var scrollbar             = true;
+
+doctype html
+html(lang='en')
+  include ../../components/header-files
+  body
+    include ../../components/taptop
+    include ../../components/loader
+    // page-wrapper Start
+    #pageWrapper.page-wrapper.compact-wrapper
+      include ../../components/header
+      // Page Body Start
+      .page-body-wrapper
+        include ../../components/sidebar
+        .page-body
+          .container-fluid
+            .page-title
+              .row
+                .col-sm-6
+                  h3
+                    | Calendar
+                .col-sm-6
+                  ol.breadcrumb
+                    li.breadcrumb-item
+                      a(href='index.html')                                        
+                        i(data-feather="home")
+                    li.breadcrumb-item Apps
+                    li.breadcrumb-item.active Calendar
+          // Container-fluid starts
+          .container-fluid.calendar-basic
+            .card
+              .card-body
+                #wrap.row
+                  .col-xxl-3.col-xl-4.box-col-30
+                    #external-events
+                      h4 Draggable Events
+                      #external-events-list
+                        .fc-event.fc-h-event.fc-daygrid-event.fc-daygrid-block-event
+                          .fc-event-main 
+                            i.fa.fa-birthday-cake.me-2
+                            | Birthday Party
+                        .fc-event.fc-h-event.fc-daygrid-event.fc-daygrid-block-event
+                          .fc-event-main 
+                            i.fa.fa-user.me-2
+                            | Meeting With Team.
+                        .fc-event.fc-h-event.fc-daygrid-event.fc-daygrid-block-event
+                          .fc-event-main 
+                            i.fa.fa-plane.me-2
+                            | Tour & Picnic
+                        .fc-event.fc-h-event.fc-daygrid-event.fc-daygrid-block-event
+                          .fc-event-main 
+                            i.fa.fa-file-text.me-2
+                            | Reporting Schedule
+                        .fc-event.fc-h-event.fc-daygrid-event.fc-daygrid-block-event
+                          .fc-event-main 
+                            i.fa.fa-briefcase.me-2
+                            | Lunch & Break
+                      p
+                        input#drop-remove.checkbox_animated(type='checkbox')
+                        label(for='drop-remove') remove after drop
+                  .col-xxl-9.col-xl-8.box-col-70
+                    #calendar-container.calendar-default
+                      #calendar
+          // Container-fluid Ends
+        include ../../components/footer
+    include ../../components/footer-files

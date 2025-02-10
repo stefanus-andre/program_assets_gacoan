@@ -1,0 +1,107 @@
+[03-Nov-2024 07:15:14 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 07:15:14 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 07:22:37 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 07:22:37 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 07:52:39 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 07:52:39 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:02:56 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:02:56 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:02 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:02 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:05 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:05 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:07 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:07 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:08 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:08 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:16 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:16 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:16 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:16 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:18 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:18 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:19 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:19 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:20 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:20 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:21 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:03:21 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:22:40 UTC] PHP Warning:  require_once(/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php): Failed to open stream: No such file or directory in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[03-Nov-2024 08:22:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/miegacoa/asset.miegacoan.co.id/../bootstrap/app.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/miegacoa/asset.miegacoan.co.id/index.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/miegacoa/asset.miegacoan.co.id/index.php on line 16
+[14-Nov-2024 08:26:26 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[14-Nov-2024 08:34:43 UTC] PHP Fatal error:  Maximum execution time of 300 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[14-Nov-2024 08:36:20 UTC] PHP Fatal error:  Maximum execution time of 100 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[14-Nov-2024 08:38:31 UTC] PHP Fatal error:  Maximum execution time of 100 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[14-Nov-2024 08:40:27 UTC] PHP Fatal error:  Maximum execution time of 100 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 190
+[14-Nov-2024 08:49:38 UTC] PHP Fatal error:  Maximum execution time of 100 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[14-Nov-2024 08:53:33 UTC] PHP Fatal error:  Maximum execution time of 100 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[14-Nov-2024 13:15:51 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[15-Nov-2024 05:03:50 UTC] PHP Fatal error:  Maximum execution time of 300 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[15-Nov-2024 07:52:30 UTC] PHP Fatal error:  Maximum execution time of 300 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[15-Nov-2024 08:11:57 UTC] PHP Fatal error:  Maximum execution time of 10 seconds exceeded in /home/miegacoa/asset.miegacoan.co.id/vendor/bacon/bacon-qr-code/src/Renderer/Image/ImagickImageBackEnd.php on line 169
+[02-Jan-2025 18:38:55 Asia/Jakarta] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/MovementOutController.php on line 6
+[02-Jan-2025 18:39:11 Asia/Jakarta] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/MovementOutController.php on line 6
+[30-Jan-2025 11:08:30 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:09:28 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:09:51 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:11:04 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:11:18 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:12:00 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:14:00 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:14:28 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RMControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmControllers.php on line 30
+[30-Jan-2025 11:16:18 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RMControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RMControllers.php on line 5
+[30-Jan-2025 11:16:38 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RMControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RMControllers.php on line 5
+[30-Jan-2025 11:18:12 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\ControllersRM, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/ControllersRM.php on line 5
+[30-Jan-2025 11:25:18 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RMControllers, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RMControllers.php on line 5
+[30-Jan-2025 11:28:30 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:31:03 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:31:16 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:31:22 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:32:23 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:37:07 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30
+[30-Jan-2025 11:39:27 Asia/Jakarta] PHP Fatal error:  Cannot declare class App\Http\Controllers\RmController, because the name is already in use in /home/miegacoa/asset.miegacoan.co.id/app/Http/Controllers/RM/RmController.php on line 30

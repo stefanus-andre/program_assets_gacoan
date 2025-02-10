@@ -1,0 +1,6 @@
+.modal {
+    display: block;
+    z-index: 1050;
+    overflow-y: auto;
+  }
+  

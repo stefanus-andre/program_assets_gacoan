@@ -1,0 +1,437 @@
+- var theme_customizer      = true;
+- var tooltip               = true;
+- var datatable             = true;
+- var page_datatable        = true;
+- var sidebar               = true;
+- var scrollbar             = true;
+
+doctype html
+html(lang='en')
+  include ../../components/header-files
+  body
+    include ../../components/taptop
+    include ../../components/loader
+    // page-wrapper Start
+    #pageWrapper.page-wrapper.compact-wrapper
+      include ../../components/header
+      // Page Body Start
+      .page-body-wrapper
+        include ../../components/sidebar
+        .page-body
+          .container-fluid
+            .page-title
+              .row
+                .col-sm-6
+                  h3
+                    | Order History
+                .col-sm-6
+                  ol.breadcrumb
+                    li.breadcrumb-item
+                      a(href='index.html')                                        
+                        i(data-feather="home")
+                    li.breadcrumb-item Ecommerce
+                    li.breadcrumb-item.active  Order History
+          // Container-fluid starts
+          .container-fluid
+            .row
+              .col-sm-12
+                .card
+                  .card-header.pb-0
+                    h5 Order history
+                  .card-body
+                    .order-history.table-responsive
+                      table#basic-1.table.table-bordernone.display
+                        thead
+                          tr
+                            th(scope='col') Product
+                            th(scope='col') Product name
+                            th(scope='col') Size
+                            th(scope='col') Color
+                            th(scope='col') Article number
+                            th(scope='col') Units
+                            th(scope='col') Price
+                            th(scope='col') Payment Mode
+                            th(scope='col')
+                              i.fa.fa-angle-down
+                        tbody
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/1.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Long Top
+                                .order-process
+                                  span.order-process-circle
+                                  | Processing
+                            td XL
+                            td 
+                              span.badge.badge-light-danger Pink
+                            td 4215738
+                            td 2
+                            td $21
+                            td Credit Card
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/13.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Fancy watch
+                                .order-process
+                                  span.order-process-circle
+                                  | Processing
+                            td Free Size
+                            td 
+                              span.badge.badge-light-info White
+                            td 5476182
+                            td 3
+                            td $30
+                            td Bank Transfer
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              img.img-fluid.img-30(src='../assets/images/product/4.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Man shoes
+                                .order-process
+                                  span.order-process-circle
+                                  | Processing
+                            td 8
+                            td 
+                              span.badge.badge-light-danger Pink
+                            td 1756457
+                            td 1
+                            td $18
+                            td Credit Card
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/10.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Ladies side bag
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td Small
+                            td 
+                              span.badge.badge-light-warning Brown
+                            td 7451725
+                            td 1
+                            td $13
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/12.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Ladies Slipper
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td 6
+                            td 
+                              span.badge.badge-light-warning Brown
+                            td 4127421
+                            td 1
+                            td $6
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/3.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Fancy Ladies Jacket
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td L
+                            td 
+                              span.badge.badge-light-info Light gray
+                            td 3581714
+                            td 2
+                            td $24
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/2.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Ladies Handbag
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td Large
+                            td 
+                              span.badge.badge-light-success Black
+                            td 6748142
+                            td 1
+                            td $15
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/15.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') I phone 13 mobile
+                                .order-process
+                                  span.order-process-circle.cancel-order
+                                  | Cancelled
+                            td No Size
+                            td 
+                              span.badge.badge-light-primary Blue
+                            td 5748214
+                            td 2
+                            td $500
+                            td Google pay
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/14.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Watch
+                                .order-process
+                                  span.order-process-circle.cancel-order
+                                  | Cancelled
+                            td Medium
+                            td 
+                              span.badge.badge-light-info White
+                            td 2471254
+                            td 1
+                            td $15
+                            td Bank Transfer
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/11.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Slipper
+                                .order-process
+                                  span.order-process-circle.cancel-order
+                                  | Cancelled
+                            td 10
+                            td 
+                              span.badge.badge-light-primary Blue
+                            td 8475112
+                            td 2
+                            td $12
+                            td Google pay
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/2.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Ladies Handbag
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td Large
+                            td 
+                              span.badge.badge-light-success Black
+                            td 6748142
+                            td 1
+                            td $15
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/15.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') I phone 13 mobile
+                                .order-process
+                                  span.order-process-circle.cancel-order
+                                  | Cancelled
+                            td No Size
+                            td 
+                              span.badge.badge-light-primary Blue
+                            td 5748214
+                            td 2
+                            td $500
+                            td Google pay
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/14.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Watch
+                                .order-process
+                                  span.order-process-circle.cancel-order
+                                  | Cancelled
+                            td Medium
+                            td 
+                              span.badge.badge-light-info White
+                            td 2471254
+                            td 1
+                            td $15
+                            td Bank Transfer
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/11.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Slipper
+                                .order-process
+                                  span.order-process-circle.cancel-order
+                                  | Cancelled
+                            td 10
+                            td 
+                              span.badge.badge-light-primary Blue
+                            td 8475112
+                            td 2
+                            td $12
+                            td Google pay
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/1.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Long Top
+                                .order-process
+                                  span.order-process-circle
+                                  | Processing
+                            td XL
+                            td 
+                              span.badge.badge-light-danger Pink
+                            td 4215738
+                            td 2
+                            td $21
+                            td Credit Card
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/13.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Fancy watch
+                                .order-process
+                                  span.order-process-circle
+                                  | Processing
+                            td Free Size
+                            td 
+                              span.badge.badge-light-info White
+                            td 5476182
+                            td 3
+                            td $30
+                            td Bank Transfer
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              img.img-fluid.img-30(src='../assets/images/product/4.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Man shoes
+                                .order-process
+                                  span.order-process-circle
+                                  | Processing
+                            td 8
+                            td 
+                              span.badge.badge-light-danger Pink
+                            td 1756457
+                            td 1
+                            td $18
+                            td Credit Card
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/10.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Ladies side bag
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td Small
+                            td 
+                              span.badge.badge-light-warning Brown
+                            td 7451725
+                            td 1
+                            td $13
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/12.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Ladies Slipper
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td 6
+                            td 
+                              span.badge.badge-light-warning Brown
+                            td 4127421
+                            td 1
+                            td $6
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+                          tr
+                            td
+                              a(href="product-page.html")
+                                img.img-fluid.img-30(src='../assets/images/product/3.png', alt='#')
+                            td
+                              .product-name
+                                a(href='javascript:void(0)') Fancy Ladies Jacket
+                                .order-process
+                                  span.order-process-circle.shipped-order
+                                  | Shipped
+                            td Xl
+                            td 
+                              span.badge.badge-light-info Light gray
+                            td 3581714
+                            td 1
+                            td $24
+                            td COD
+                            td
+                              i(data-feather='more-vertical')
+          // Container-fluid Ends  
+        include ../../components/footer
+    include ../../components/footer-files
