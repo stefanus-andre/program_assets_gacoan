@@ -432,7 +432,7 @@
                     <button type="button" class="btn btn-danger btn-remove-asset">-</button>
                 </div>
                 <!-- Submit Buttons -->
-                <div class="text-right">
+                <div id="buttonSubmit" class="text-right">
                     <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
                 </div>
             </div>
@@ -765,6 +765,10 @@ function createFreshAssetField() {
     const $template = $('.asset-fields').first();
     const $newField = $template.clone();
     
+    // Remove the buttonSearch from the cloned field
+    $newField.find('#buttonSearch').remove();
+    $newField.find('#buttonSubmit').remove();
+    
     // Generate unique ID
     const uniqueId = 'asset_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     
@@ -794,6 +798,7 @@ function createFreshAssetField() {
     
     return $newField;
 }
+
 
 // Initialize existing fields
 $(document).ready(function() {
