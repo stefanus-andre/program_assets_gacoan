@@ -1521,16 +1521,25 @@ public function AddDataStockOpname(Request $request)
     
 
 
-    public function ImportDataExcelStockOpname(Request $request) {
+    public function ImportDataExcelStockOpname(Request $request) 
+    {
         ini_set('max_execution_time', 3600);
-
+    
+        // Validate the uploaded file
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
-
-        Excel::import(new MasterStockOpnameImport, $request->file('file'));
-
-        return redirect()->back()->with('success', 'Data imported successfully!');
+    
+        try {
+            // Import the Excel file and process each row
+            Excel::import(new MasterStockOpnameImport, $request->file('file'));
+    
+            // If import is successful, return a success message
+            return redirect()->back()->with('success', 'Data imported successfully.');
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal Import Data. Error: ' . $e->getMessage());
+        }
     }
 
 
