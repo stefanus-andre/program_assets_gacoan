@@ -20,7 +20,7 @@ class OpnameDetails extends Model
         'qty_physical',
         'qty_difference',
         'uom',
-        'condition_id',
+        'condition',
         'image'
     ];
 
