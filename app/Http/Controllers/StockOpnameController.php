@@ -124,7 +124,7 @@ class StockOpnameController extends Controller
 
     // Handle date filtering logic
     $moveoutsQuery = DB::table('t_opname_header')
-    ->select('t_opname_header.*', 'master_resto_v2.name_store_street AS location_now', 't_opname_detail.qty_onhand', 't_opname_detail.qty_physical', 't_opname_detail.register_code', 'm_uom.uom_name', 't_opname_header.deleted_at')
+    ->select('t_opname_header.*', 'master_resto_v2.name_store_street AS location_now', 't_opname_header.verify', 't_opname_detail.qty_onhand', 't_opname_detail.qty_physical', 't_opname_detail.qty_difference', 't_opname_detail.register_code', 'm_uom.uom_name', 't_opname_header.deleted_at')
     ->join('master_resto_v2', 't_opname_header.loc_id', '=', 'master_resto_v2.id')
     ->join('t_opname_detail', 't_opname_header.opname_id', '=', 't_opname_detail.opname_id')
     ->join('m_uom', 't_opname_detail.uom', '=', 'm_uom.uom_id')
@@ -1524,16 +1524,16 @@ public function AddDataStockOpname(Request $request)
     public function ImportDataExcelStockOpname(Request $request) 
     {
         ini_set('max_execution_time', 3600);
-    
+
         // Validate the uploaded file
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
-    
+
         try {
             // Import the Excel file and process each row
             Excel::import(new MasterStockOpnameImport, $request->file('file'));
-    
+
             // If import is successful, return a success message
             return redirect()->back()->with('success', 'Data imported successfully.');
             
