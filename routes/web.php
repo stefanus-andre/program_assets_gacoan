@@ -714,9 +714,8 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
        Route::get('/admin/revdis-taf', [DisposalController::class, 'HalamanTaf'])->name('Admin.revdis-taf');
 
 
- // Stock Opname
- Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname']);
- Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname'])->name('Admin.stockopname');
+// Stock Opname
+ Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname'])->name('admin.stockopname');
  Route::post('/add-stockopname', [StockOpnameController::class, 'AddDataStockOpname'])->name('add.stockopname');
  Route::get('/get-stockopname', [StockOpnameController::class, 'GetStockOpname'])->name('get.stockopname');
  Route::get('/admin/stockopnames', [StockOpnameController::class, 'Index'])->name('Admin.stockopname');
