@@ -519,7 +519,7 @@
                                 </div>
                                 <div class="col-md-4 d-flex align-items-end">
                                     <button type="submit" class="btn btn-primary me-2">Filter</button>
-                                    <a href="{{ route('Admin.stockopname') }}" class="btn btn-secondary ml-2">Reset</a>
+                                    <a href="{{ route('admin.stockopname') }}" class="btn btn-secondary ml-2">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -539,8 +539,8 @@
                                     <th>Asset Tag</th>
                                     <th>Qty OnHand</th>
                                     <th>Qty Actual</th>
-                                    <!-- <th>Qty  Difference</th>
-                                    <th>Kondisi</th> -->
+                                    <th>Qty  Difference</th>
+                                    {{-- <th>Kondisi</th> --}}
                                     <th>Satuan</th>
                                     <!-- <th>Data Dibuat</th> -->
                                     <th>Verify</th>
@@ -560,6 +560,7 @@
                                         <td>{{ $moveout->register_code }}</td>
                                         <td>{{ $moveout->qty_onhand }}</td>
                                         <td>{{ $moveout->qty_physical }}</td>
+                                        <td>{{ $moveout->qty_difference }}</td>
                                         <td>{{ $moveout->uom_name }}</td>
                                         <td>{{ $moveout->verify }}</td>
                                         <td>
