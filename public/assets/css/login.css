@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h5{
+    position: relative;
+    text-align: center;
+    top: 2rem;
+}
+
+html, body {
+    height: 100%;
+}
+
+body{
+    background-image: url('../images/background2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Poppins';font-size: 1rem;
+}
+
+form i {
+    margin-left: -30px;
+    cursor: pointer;
+}
+
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.card {
+    box-shadow: 0 0px 0px 0;
+    transition: 0.3s;
+    width: 25%;
+    border-radius: 5px;
+    height: 65%;
+
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    padding: 60px 35px;
+  gap: 10px;
+  width: 107%;
+  position: relative;
+  right: 21px;
+  bottom: 30px;
+}
+
+.button-container {
+    display: flex;
+    justify-content:center;
+    position: relative;
+    bottom: 3.5rem;
+    gap: 5px;
+}
+
+.card-header {
+    background-color: #0f029e;
+    color: white;
+    padding: 25px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 0rem 0rem 0rem 0rem;
+    width: 102%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.header-card-image {
+    width: 100%;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: calc(100% - 40px); /* Adjust width for the icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #007bff; /* Color of the icon */
+}
+
+.toggle-password i {
+    font-size: 1.2em; /* Adjust icon size */
+}
+
+.lupa-password {
+    color: black;
+    font-style: normal;
+}

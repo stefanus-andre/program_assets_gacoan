@@ -1,0 +1,533 @@
+- var chartist              = true;
+- var theme_customizer      = true;
+- var apex                  = true;
+- var dashboard_2           = true;
+- var notify                = true;
+- var animate               = true;
+- var knobchart             = true;
+- var page_knobchart        = true;
+- var date_picker           = true;
+- var typeahead             = true;
+- var typeahead_search      = true;
+- var sidebar               = true;
+- var scrollbar             = true;
+- var vector_map            = true;
+- var page_vector_map       = true;
+- var customcard            = true;
+- var clipboard             = true;
+- var prism                 = true;
+
+doctype html
+html(lang='en')
+  include ../../components/header-files
+  body(onload='startTime()')
+    include ../../components/taptop
+    include ../../components/loader
+    // page-wrapper Start
+    #pageWrapper.page-wrapper.compact-wrapper
+      include ../../components/header
+      // Page Body Start
+      .page-body-wrapper
+        include ../../components/sidebar
+        .page-body
+          // Container-fluid starts
+          .container-fluid.default-dash2
+            .row       
+              .col-xl-6.chart_data_left
+                .card
+                  .card-body.p-0
+                    .row.m-0.chart-main
+                      .col-sm-6.p-0
+                        .d-flex.align-items-center
+                          .earnings-small-chart
+                            .small-bar
+                              .small-chart.flot-chart-container
+                          .flex-grow-1
+                            .right-chart-content
+                              h4 $85,956.23
+                              p Total Earnings 
+                                span.badge.badge-primary New
+                      .col-sm-6.p-0
+                        .d-flex.align-items-center
+                          .earnings-small-chart
+                            .small-bar
+                              .small-chart1.flot-chart-container
+                          .flex-grow-1
+                            .right-chart-content
+                              h4 $30,250.50
+                              p Total Investment
+                                span.badge.badge-secondary New
+              .col-xl-6.chart_data_right
+                .card
+                  .card-body.p-0
+                    .row.m-0.chart-main
+                      .col-sm-6.p-0
+                        .d-flex.p-0
+                          .flex-grow-1
+                            .d-flex.align-items-center
+                              .knob-block.text-center
+                                input.knob1(data-width='5' , data-height='76', data-thickness='.2', data-angleoffset='0' , data-linecap='round' , data-fgcolor='#3e5fce',data-bgcolor="#eef4fa", value='65')
+                              .flex-grow-1
+                                .right-chart-content
+                                  h4 4,05,984K
+                                  p  Total Visitors
+                                    span.badge.badge-primary New
+                      .col-sm-6.p-0
+                        .d-flex.p-0
+                          .flex-grow-1
+                            .d-flex.align-items-center
+                              .knob-block.text-center
+                                input.knob1(data-width='5' , data-height='76', data-thickness='.2', data-angleoffset='0' , data-linecap='round' , data-fgcolor='#ffce00',data-bgcolor="#fff5cc", value='80')
+                              .flex-grow-1
+                                .right-chart-content
+                                  h4 2,54,562K
+                                  p Total Users
+                                    span.badge.badge-secondary New
+              .col-xl-4.col-md-6.box-col-4
+                .card.goal-view
+                  .card-header.card-no-border.dflex.justify-content-between
+                    h5 Our Goal Overview
+                    .center-content
+                      p This Year Goal
+                    .card-header-right
+                      ul.list-unstyled.card-option
+                        li
+                          i.icon-more-alt
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card                 
+                  .card-body.p-0
+                    .profit-goal
+                      h4 $78,486.65
+                        span.badge.badge-primary.ms-3 New
+                      p Total Profit
+                    #goal-rview
+                    .code-box-copy
+                        button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#ourgoal' title='' data-bs-original-title='Copy' aria-label='Copy')
+                          i.icofont.icofont-copy-alt
+                        pre
+                          code.language-html#ourgoal
+                              |&lt;div class="card goal-view"&gt;
+                              |  &lt;div class="card-header card-no-border dflex justify-content-between"&gt;
+                              |    &lt;h5&gt;Our Goal Overview&lt;/h5&gt;
+                              |      &lt;div class="center-content"&gt;
+                              |        &lt;p&gt;This Year Goal&lt;/p&gt;
+                              |      &lt;/div&gt;
+                              |      &lt;div class="card-header-right"&gt;
+                              |        &lt;ul class="list-unstyled card-option"&gt;
+                              |          &lt;li&gt;&lt;i class="icon-more-alt"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt; &lt;/i&gt;&lt;/li&gt;
+                              |        &lt;/ul&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;div class="card-body p-0"&gt;
+                              |    &lt;div class="profit-goal"&gt;
+                              |      &lt;h4&gt;$78,486.65&lt;span class="badge badge-primary ms-3"&gt;New&lt;/span&gt;&lt;/h4&gt;
+                              |      &lt;p&gt;Total Profit&lt;/p&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div id="goal-rview"&gt;&lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+                  ul.goal-list
+                    li
+                      h4 65%
+                      p Completed Goal
+                    li 
+                      h4 96%
+                      p Expected Goal                
+              .col-xl-4.col-md-6.box-col-4
+                .card.browser-statistics
+                  .card-header.pb-0.card-no-border.dflex.justify-content-between
+                    h5 Browser Statistics
+                    .center-content
+                      p This Year Statistics
+                    .card-header-right
+                      ul.list-unstyled.card-option
+                        li
+                          i.icon-more-alt
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card                 
+                  .card-body.text-center
+                    #explorerstatistics
+                    #chromestatistics
+                    #operastatistics
+                    #firefoxstatistics
+                    a.btn.btn-primary(href="chart-widget.html") View More
+                    .code-box-copy
+                        button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#browserstatist' title='' data-bs-original-title='Copy' aria-label='Copy')
+                          i.icofont.icofont-copy-alt
+                        pre
+                          code.language-html#browserstatist
+                              |&lt;div class="card browser-statistics"&gt;
+                              |  &lt;div class="card-header pb-0 card-no-border dflex justify-content-between"&gt;
+                              |    &lt;h5&gt;Browser Statistics&lt;/h5&gt;
+                              |     &lt;div class="center-content"&gt;
+                              |       &lt;p&gt;This Year Statistics&lt;/p&gt;
+                              |     &lt;/div&gt;
+                              |     &lt;div class="card-header-right"&gt;
+                              |       &lt;ul class="list-unstyled card-option"&gt;
+                              |         &lt;li&gt;&lt;i class="icon-more-alt"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |         &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |         &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |         &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |         &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |         &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt; &lt;/i&gt;&lt;/li&gt;
+                              |       &lt;/ul&gt;
+                              |     &lt;/div&gt;
+                              |   &lt;/div&gt;
+                              |  &lt;div class="card-body text-center"&gt;
+                              |    &lt;div id="explorerstatistics"&gt;&lt;/div&gt;
+                              |    &lt;div id="chromestatistics"&gt;&lt;/div&gt;
+                              |    &lt;div id="operastatistics"&gt;&lt;/div&gt;
+                              |    &lt;div id="firefoxstatistics"&gt;&lt;/div&gt;&lt;a class="btn btn-primary" href="javascript:void(0)"&gt;View More&lt;/a&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+              .col-xl-4.col-md-6.box-col-4
+                .card.pro-delivery
+                  .card-header.pb-0.card-no-border.dflex.justify-content-between
+                    h5 Product delivery
+                    .center-content
+                      p See all product delivery
+                    .card-header-right
+                      ul.list-unstyled.card-option
+                        li
+                          i.icon-more-alt
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card                 
+                  .card-body.pt-0
+                    #world-map2.jvector-map-height
+                    .code-box-copy
+                        button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#prodelivery' title='' data-bs-original-title='Copy' aria-label='Copy')
+                          i.icofont.icofont-copy-alt
+                        pre
+                          code.language-html#prodelivery
+                              |&lt;div class="card pro-delivery"&gt;
+                              |  &lt;div class="card-header pb-0 card-no-border dflex justify-content-between"&gt;
+                              |    &lt;h5&gt;Product delivery&lt;/h5&gt;
+                              |      &lt;div class="center-content"&gt;
+                              |        &lt;p&gt;See all product delivery&lt;/p&gt;
+                              |      &lt;/div&gt;
+                              |      &lt;div class="card-header-right"&gt;
+                              |        &lt;ul class="list-unstyled card-option"&gt;
+                              |          &lt;li&gt;&lt;i class="icon-more-alt"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |          &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt; &lt;/i&gt;&lt;/li&gt;
+                              |        &lt;/ul&gt;
+                              |      &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body pt-0"&gt;
+                              |    &lt;div class="jvector-map-height" id="world-map2"&gt;&lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+              .col-xxl-6.col-xl-5.box-col-5.col-md-6.xl-35
+                .card.total-profit-chart
+                  .card-header.card-no-border.dflex.justify-content-between
+                    h5 Our Total Profit
+                    .center-content
+                      ul.profit-list
+                        li
+                          i.fa.fa-square
+                          span Last Year
+                        li
+                          i.fa.fa-square
+                          span Current Year
+                    .card-header-right
+                      ul.list-unstyled.card-option
+                        li
+                          i.icon-more-alt
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card                 
+                  .card-body.p-0                   
+                    .profit-goal
+                      h4 $78,486.65 
+                        span.badge.badge-primary.ms-3 New
+                      p Total Profit                   
+                    #total-profit
+                    .code-box-copy
+                        button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#total-profit-chart' title='' data-bs-original-title='Copy' aria-label='Copy')
+                          i.icofont.icofont-copy-alt
+                        pre
+                          code.language-html#total-profit-chart
+                              |&lt;div class="card total-profit-chart"&gt;
+                              |  &lt;div class="card-header card-no-border dflex justify-content-between"&gt;
+                              |    &lt;h5&gt;Our Total Profit&lt;/h5&gt;
+                              |    &lt;div class="center-content"&gt;
+                              |      &lt;ul class="profit-list"&gt;
+                              |        &lt;li&gt;&lt;i class="fa fa-square"&gt;&lt;/i&gt;&lt;span&gt;Last Year&lt;/span&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="fa fa-square"&gt;&lt;/i&gt;&lt;span&gt;Current Year&lt;/span&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="list-unstyled card-option"&gt;
+                              |        &lt;li&gt;&lt;i class="icon-more-alt"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt; &lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-0"&gt;
+                              |    &lt;div class="profit-goal"&gt;
+                              |      &lt;h4&gt;$78,486.65 &lt;span class="badge badge-primary ms-3"&gt;New&lt;/span&gt;&lt;/h4&gt;
+                              |      &lt;p&gt;Total Profit &lt;/p&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div id="total-profit"&gt;&lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+              .col-xxl-6.col-xl-7.box-col-7.xl-65
+                .card.selling-product
+                  .card-header.card-no-border.dflex.justify-content-between
+                    h5 Top Selling Product
+                    .center-content
+                      p Last Year Earning 
+                    .card-header-right
+                      ul.list-unstyled.card-option
+                        li
+                          i.icon-more-alt
+                        li
+                          i.view-html.fa.fa-code
+                        li
+                          i.icofont.icofont-maximize.full-card
+                        li
+                          i.icofont.icofont-minus.minimize-card
+                        li
+                          i.icofont.icofont-refresh.reload-card
+                        li
+                          i.icofont.icofont-error.close-card                 
+                  .card-body.p-t-0
+                    .row
+                      .col-md-6.col-sm-6.ratio_100
+                        .product-box
+                          span.badge.badge-primary.left-badge New
+                          span.badge.badge-secondary.right-badge -36%
+                          .img-wrraper
+                            img.img-fluid.bg-img-cover(src="../assets/images/dashboard-2/product/1.png" alt="")
+                          .product-detail
+                            p Fully Comfortable
+                            a(href="product-page.html")
+                              h6 Latest Sports Shoes
+                            a.btn.btn-primary(href="product-page.html")
+                              span.fa.fa-shopping-bag 
+                              | Buy Now                     
+                      .col-md-6.ratio_100
+                        .row.product-block
+                          .col-6
+                            .product-box
+                              span.badge.badge-transparent.right-badge.font-primary -20%
+                              .img-wrraper
+                                img.img-fluid.bg-img-cover(src="../assets/images/dashboard-2/product/2.png" alt="")
+                              .product-detail                           
+                                a(href="product-page.html")   
+                                  h6 File Jumper Sports Shoes
+                          .col-6
+                            .product-box
+                              span.badge.badge-transparent.right-badge.font-primary -28%
+                              .img-wrraper
+                                img.img-fluid.bg-img-cover(src="../assets/images/dashboard-2/product/3.png" alt="")
+                              .product-detail   
+                                a(href="product-page.html")                        
+                                  h6 Adidas Sports Shoes
+                          .col-6
+                            .product-box
+                              span.badge.badge-transparent.right-badge.font-primary -42%
+                              .img-wrraper
+                                img.img-fluid.bg-img-cover(src="../assets/images/dashboard-2/product/4.png" alt="")
+                              .product-detail 
+                                a(href="product-page.html")                          
+                                  h6 Puma Green Sports
+                          .col-6
+                            .product-box
+                              span.badge.badge-transparent.right-badge.font-primary -41%
+                              .img-wrraper
+                                img.img-fluid.bg-img-cover(src="../assets/images/dashboard-2/product/5.png" alt="")
+                              .product-detail 
+                                a(href="product-page.html")                          
+                                  h6 Grey Nike Air
+                    .code-box-copy
+                        button.code-box-copy__btn.btn-clipboard(data-clipboard-target='#selling-product' title='' data-bs-original-title='Copy' aria-label='Copy')
+                          i.icofont.icofont-copy-alt
+                        pre
+                          code.language-html#selling-product
+                              |&lt;div class="card selling-product"&gt;
+                              |  &lt;div class="card-header card-no-border dflex justify-content-between"&gt;
+                              |    &lt;h5&gt;Top Selling Product&lt;/h5&gt;
+                              |    &lt;div class="center-content"&gt;
+                              |      &lt;p&gt;Last Year Earning &lt;/p&gt;
+                              |    &lt;/div&gt;
+                              |    &lt;div class="card-header-right"&gt;
+                              |      &lt;ul class="list-unstyled card-option"&gt;
+                              |        &lt;li&gt;&lt;i class="icon-more-alt"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="view-html fa fa-code"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-maximize full-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-minus minimize-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-refresh reload-card"&gt;&lt;/i&gt;&lt;/li&gt;
+                              |        &lt;li&gt;&lt;i class="icofont icofont-error close-card"&gt; &lt;/i&gt;&lt;/li&gt;
+                              |      &lt;/ul&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |  &lt;div class="card-body p-t-0"&gt;
+                              |    &lt;div class="row"&gt;
+                              |      &lt;div class="col-md-6 col-sm-6 ratio_100"&gt;
+                              |        &lt;div class="product-box"&gt;&lt;span class="badge badge-primary left-badge"&gt;New&lt;/span&gt;&lt;span class="badge badge-secondary right-badge"&gt;-36%&lt;/span&gt;
+                              |          &lt;div class="img-wrraper"&gt;&lt;img class="img-fluid bg-img-cover" src="../assets/images/dashboard-2/product/1.png" alt="" /&gt;&lt;/div&gt;
+                              |          &lt;div class="product-detail"&gt;
+                              |            &lt;p&gt;Fully Confirtable&lt;/p&gt;
+                              |            &lt;h6&gt;Latest Sports Shoes&lt;/h6&gt;&lt;a class="btn btn-primary" href="javascript:void(0)"&gt;&lt;span class="fa fa-shopping-bag"&gt; &lt;/span&gt;Buy Now &lt;/a&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |      &lt;div class="col-md-6 ratio_100"&gt;
+                              |        &lt;div class="row product-block"&gt;
+                              |          &lt;div class="col-6"&gt;
+                              |            &lt;div class="product-box"&gt;&lt;span class="badge badge-transparent right-badge font-primary"&gt;-20%&lt;/span&gt;
+                              |              &lt;div class="img-wrraper"&gt;&lt;img class="img-fluid bg-img-cover" src="../assets/images/dashboard-2/product/2.png" alt="" /&gt;&lt;/div&gt;
+                              |              &lt;div class="product-detail"&gt;
+                              |                &lt;h6&gt;Red Sports Shoes&lt;/h6&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |          &lt;div class="col-6"&gt;
+                              |            &lt;div class="product-box"&gt;&lt;span class="badge badge-transparent right-badge font-primary"&gt;-28%&lt;/span&gt;
+                              |              &lt;div class="img-wrraper"&gt;&lt;img class="img-fluid bg-img-cover" src="../assets/images/dashboard-2/product/3.png" alt="" /&gt;&lt;/div&gt;
+                              |              &lt;div class="product-detail"&gt;
+                              |                &lt;h6&gt;Red Sports Shoes&lt;/h6&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |          &lt;div class="col-6"&gt;
+                              |            &lt;div class="product-box"&gt;&lt;span class="badge badge-transparent right-badge font-primary"&gt;-42%&lt;/span&gt;
+                              |              &lt;div class="img-wrraper"&gt;&lt;img class="img-fluid bg-img-cover" src="../assets/images/dashboard-2/product/4.png" alt="" /&gt;&lt;/div&gt;
+                              |              &lt;div class="product-detail"&gt;
+                              |                &lt;h6&gt;Red Sports Shoes&lt;/h6&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |          &lt;div class="col-6"&gt;
+                              |            &lt;div class="product-box"&gt;&lt;span class="badge badge-transparent right-badge font-primary"&gt;-41%&lt;/span&gt;
+                              |              &lt;div class="img-wrraper"&gt;&lt;img class="img-fluid bg-img-cover" src="../assets/images/dashboard-2/product/5.png" alt="" /&gt;&lt;/div&gt;
+                              |              &lt;div class="product-detail"&gt;
+                              |                &lt;h6&gt;Red Sports Shoes&lt;/h6&gt;
+                              |              &lt;/div&gt;
+                              |            &lt;/div&gt;
+                              |          &lt;/div&gt;
+                              |        &lt;/div&gt;
+                              |      &lt;/div&gt;
+                              |    &lt;/div&gt;
+                              |  &lt;/div&gt;
+                              |&lt;/div&gt;
+              .col-xl-8.col-md-7
+                .card.best-seller
+                  .card-body 
+                    .table-responsive
+                      table.table.table-bordernone
+                        thead
+                          tr
+                            th.font-primary.f-16
+                               | Best Seller
+                            th Date                                          
+                            th Product
+                            th Country
+                            th Total
+                            th Status
+                        tbody
+                          tr
+                            td 
+                              a(href="user-profile.html") 
+                                span Ossim keter
+                              p 2023
+                            td 16 Aug
+                            td Clothes
+                            td 
+                              i.flag-icon.flag-icon-gb
+                            td $1,58,652
+                            td Success
+                          tr
+                            td 
+                              a(href="user-profile.html")
+                                span Venter loren
+                              p 2021
+                            td 21 Sep
+                            td Branded Shoes
+                            td 
+                              i.flag-icon.flag-icon-us
+                            td $95,025
+                            td Success
+                          tr
+                            td 
+                              a(href="user-profile.html")
+                                span Fran Loan
+                              p 2023
+                            td 06 Mar
+                            td Electronics
+                            td 
+                              i.flag-icon.flag-icon-za
+                            td $90,155
+                            td Success
+              .col-xl-4.col-md-5.col-lg-5
+                .card.announcement-sec
+                  img.img-fluid.bg-img-cover(src="../assets/images/dashboard-2/announcement.jpg" alt="")
+                  .card-body
+                    div 
+                      h4 Announcement
+                      span Packaging Department
+                      .real-date-time
+                        .real-date 14, Jan 2023
+                        .real-time 
+                          i.icon-alarm-clock.me-2
+                          span#txt
+                      .announcement-buttons
+                        a.btn(href="javascript:void(0)") Open
+                        .iocn-bell.ms-3
+                          i.fa.fa-bell
+                          span.badge.rounded-pill.badge-light 8
+                  .shap-block       
+                    .shap1 +
+                    .shap2.opicity-10 +
+                    .shap3.opicity-50 +
+                    .shap4
+                    .shap5.opicity-10  
+                    .shap6
+                    .shap7  
+          // Container-fluid Ends
+        include ../../components/footer
+    include ../../components/footer-files
