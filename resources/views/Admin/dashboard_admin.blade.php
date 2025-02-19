@@ -10,6 +10,7 @@
     <link rel="icon" href=" {{asset('assets/images/favicon/favicon.png')}}" type="image/x-icon">
     <link rel="shortcut icon" href="{{asset('assets/images/favicon/favicon.png')}}" type="image/x-icon">
     <title>ASMI - Asset System Management Integration</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google font-->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +43,10 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}">
     <style>
+      #myChart{
+        width: 100%!important;
+        height: 314PX;
+      }
       * {
   box-sizing: border-box;
 }
@@ -305,30 +310,62 @@
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <!-- Container-fluid starts-->
-          <h2>Dashboard</h2>
-          <br><br><br>
-       <div class="flex-container">
-       <div class="card">
-      <h2>Total Asset</h2>
-      <p class="count">1000</p>
-      <p class="description">Total Keseluruhan Asset</p>
-    </div>
-    <div class="card">
-      <h2>Bad Asset</h2>
-      <p class="count red">100</p>
-      <p class="description">Total Asset Rusak</p>
-    </div>
-    <div class="card">
-      <h2>Good Asset</h2>
-      <p class="count">900</p>
-      <p class="description">Total Asset Digunakan</p>
-    </div>
-    <div class="card">
-      <h2>Total Resto</h2>
-      <p class="count">90</p>
-      <p class="description">Total Registrasi Asset</p>
-    </div>
+          <h2 class="py-4 ps-4">Dashboard</h2>
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="card flex-row py-4">
+                <div class="col-sm-3">
+                  <h2>Total Asset</h2>
+                  <p class="count">{{ $totalAsset }}</p>
+                  <p class="description">Total Keseluruhan Asset</p>
+                </div>
+                <div class="col-sm-3">
+                  <h2>Bad Asset</h2>
+                  <p class="count red">{{ $badAsset }}</p>
+                  <p class="description">Total Asset Rusak</p>
+                </div>
+                <div class="col-sm-3">
+                  <h2>Good Asset</h2>
+                  <p class="count">{{ $goodAsset }}</p>
+                  <p class="description">Total Asset Digunakan</p>
+                </div>
+                <div class="col-sm-3">
+                  <h2>Total Resto</h2>
+                  <p class="count">{{ $totalResto }}</p>
+                  <p class="description">Total Registrasi Asset</p>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="card">
+            <div class="pb-5">
+                <div class="row">
+                  <div class="col-md-4">
+                      <label for="start_date">Start Date</label>
+                      <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}">
+                  </div>
+                  <div class="col-md-4">
+                      <label for="end_date">End Date</label>
+                      <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request('end_date') }}">
+                  </div>
+                  <div class="col-md-4 d-flex align-items-end">
+                      <button class="btn btn-primary me-2" onclick="filterNow()">Filter</button>
+                      <a href="/admin/dashboard" class="btn btn-secondary ml-2">Reset</a>
+                  </div>
+                </div>
+            </div>
+            <!-- Tombol untuk navigasi halaman -->
+            <div class="d-flex justify-content-end">
+              <button id="prevPage" class="btn btn-info me-2">Previous</button>
+              <span id="current-page"> 1</span> / <span id="total-pages">10 </span>
+              <button id="nextPage" class="btn btn-info ms-2">Next</button>
+            </div>
+            <div class="d-flex justify-content-center mb-4">
+              <h2>Asset Per Resto Mie Gacoan</h2>
+            </div>
+            <div id="posts-container"></div>
+            <canvas id="myChart"></canvas>
+          </div>
         </div>
         <!-- footer start-->
         <footer class="footer">
@@ -351,91 +388,285 @@
         </footer>
       </div>
     </div>
-    <!-- latest jquery-->
-    <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
-    <!-- Bootstrap js-->
-    <script src="{{asset('assets/js/bootstrap/bootstrap.bundle.min.js')}}"></script>
-    <!-- feather icon js-->
-    <script src="{{asset('assets/js/icons/feather-icon/feather.min.js')}}"></script>
-    <script src="{{asset('assets/js/icons/feather-icon/feather-icon.js')}}"></script>
-    <!-- scrollbar js-->
-    <script src="{{asset('assets/js/scrollbar/simplebar.js')}}"></script>
-    <script src="{{asset('assets/js/scrollbar/custom.js')}}"></script>
-    <!-- Sidebar jquery-->
-    <script src="{{asset('assets/js/config.js')}}"></script>
-    <!-- Plugins JS start-->
-    <script src="{{asset('assets/js/sidebar-menu.js')}}"></script>
-    <script src="{{asset('assets/js/chart/chartist/chartist.js')}}"></script>
-    <script src="{{asset('assets/js/chart/chartist/chartist-plugin-tooltip.js')}}"></script>
-    <script src="{{asset('assets/js/chart/knob/knob.min.js')}}"></script>
-    <script src="{{asset('assets/js/chart/knob/knob-chart.js')}}"></script>
-    <script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
-    <script src="{{asset('assets/js/chart/apex-chart/stock-prices.js')}}"></script>
-    <script src="{{asset('assets/js/prism/prism.min.js')}}"></script>
-    <script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>
-    <script src="{{asset('assets/js/custom-card/custom-card.js')}}"></script>
-    <script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
-    <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
-    <script src="{{asset('assets/js/slick-slider/slick.min.js')}}"></script>
-    <script src="{{asset('assets/js/slick-slider/slick-theme.js')}}"></script>
-    <script src="{{asset('assets/js/typeahead/handlebars.js')}}"></script>
-    <script src="{{asset('assets/js/typeahead/typeahead.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/typeahead/typeahead.custom.js')}}"></script>
-    <script src="{{asset('assets/js/typeahead-search/handlebars.js')}}"></script>
-    <!-- Plugins JS Ends-->
-    <!-- Theme js-->
-    <script src="{{asset('assets/js/script.js')}}"></script>
-    <!-- login js-->
-    <!-- Plugin used-->
+<!-- latest jquery-->
+<script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+<!-- Bootstrap js-->
+<script src="{{asset('assets/js/bootstrap/bootstrap.bundle.min.js')}}"></script>
+<!-- feather icon js-->
+<script src="{{asset('assets/js/icons/feather-icon/feather.min.js')}}"></script>
+<script src="{{asset('assets/js/icons/feather-icon/feather-icon.js')}}"></script>
+<!-- scrollbar js-->
+<script src="{{asset('assets/js/scrollbar/simplebar.js')}}"></script>
+<script src="{{asset('assets/js/scrollbar/custom.js')}}"></script>
+<!-- Sidebar jquery-->
+<script src="{{asset('assets/js/config.js')}}"></script>
+<!-- Plugins JS start-->
+<script src="{{asset('assets/js/sidebar-menu.js')}}"></script>
+<script src="{{asset('assets/js/chart/chartist/chartist.js')}}"></script>
+<script src="{{asset('assets/js/chart/chartist/chartist-plugin-tooltip.js')}}"></script>
+<script src="{{asset('assets/js/chart/knob/knob.min.js')}}"></script>
+<script src="{{asset('assets/js/chart/knob/knob-chart.js')}}"></script>
+<script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
+<script src="{{asset('assets/js/chart/apex-chart/stock-prices.js')}}"></script>
+<script src="{{asset('assets/js/prism/prism.min.js')}}"></script>
+<script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>
+<script src="{{asset('assets/js/custom-card/custom-card.js')}}"></script>
+<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
+<script src="{{asset('assets/js/dashboard/default.js')}}"></script>
+<script src="{{asset('assets/js/slick-slider/slick.min.js')}}"></script>
+<script src="{{asset('assets/js/slick-slider/slick-theme.js')}}"></script>
+<script src="{{asset('assets/js/typeahead/handlebars.js')}}"></script>
+<script src="{{asset('assets/js/typeahead/typeahead.bundle.js')}}"></script>
+<script src="{{asset('assets/js/typeahead/typeahead.custom.js')}}"></script>
+<script src="{{asset('assets/js/typeahead-search/handlebars.js')}}"></script>
+<!-- Plugins JS Ends-->
+<!-- Theme js-->
+<script src="{{asset('assets/js/script.js')}}"></script>
+<!-- login js-->
+<!-- Plugin used-->
 
-    <script>
-    $(document).ready(function () {
-        // Make an AJAX GET request to fetch the total data asset
-        $.ajax({
-            url: '/user/get_data_total_asset', // API endpoint
-            method: 'GET',
-            success: function (response) {
-                // Display the total count in the paragraph
-                $('#data_total_asset').text(`${response.total_count}`);
-            },
-            error: function (xhr, status, error) {
-                // Handle errors
-                console.error('Error fetching data:', error);
-                $('#data_total_asset').text('Failed to fetch data.');
-            }
-        });
+<script>
+  $(document).ready(function () {
+      // Make an AJAX GET request to fetch the total data asset
+      $.ajax({
+          url: '/user/get_data_total_asset', // API endpoint
+          method: 'GET',
+          success: function (response) {
+              // Display the total count in the paragraph
+              $('#data_total_asset').text(`${response.total_count}`);
+          },
+          error: function (xhr, status, error) {
+              // Handle errors
+              console.error('Error fetching data:', error);
+              $('#data_total_asset').text('Failed to fetch data.');
+          }
+      });
 
-        $.ajax({
-            url: '/user/get_data_total_asset_rusak', // API endpoint
-            method: 'GET',
-            success: function (response) {
-                // Display the total count in the paragraph
-                $('#data_total_asset_rusak').text(`${response.total_count}`);
-            },
-            error: function (xhr, status, error) {
-                // Handle errors
-                console.error('Error fetching data:', error);
-                $('#data_total_asset_rusak').text('Failed to fetch data.');
-            }
-        });
+      $.ajax({
+          url: '/user/get_data_total_asset_rusak', // API endpoint
+          method: 'GET',
+          success: function (response) {
+              // Display the total count in the paragraph
+              $('#data_total_asset_rusak').text(`${response.total_count}`);
+          },
+          error: function (xhr, status, error) {
+              // Handle errors
+              console.error('Error fetching data:', error);
+              $('#data_total_asset_rusak').text('Failed to fetch data.');
+          }
+      });
 
-        $.ajax({
-            url: '/user/get_data_total_asset_bagus', // API endpoint
-            method: 'GET',
-            success: function (response) {
-                // Display the total count in the paragraph
-                $('#data_total_asset_bagus').text(`${response.total_count}`);
-            },
-            error: function (xhr, status, error) {
-                // Handle errors
-                console.error('Error fetching data:', error);
-                $('#data_total_asset_bagus').text('Failed to fetch data.');
-            }
-        });
+      $.ajax({
+          url: '/user/get_data_total_asset_bagus', // API endpoint
+          method: 'GET',
+          success: function (response) {
+              // Display the total count in the paragraph
+              $('#data_total_asset_bagus').text(`${response.total_count}`);
+          },
+          error: function (xhr, status, error) {
+              // Handle errors
+              console.error('Error fetching data:', error);
+              $('#data_total_asset_bagus').text('Failed to fetch data.');
+          }
+      });
 
-    });
-  </script>
+  });
+</script>
+<script>
+  let currentPage = 1; // Halaman saat ini
+  const itemsPerPage = 10;  // Jumlah restoran per halaman
 
-  
-  </body>
+  let labels = [];
+  let data1 = []; // Data pertama
+  let data2 = []; // Data kedua
+  let data3 = []; // Data ketiga (data disposal)
+
+  $(document).ready(function() {
+      // Mengambil data melalui AJAX ketika halaman siap
+      fetchRestoData();
+  });
+
+  // Fungsi filter berdasarkan tanggal
+  function filterNow() {
+      const startDate = $("#start_date").val();
+      const endDate = $("#end_date").val();
+
+      // Pastikan startDate dan endDate valid
+      if (startDate && endDate) {
+          // Panggil fetchRestoData dengan startDate dan endDate
+          fetchRestoData(startDate, endDate);
+      } else {
+          alert('Silakan pilih tanggal dengan benar!');
+      }
+  }
+
+  // Fungsi mengambil data restoran
+  function fetchRestoData(startDate, endDate) {
+      $.ajax({
+          url: '{{ url("/admin/get-resto-json") }}', // URL untuk mengambil data
+          method: 'GET',
+          data: {
+              start_date: startDate,  // Ambil nilai start_date dari input
+              end_date: endDate     // Ambil nilai end_date dari input
+          },
+          dataType: 'json', // Format data yang diharapkan
+          success: function(response) {
+              if (response && Object.keys(response).length > 0) {
+                  processRestoData(response);
+              } else {
+                  $('#posts-container').html('<p>Tidak ada data.</p>');
+              }
+          },
+          error: function() {
+              $('#posts-container').html('<p>Terjadi kesalahan saat mengambil data.</p>');
+          }
+      });
+  }
+
+  // Fungsi untuk memproses data restoran dan membuat chart
+  function processRestoData(response) {
+      // Reset data setiap kali pemrosesan baru dilakukan
+      labels = [];
+      data1 = [];
+      data2 = [];
+      data3 = [];
+
+      var restoMap = {};
+
+      response.forEach(function(resto) {
+          if (resto.asset_model !== null) {
+              if (!restoMap[resto.id_resto]) {
+                  restoMap[resto.id_resto] = {
+                      id_resto: resto.id_resto,
+                      asset_model: resto.asset_model,
+                      condition_name: resto.condition_name,
+                      condition_id: resto.condition_id,
+                      qty: resto.qty,
+                      qty_disposal: resto.qty_disposal
+                  };
+              } else {
+                  restoMap[resto.id_resto].qty += resto.qty;
+              }
+              if (resto.condition_id === 3 || resto.condition_id === 1) {
+                  restoMap[resto.id_resto].qty_good = (restoMap[resto.id_resto].qty_good || 0) + resto.qty;
+              }
+              if (resto.out_id.includes("DA")) {
+                  restoMap[resto.id_resto].qty_disposal = (restoMap[resto.id_resto].qty_disposal || 0) + resto.qty;
+              }
+
+              // Memisahkan name_store_street berdasarkan '-'
+              const explode_street = resto.name_store_street.split('-');
+              
+              // Ambil elemen 1 dan 2 dari hasil split
+              if (explode_street.length > 1) {
+                  restoMap[resto.id_resto].name_store_street = explode_street[1].trim() + " - " + explode_street[2].trim();
+              }
+              
+          }
+      });
+
+      // Mengubah restoMap menjadi array yang bisa digunakan untuk chart
+      Object.values(restoMap).forEach(function(resto) {
+          labels.push(resto.name_store_street);
+          data1.push(resto.qty);
+          data2.push(resto.qty_good || 0);
+          data3.push(resto.qty_disposal);
+      });
+
+      // Perbarui chart untuk halaman pertama
+      updateChart();
+  }
+
+  // Fungsi untuk memperbarui chart berdasarkan halaman yang aktif
+  function updateChart() {
+      // Mendapatkan konteks canvas
+      var ctx = document.getElementById('myChart').getContext('2d');
+
+      // Mengecek apakah chart sudah ada sebelumnya dan menghancurkannya
+      if (window.myChart instanceof Chart) {
+          window.myChart.destroy();
+      }
+
+      // Membatasi data yang akan ditampilkan pada halaman ini
+      const startIdx = (currentPage - 1) * itemsPerPage;
+      const endIdx = startIdx + itemsPerPage;
+      const pageLabels = labels.slice(startIdx, endIdx);
+      const pageTotalAsset = data1.slice(startIdx, endIdx);
+      const pageGoodAsset = data2.slice(startIdx, endIdx);
+      const pageDisposalAsset = data3.slice(startIdx, endIdx);
+
+      // Membuat chart baru dan menyimpannya ke dalam window.myChart
+      window.myChart = new Chart(ctx, {
+          type: 'bar', // Jenis chart, bisa diganti dengan line, pie, dll
+          data: {
+              labels: pageLabels, // Label sumbu X
+              datasets: [
+                  {
+                      label: 'Total Asset',
+                      data: pageTotalAsset, // Data asli
+                      backgroundColor: 'rgba(75, 192, 192, 0.2)', // Warna latar belakang
+                      borderColor: 'rgba(75, 192, 192, 1)', // Warna border
+                      borderWidth: 1
+                  },
+                  {
+                      label: 'Good Asset',
+                      data: pageGoodAsset, // Data good
+                      backgroundColor: 'rgba(153, 102, 255, 0.2)', // Warna latar belakang
+                      borderColor: 'rgba(153, 102, 255, 1)', // Warna border
+                      borderWidth: 1
+                  },
+                  {
+                      label: 'Disposal Asset',
+                      data: pageDisposalAsset, // Data disposal
+                      backgroundColor: 'rgba(255, 159, 64, 0.2)', // Warna latar belakang
+                      borderColor: 'rgba(255, 159, 64, 1)', // Warna border
+                      borderWidth: 1
+                  }
+              ]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+
+      // Perbarui tombol navigasi (Next dan Previous)
+      updatePagination();
+  }
+
+  // Fungsi untuk memperbarui tombol pagination
+  function updatePagination() {
+      const totalPages = Math.ceil(labels.length / itemsPerPage);
+      $('#current-page').text(currentPage);
+      $('#total-pages').text(totalPages);
+
+      // Sembunyikan tombol "Previous" jika sudah di halaman pertama
+      $('#prevPage').prop('disabled', currentPage === 1);
+
+      // Sembunyikan tombol "Next" jika sudah di halaman terakhir
+      $('#nextPage').prop('disabled', currentPage === totalPages);
+  }
+
+  // Event listeners untuk tombol navigasi paging
+  $('#nextPage').on('click', function() {
+      const totalPages = Math.ceil(labels.length / itemsPerPage);
+      if (currentPage < totalPages) {
+          currentPage++;
+          updateChart(); // Perbarui chart untuk halaman berikutnya
+      }
+  });
+
+  $('#prevPage').on('click', function() {
+      if (currentPage > 1) {
+          currentPage--;
+          updateChart(); // Perbarui chart untuk halaman sebelumnya
+      }
+  });
+
+
+</script>
+</body>
 </html>
