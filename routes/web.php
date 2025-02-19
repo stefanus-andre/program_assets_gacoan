@@ -96,6 +96,7 @@ Route::prefix('admin/registrasi_asset')->group(function(){
 
 Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
+    Route::get('/admin/get-resto-json', [AdminController::class, 'getDataResto']);
     // Asset Route
     Route::get('/admin/halaman_asset', [AdminController::class, 'HalamanAsset']);
     Route::get('/admin/GetDataAsset', [AdminController::class, 'GetDataAsset']);
