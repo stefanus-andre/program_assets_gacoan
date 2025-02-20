@@ -1,0 +1,417 @@
+/**=====================
+     85.Update CSS Start
+==========================**/
+@import "utils/variables";
+// jsgrid css
+.jsgrid-filter-row {
+    select, input {
+        padding: 6px 10px;
+        border: 1px solid $horizontal-border-color;
+        background: $white;
+    }
+}
+.js_basic_table{
+    .jsgrid-cell{
+      &:nth-child(7) {
+        color: $danger-color;
+      }
+    }
+  }
+
+  .jsgrid {
+	.jsgrid-button {
+        width: 20px;
+		height: 20px;
+        &.jsgrid-search-button{
+            background-position: 0 -295px;
+        }
+        &.jsgrid-clear-filter-button{
+            background-position: 0 -39px;
+        }
+    }
+    .jsgrid-delete-button {
+        background-position: 0 -78px;
+        width: 22px;
+        height: 22px;
+    }
+    .jsgrid-edit-button {
+        background-position: -2px -122px;
+        width: 22px;
+        height: 22px;
+    }
+    .jsgrid-insert-mode-button {
+        background-position: -2px -160px;
+        width: 25px;
+        height: 25px;
+    }
+    .jsgrid-insert-button {
+        background-position: -3px -202px;
+        width: 16px;
+        height: 16px;
+    }
+}
+.todo-wrap{
+    .card-header{
+      &.b-bottom{
+        border-bottom: 1px solid $light-gray;
+      }
+      .todo-list-header{
+        .add-new-task-btn{
+          display: flex;
+          align-items: center;
+          z-index: 0;
+        }
+      }
+    }
+}
+.datepicker--cell-day {
+    width: 14.2857142857%;
+}
+// animation
+.animation-modal{
+    .card-body{
+        .animate-widget{
+            img{
+                border-radius: 10px 10px 0 0;
+            }
+        }
+    }
+}
+.support-ticket{
+    .table-responsive{
+        overflow: hidden;
+    }
+}
+div.dataTables_wrapper{
+    font-family: $font-rubik;
+}
+// popover
+.popover {
+    background-color: $white;
+    border: none;
+    -webkit-box-shadow: 0 0 20px rgba($primary-color, 0.1);
+    box-shadow: 0 0 20px rgba($primary-color, 0.1);
+    .popover-header {
+        background-color: $theme-medium-color;
+        color: $primary-color;
+        border-bottom: none;
+    }
+    .popover-body {
+        color: rgba(43,43,43,0.7);
+    }
+}
+// summernote css 
+.card-header.note-toolbar{
+    .dropdown-menu.note-check{
+      a{
+        i{
+          color: $primary-color;
+          visibility: visible;
+        }
+      }
+    }
+  }
+  .note-btn-group.btn-group{
+    &:hover{
+      > .dropdown-menu{
+        display: block !important;
+      }
+    }
+  }
+.todo-wrap {
+    .card-header {
+        .todo-list-header {
+            .new-task-wrapper {
+                input {
+                    background-color: $body-color;
+                }
+            }
+        }
+    }
+}
+// tooltip css start
+.tooltip {
+    &.bs-tooltip-top {
+      .tooltip-arrow {
+          &:before {
+              border-top-color:$theme-medium-color;
+          }
+      }
+    }
+    &.bs-tooltip-bottom {
+        .tooltip-arrow {
+            &:before {
+                border-bottom-color: $theme-medium-color;
+                border-top-color: transparent;
+            }
+        }
+    }
+    &.bs-tooltip-start {
+        .tooltip-arrow {
+            &:before {
+                border-left-color: $theme-medium-color;
+                border-top-color: transparent;
+            }
+        }
+    }
+    &.bs-tooltip-end {
+        .tooltip-arrow {
+            &:before {
+                border-right-color: $theme-medium-color;
+                border-top-color: transparent;
+            }
+        }
+    }
+    .tooltip-inner {
+        background-color: $theme-medium-color;
+        color: $primary-color;
+    }
+    .tooltip-arrow{
+        &:before {
+            border-top-color: $theme-medium-color;
+        }
+    }
+}
+// tooltip css end
+
+// dropdown css start
+.dropdown-basic {
+    .dropdown {
+        .dropdown-content {
+            a {
+                padding: 6px 16px;
+                color: $dark-editor-document;
+                opacity: 0.6;
+                font-size: 13px;
+                border-top: 1px solid $light-semi-gray;
+                background: $white;
+                &:hover {
+                    background-color: $white;
+                }
+            }
+            .dropdown-header {
+                padding: 8px 16px;
+                font-weight: 400;
+                color: $dark-color;
+                font-size: 13px;
+            }
+        }
+    }
+    .dropup {
+        .dropup-content {
+            top: auto;
+        }
+    }
+}
+// dropdown css end
+
+
+// tab-bootstrap css start
+.nav-tabs {
+    border-bottom: none;
+    .nav-bottom {
+        .nav-item {
+            .nav-link.active {
+                border-color: $light-semi-gray;
+            }
+        }
+    } 
+}
+.nav-tabs {
+    .nav-item{
+        &.show{
+            .nav-link {
+                font-weight: 500;
+            }
+        }
+    }
+    .nav-link {
+        color: $dark-color;
+        &.active {
+            font-weight:500;
+            border-color: $light-gray $light-gray $white;
+        }
+        &.dropdown-toggle{
+            border-radius:5px;
+            border-bottom:none;
+        }
+
+    }
+    &.nav-bottom {
+        .nav-item {
+            .nav-link {
+                &.active {
+                    border-color: $light-gray $light-gray #fff;
+                }
+            }
+        }
+    }
+}
+.dropdown-menu {
+    -webkit-box-shadow: 0 0 20px rgba(89,102,122,0.1);
+    box-shadow: 0 0 20px rgba(89,102,122,0.1);
+    border: none;
+    padding: 0;
+    .dropdown-item {
+      color: #2b2b2b;
+      opacity: 0.6;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-top: 1px solid $light-semi-gray;
+      background: $white;
+      &:hover {
+        background-color: $white;
+      }
+    }
+    .dropdown-divider {
+        margin:0;
+        border-top:1px solid $light-gray;
+    }
+  }
+// tab-bootstrap css end
+.border-tab{
+    .nav-tabs {
+        .nav-item {
+            .nav-link {
+                &.active{
+                    border-bottom: 2px solid $primary-color;
+                }
+                &.show{
+                    border-bottom: 2px solid $primary-color;
+                }
+                &:focus{
+                    border-bottom: 2px solid $primary-color;
+                }
+            }
+        }
+    }
+}
+.tabbed-card {
+    .nav-tabs {
+        .nav-item {
+            .nav-link {
+                top:17px;
+            }
+        }
+    }
+}
+.timeliny {
+    .timeliny-dot::before {
+        font-size: $btn-lg-font-size;
+    }
+}
+.component {
+    .input-group {
+        .btn {
+            line-height: 32px;
+            text-transform: capitalize;
+        }
+    }
+}
+.login-card {
+    .login-main {
+        .theme-form {
+            label {
+                font-size: $body-font-size;
+            }
+            .show-hide {
+                top: 50%;
+            }
+        }
+    }
+}
+// faq css end
+.job-filter {
+    .faq-form {
+        .form-control {
+            font-size: 14px;
+        }
+        .search-icon {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+// list group //
+.list-group-item{
+    border-color: $light-gray;
+}
+// pagination //
+.page-link{
+    border-color:$light-gray;
+}
+
+
+
+
+// gallery //
+.img-thumbnail{
+    border-color: $light-gray;
+}
+.my-gallery.gallery-with-description{
+    border-color: $light-gray !important;
+}
+.gallery-with-description {
+    a{
+        >div{
+            border-color: $light-gray ;
+        }
+    }
+}
+
+// editor 
+.editor-toolbar,.editor-statusbar,.CodeMirror{
+    border-color:$light-gray;
+}
+
+// clockpicker
+.clockpicker{   
+    input{
+      border-radius: 10px !important;
+    }
+}
+
+// progress
+.progress{
+    border-radius:30px;
+}
+
+// modal 
+.modal-header,.modal-footer,.modal-content {
+    .btn-close{
+        position: absolute;
+        top: 30px;
+        right: 25px;
+    }
+}
+
+// datatable
+.live-dom-table{   
+    tr{       
+        th,td{            
+            min-width:300px !important;
+        } 
+    }  
+}
+
+.dataTables_wrapper {
+    table{
+        &.column-selector {
+            tbody {
+                td,th{
+                    &.select-checkbox{
+                        &:before{
+                           left:45px; 
+                        }
+                        &:after{
+                            left:19px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/**=====================
+     85.Update CSS Ends
+==========================**/
