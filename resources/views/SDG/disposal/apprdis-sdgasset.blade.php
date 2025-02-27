@@ -204,7 +204,7 @@
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
-       @include('Admin.layouts.right_sidebar_admin')
+       @include('SDG.layouts.right_sidebar_sdg')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <!-- Container-fluid starts-->
@@ -396,8 +396,8 @@
                                               <a href="javascript:void(0);" class="edit-button" data-id="{{ $moveout->out_id }}" data-no="{{ $moveout->out_no }}" title="Edit">
                                                   <i class="fas fa-edit"></i>
                                               </a>
-                                              @endif
-                                              <a href="{{ url('/admin/get_detail_data_disposal_out/' . $moveout->out_id) }}" title="Detail">
+                                            @endif
+                                              <a href="{{ url('/sdg/get_detail_data_disposal/' . $moveout->out_id) }}" title="Detail">
                                                 <i class="fas fa-book"></i>
                                               </a>
                                         </td>
@@ -627,12 +627,12 @@
             e.preventDefault(); // Cegah form reload halaman
 
             $.ajax({
-                url: '/admin/apprmoveout-sdgassets/edit/' + $('#out_id').val(),
+                url: '/sdg/apprmoveout-sdgassets/edit/' + $('#out_id').val(),
                 method: 'PUT', // Menggunakan PUT untuk memperbarui data
                 data: $(this).serialize(), // Serialisasi data form untuk dikirim
                 success: function(response) {
                     if(response.status === 'success') {
-                        window.location.href = '/admin/apprdis-sdgasset'; // Redirect ke halaman yang sudah diatur
+                        window.location.href = '/sdg/apprdis-sdgasset'; // Redirect ke halaman yang sudah diatur
                     }
                 },
                 error: function(jqXHR) {
@@ -689,7 +689,7 @@
                 data: form.serialize(), // Kirim data form
                 success: function(response) {
                     if (response.status === 'success') {
-                        window.location.href = '/admin/apprdis-sdgasset'; // Redirect ke Admin.moveout
+                        window.location.href = '/sdg/apprdis-sdgasset'; // Redirect ke Admin.moveout
                     } else {
                         alert(response.message); // Tampilkan pesan error jika gagal
                     }

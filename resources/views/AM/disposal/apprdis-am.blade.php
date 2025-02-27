@@ -53,7 +53,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         .btn-link {
             color: #007bff;
@@ -227,7 +226,7 @@
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
             <!-- Page Sidebar Start-->
-            @include('SM.layouts.right_sidebar_sm')
+            @include('AM.layouts.right_sidebar_am')
             <!-- Page Sidebar Ends-->
             <div class="page-body">
                 <!-- Container-fluid starts-->
@@ -236,14 +235,14 @@
                     <div class="page-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3>Disposal Out Name List</h3>
+                                <h3>Approval AM - Disposal Out</h3>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a>
                                     </li>
                                     <li class="breadcrumb-item">ASMI</li>
-                                    <li class="breadcrumb-item active">Disposal Out Name List</li>
+                                    <li class="breadcrumb-item active">Approval AM - Disposal Out</li>
                                 </ol>
                             </div>
                         </div>
@@ -257,22 +256,21 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h5>Disposal Out Name List</h5>
+                                    <h5>Approval AM - Disposal Out</h5>
                                     <span>adalah daftar atau kumpulan aset yang dimiliki oleh seseorang, organisasi,
                                         atau perusahaan. Daftar ini biasanya mencakup rincian tentang setiap aset,
                                         seperti jenis aset, nilai, lokasi, dan informasi relevan lainnya.</span>
                                 </div>
-                                <div class="card-body">
+                                {{-- <div class="card-body">
                                     <div class="btn-showcase">
                                         <div class="button_between">
-                                            <a href="{{ url('/sm/tambah_data_disposal') }}"
-                                                class="btn btn-square btn-primary">+ Add Data Disposal Out</a>
-                                            {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
-                                <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                Download PDF Data</button> --}}
+                                            <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#addDataMoveOut">+ Add Data moveout</button>
+                                            <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
+                                            <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                            Download PDF Data</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <!-- Button trigger modal -->
@@ -288,150 +286,14 @@
                                     </div>
                                 @endif
 
-                                <!-- Modal add -->
-                                <!-- Modal Add Data Asset -->
-                                <div class="modal fade" id="addDataMoveOut" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Data Disposal Out
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="addMoveOutForm" enctype="multipart/form-data">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <!-- Tanggal, Lokasi, dan Deskripsi -->
-                                                        <div class="col-sm-12">
-                                                            <label for="out_date">Tanggal Disposal Out:</label>
-                                                            <input type="date" name="out_date" id="out_date"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="from_loc">Lokasi Asal:</label>
-                                                            <input type="text" name="from_loc" id="from_loc"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="dest_loc">Lokasi Tujuan:</label>
-                                                            <input type="text" name="dest_loc" id="dest_loc"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="out_desc">Deskripsi Disposal Out:</label>
-                                                            <input type="text" name="out_desc" id="out_desc"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="reason_id">Alasan Disposal Out:</label>
-                                                            <select name="reason_id" id="reason_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Alasan</option>
-                                                                @foreach ($reasons as $reason)
-                                                                    <option value="{{ $reason->reason_id }}">
-                                                                        {{ $reason->reason_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="images">Upload Images:</label>
-                                                            <input type="file" name="images[]" id="images"
-                                                                class="form-control" multiple>
-                                                        </div>
-
-                                                        <!-- Container untuk data asset -->
-                                                        <div id="assetFieldsContainer">
-                                                            <!-- Field Asset Pertama -->
-                                                            <div class="asset-fields">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                        <label for="asset_id">Data Asset:</label>
-                                                                        <select name="asset_id[]"
-                                                                            class="form-control asset-select" required>
-                                                                            <option value="">Pilih Asset</option>
-                                                                            @foreach ($assets as $asset)
-                                                                                <option value="{{ $asset->id }}">
-                                                                                    {{ $asset->asset_name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="merk">Merk:</label>
-                                                                        <input type="text" name="merk[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="qty">Quantity:</label>
-                                                                        <input type="text" name="qty[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="satuan">Satuan:</label>
-                                                                        <input type="text" name="satuan[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="serial_number">Serial
-                                                                            Number:</label>
-                                                                        <input type="text" name="serial_number[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="register_code">Register
-                                                                            Code:</label>
-                                                                        <input type="text" name="register_code[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="condition_id">Kondisi
-                                                                            Asset:</label>
-                                                                        <select name="condition_id[]"
-                                                                            class="form-control" required>
-                                                                            <option value="">Pilih Kondisi
-                                                                            </option>
-                                                                            @foreach ($conditions as $condition)
-                                                                                <option
-                                                                                    value="{{ $condition->condition_id }}">
-                                                                                    {{ $condition->condition_name }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Tombol untuk menambah atau menghapus field -->
-                                                                <button type="button"
-                                                                    class="btn btn-success btn-add-asset mt-2">+</button>
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-remove-asset mt-2">-</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary"
-                                                    id="saveMoveOutButton">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <!-- Update Modal -->
                                 <div id="updateModal" class="modal fade" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-md">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Update Disposal Out
-                                                </h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Update Status Approval
+                                                    AM</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -443,84 +305,15 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <label for="out_date">Tanggal Disposal Out: </label>
-                                                            <input type="date" name="out_date" id="out_date"
-                                                                class="form-control"
-                                                                placeholder="Enter Tanggal Disposal Out" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="from_loc">Lokasi Asal: </label>
-                                                            <input type="text" name="from_loc" id="from_loc"
-                                                                class="form-control" placeholder="Enter Lokasi Asal"
-                                                                required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="dest_loc">Lokasi Tujuan: </label>
-                                                            <input type="text" name="dest_loc" id="dest_loc"
-                                                                class="form-control" placeholder="Enter Lokasi Tujuan"
-                                                                required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="out_desc">Deskripsi Disposal Out: </label>
-                                                            <input type="text" name="out_desc" id="out_desc"
-                                                                class="form-control"
-                                                                placeholder="Enter Deskripsi Disposal Out" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="reason_id">Alasan Disposal Out: </label>
-                                                            <select name="reason_id" id="reason_id"
+                                                            <label for="appr_1">Approval AM: </label>
+                                                            <select name="appr_1" id="appr_1"
                                                                 class="form-control" required>
-                                                                <option value="">Pilih Alasan</option>
-                                                                @foreach ($reasons as $reason)
-                                                                    <option value="{{ $reason->reason_id }}">
-                                                                        {{ $reason->reason_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="asset_id">Data Asset: </label>
-                                                            <select name="asset_id" id="asset_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Asset</option>
-                                                                @foreach ($assets as $asset)
-                                                                    <option value="{{ $asset->id }}">
-                                                                        {{ $asset->asset_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="merk">Merk: </label>
-                                                            <input type="text" name="merk" id="merk"
-                                                                class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="qty">Quantity: </label>
-                                                            <input type="text" name="qty" id="qty"
-                                                                class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="satuan">Satuan: </label>
-                                                            <input type="text" name="satuan" id="satuan"
-                                                                class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="serial_number">Serial Number: </label>
-                                                            <input type="text" name="serial_number"
-                                                                id="serial_number" class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="register_code">Register Code: </label>
-                                                            <input type="text" name="register_code"
-                                                                id="register_code" class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="condition_id">Kondisi Asset: </label>
-                                                            <select name="condition_id" id="condition_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Kondisi</option>
-                                                                @foreach ($conditions as $condition)
-                                                                    <option value="{{ $condition->condition_id }}">
-                                                                        {{ $condition->condition_name }}</option>
+                                                                <option value="">Pilih Status</option>
+                                                                @foreach ($approvals as $approval)
+                                                                    @if ($approval->approval_id != 3 && $approval->approval_id != 1)
+                                                                        <option value="{{ $approval->approval_id }}">
+                                                                            {{ $approval->approval_name }}</option>
+                                                                    @endif
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -605,108 +398,57 @@
                                 </div>
 
 
-
-
                                 <div class="card-body">
                                     <div class="table-responsive product-table"
                                         style="max-width: 100%; overflow-x: auto;">
                                         <div class="d-flex justify-content-between mb-3 mt-3">
                                             <h5>Disposal Out Data</h5> <!-- Add a heading for the table if needed -->
                                             <!-- Search Input Field aligned to the right -->
-                                        </div>
-                                        <form action="/sm/filter_data_disposal" method="POST">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label for="start_date">Start Date</label>
-                                                    <input type="date" id="start_date" name="start_date"
-                                                        class="form-control" value="{{ old('start_date') }}">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="end_date">End Date</label>
-                                                    <input type="date" id="end_date" name="end_date"
-                                                        class="form-control" value="{{ old('end_date') }}">
-                                                </div>
-                                                <div class="col-md-4 d-flex align-items-end">
-                                                    <button type="submit" class="btn btn-primary">Filter</button>
-                                                    <a href="/sm/disposal"
-                                                        class="btn btn-secondary ml-2">Reset</a>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <div class="d-flex justify-content-between mb-3 mt-3">
-                                            <h5></h5> <!-- Add a heading for the table if needed -->
-                                            <!-- Search Input Field aligned to the right -->
                                             <div class="input-group" style="width: 250px;">
                                                 <input type="text" id="searchInput" class="form-control"
                                                     placeholder="Search for assets..." />
                                             </div>
                                         </div>
-
                                         <table class="table table-striped display" id="coba"
                                             style="width: 100%;">
                                             <thead>
                                                 <tr class="text-center">
-                                                    <th>No</th>
-                                                    <th>ID Disposal Out</th>
+                                                    <th>No Disposal Out</th>
                                                     <th>Tanggal Disposal Out</th>
                                                     <th>Lokasi Asal</th>
-                                                    <th>Quantity Barang</th>
-                                                    <th>Satuan</th>
-                                                    <th>Merk</th>
+                                                    <th>ID Movement In</th>
                                                     <th>Deskripsi</th>
                                                     <th>Alasan</th>
-                                                    <th>Status Disposal</th>
-                                                    <th>Approval Tahap 1</th>
-                                                    <th>Approval Tahap 2</th>
-                                                    <th>Approval Tahap 3</th>
-                                                    <th>Data Disposal Out Status</th>
+                                                    <th>Status AM</th>
                                                     <th>Actions</th>
+                                                    <th>Tanggal Approve</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php $no = 1; @endphp
                                                 @foreach ($moveouts as $moveout)
-                                                    {{-- @if ($moveout->from_loc == auth()->user()->location_now) --}}
                                                     <tr class="text-center">
-                                                        <td>{{ $no++ }}</td>
-                                                        <td>{{ $moveout->out_id }}</td>
+                                                        <td>{{ $moveout->out_no }}</td>
                                                         <td>{{ $moveout->out_date }}</td>
-                                                        <td>{{ $moveout->name_store_street }}</td>
-                                                        <td>{{ $moveout->qty }}</td>
-                                                        <td>{{ $moveout->uom_name }}</td>
-                                                        <td>{{ $moveout->brand_name }}</td>
+                                                        <td>{{ $moveout->from_location }}</td>
+                                                        <td>{{ $moveout->in_id }}</td>
                                                         <td>{{ $moveout->out_desc }}</td>
                                                         <td>{{ $moveout->reason_name }}</td>
                                                         <td>{{ $moveout->approval_name }}</td>
-                                                        <td>
-                                                            {{ $moveout->appr_1 == 2 ? 'Approved' : ($moveout->appr_1 == 4 ? 'Rejected' : 'Belum Approved') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $moveout->appr_2 == 2 ? 'Approved' : ($moveout->appr_2 == 4 ? 'Rejected' : 'Belum Approved') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $moveout->appr_3 == 3 ? 'Confirmed' : ($moveout->appr_3 == 4 ? 'Rejected' : 'Belum Approved') }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($moveout->deleted_at)
-                                                                Nonactive
-                                                            @else
-                                                                Active
-                                                            @endif
-                                                        </td>
                                                         <td class="text-center">
-                                                            <a href="{{ url('/sm/get_detail_data_disposal_out/' . $moveout->out_id) }}"
+                                                            @if ($moveout->appr_1 != 2 && $moveout->appr_1 != 4)
+                                                                <a href="javascript:void(0);" class="edit-button"
+                                                                    data-id="{{ $moveout->out_id }}"
+                                                                    data-no="{{ $moveout->out_no }}" title="Edit">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+                                                            @endif
+                                                            <a href="{{ url('/am/get_detail_data_disposal/' . $moveout->out_id) }}"
                                                                 title="Detail">
                                                                 <i class="fas fa-book"></i>
                                                             </a>
-                                                            <a href="{{ route('admin.disoutPDF', $moveout->out_id) }}"
-                                                                target="_blank">
-                                                                <i class="fas fa-print mx-1"></i>
-                                                              </a>
                                                         </td>
+                                                        <td>{{ $moveout->appr_1_date }}</td>
                                                     </tr>
-                                                    {{-- @endif --}}
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -817,15 +559,48 @@
 
     {{-- Get Data moveout --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script>
+        $(document).ready(function() {
+            // Mengambil data moveout menggunakan Ajax
+            $.ajax({
+                url: "{{ route('get.moveout') }}", // Route untuk get_moveout
+                method: "GET",
+                success: function(data) {
+                    let rows = '';
+                    data.forEach(function(moveout) {
+                        rows += `
+                            <tr>
+                                <td>${moveout.out_id}</td> <!-- Tampilkan ID moveout -->
+                                <td>${moveout.out_no}</td> <!-- Tampilkan Nama moveout -->
+                                <td>
+                                <a href="javascript:void(0);" class="edit-button" data-id="${moveout.out_id}" data-name="${moveout.out_no}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form class="delete-form" action="{{ url('admin/moveouts/delete') }}/${moveout.out_id}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="delete-button" title="Delete" style="border: none; background: none; cursor: pointer;">
+                                        <i class="fas fa-trash-alt" style="color: red;"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            </tr>
+                        `;
+                    });
+                    $('#moveoutTableBody').html(rows); // Memasukkan baris ke dalam tbody
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching data:', textStatus, errorThrown);
+                }
+            });
+        });
+    </script>
 
     {{-- Add Data moveout --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-
-
-
+            // Get the CSRF token from the meta tag
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -835,52 +610,40 @@
                 e.preventDefault();
 
                 // Ambil data form
-                var moveoutData = {
-                    out_date: $('#out_date').val(),
-                    from_loc: $('#from_loc').val(),
-                    dest_loc: $('#dest_loc').val(),
-                    out_desc: $('#out_desc').val(),
-                    reason_id: $('#reason_id').val(),
-                    // Gather asset data as arrays
-                    asset_id: [],
-                    register_code: [],
-                    serial_number: [],
-                    merk: [],
-                    qty: [],
-                    satuan: [],
-                    condition_id: []
-                };
+                var moveoutDate = $('#out_date').val();
+                var moveoutFromloc = $('#from_loc').val();
+                var moveoutDestloc = $('#dest_loc').val();
+                var moveoutDesc = $('#out_desc').val();
+                var moveoutReason = $('#reason_id').val();
+                var moveoutAsset = $('#asset_id').val();
+                var moveoutRegcode = $('#register_code').val();
+                var moveoutMerk = $('#merk').val();
+                var moveoutQty = $('#qty').val();
+                var moveoutUom = $('#satuan').val();
+                var moveoutSernum = $('#serial_number').val();
+                var moveoutCond = $('#condition_id').val();
 
-                // Loop through each asset field
-                $('.asset-select').each(function(index) {
-                    moveoutData.asset_id.push($(this).val());
-                });
-                $('input[name^="register_code"]').each(function(index) {
-                    moveoutData.register_code.push($(this).val());
-                });
-                $('input[name^="serial_number"]').each(function(index) {
-                    moveoutData.serial_number.push($(this).val());
-                });
-                $('input[name^="merk"]').each(function(index) {
-                    moveoutData.merk.push($(this).val());
-                });
-                $('input[name^="qty"]').each(function(index) {
-                    moveoutData.qty.push($(this).val());
-                });
-                $('input[name^="satuan"]').each(function(index) {
-                    moveoutData.satuan.push($(this).val());
-                });
-                $('select[name^="condition_id"]').each(function(index) {
-                    moveoutData.condition_id.push($(this).val());
-                });
-
-                // Send the gathered data
+                // Kirimkan data menggunakan Ajax
                 $.ajax({
-                    url: '/add-moveout', // Update this to your correct URL
-                    method: 'POST',
-                    data: moveoutData,
+                    url: '/add-moveout' + $('#out_id').val(), // Pastikan ini adalah URL yang benar
+                    method: 'POST', // Pastikan ini menggunakan metode PUT
+                    data: {
+                        out_date: moveoutDate,
+                        from_loc: moveoutFromloc,
+                        dest_loc: moveoutDestloc,
+                        out_desc: moveoutDesc,
+                        reason_id: moveoutReason,
+                        asset_id: moveoutAsset,
+                        register_code: moveoutRegcode,
+                        merk: moveoutMerk,
+                        qty: moveoutQty,
+                        satuan: moveoutUom,
+                        serial_number: moveoutSernum,
+                        condition_id: moveoutCond
+                    }, // Kirim data dari form
                     success: function(response) {
                         console.log(response);
+                        // Cek apakah response berisi error atau success
                         if (response.status === 'success') {
                             $('#addDataMoveOut').modal('hide');
                             window.location.href = response.redirect_url;
@@ -891,7 +654,7 @@
                     error: function(jqXHR) {
                         const message = jqXHR.responseJSON?.message ||
                             'Failed to update moveout.';
-                        alert(message);
+                        alert(message); // Tampilkan pesan kesalahan
                     }
                 });
             });
@@ -901,58 +664,17 @@
     {{-- Update Data moveout --}}
     <script>
         $(document).on('click', '.edit-button', function() {
-            const outId = $(this).data('id');
+            const moveoutId = $(this).data('id'); // Ambil out_id dari atribut data
+            const moveoutNo = $(this).data('no'); // Ambil out_no dari atribut data
+            const moveoutApproval = $(this).data('approval'); // Ambil out_no dari atribut data
 
-            // Make an AJAX call to fetch the moveout data
-            $.ajax({
-                url: `/moveout/${outId}`,
-                method: 'GET',
-                success: function(data) {
-                    // Populate the modal fields with the fetched data
-                    $('#out_id').val(data.out_id);
-                    $('#out_date').val(data.out_date);
-                    $('#from_loc').val(data.from_loc);
-                    $('#dest_loc').val(data.dest_loc);
-                    $('#out_desc').val(data.out_desc);
-                    $('#reason_id').val(data.reason_id);
-                    $('#asset_id').val(data.asset_id).change(); // Trigger change to fetch asset details
-                    $('#merk').val(data.merk);
-                    $('#qty').val(data.qty);
-                    $('#satuan').val(data.satuan);
-                    $('#serial_number').val(data.serial_number);
-                    $('#register_code').val(data.register_code);
-                    $('#condition_id').val(data.condition_id);
+            // Isi input dengan data
+            $('#out_id').val(moveoutId);
+            $('#out_no').val(moveoutNo);
+            $('#appr_1').val(moveoutApproval);
 
-                    // Show the modal
-                    $('#updateModal').modal('show');
-                },
-                error: function(xhr) {
-                    alert('Error fetching moveout data: ' + xhr.responseJSON.message);
-                }
-            });
-        });
-
-        $('#asset_id').on('change', function() {
-            const assetId = $(this).val();
-
-            if (assetId) {
-                fetch(`/get-asset-details/${assetId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        $('#merk').val(data.merk || '');
-                        $('#qty').val(data.qty || '');
-                        $('#satuan').val(data.satuan || '');
-                        $('#serial_number').val(data.serial_number || '');
-                        $('#register_code').val(data.register_code || '');
-                    })
-                    .catch(error => console.error('Error fetching asset details:', error));
-            } else {
-                $('#merk').val('');
-                $('#qty').val('');
-                $('#satuan').val('');
-                $('#serial_number').val('');
-                $('#register_code').val('');
-            }
+            // Tampilkan modal
+            $('#updateModal').modal('show');
         });
 
         // Mengirim permintaan edit melalui Ajax
@@ -960,12 +682,13 @@
             e.preventDefault(); // Cegah form reload halaman
 
             $.ajax({
-                url: '/admin/moveouts/edit/' + $('#out_id').val(),
+                url: '/admin/apprmoveout-ams/edit/' + $('#out_id').val(),
                 method: 'PUT', // Menggunakan PUT untuk memperbarui data
                 data: $(this).serialize(), // Serialisasi data form untuk dikirim
                 success: function(response) {
                     if (response.status === 'success') {
-                        window.location.href = '/admin/disout' // Redirect ke halaman yang sudah diatur
+                        window.location.href =
+                        '/am/apprdis-am'; // Redirect ke halaman yang sudah diatur
                     }
                 },
                 error: function(jqXHR) {
@@ -977,41 +700,30 @@
     </script>
 
     {{-- Detail --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).on('click', '.detail-button', function() {
-            var outId = $(this).data('id');
+        $(document).ready(function() {
+            // Event listener for detail button
+            $('.detail-button').on('click', function() {
+                // Get brand data from the clicked button
+                var moveoutId = $(this).data('id');
+                var moveoutNo = $(this).data('no');
+                const moveoutDate = $(this).data('date'); // Ambil out_no dari atribut data
+                const moveoutFromloc = $(this).data('from'); // Ambil out_no dari atribut data
+                const moveoutDestloc = $(this).data('dest'); // Ambil out_no dari atribut data
+                const moveoutDesc = $(this).data('desc'); // Ambil out_no dari atribut data
+                const moveoutReason = $(this).data('reason'); // Ambil out_no dari atribut data
 
-            // AJAX request to fetch data from the server
-            $.ajax({
-                url: '/fetch-moveout-details/' + outId, // Adjust URL as needed
-                method: 'GET',
-                success: function(response) {
-                    // Assuming response is a JSON object containing the necessary data
-                    $('#moveout-id').text(response.out_id);
-                    $('#moveout-no').text(response.out_no);
-                    $('#out-date').text(response.out_date);
-                    $('#from-loc').text(response.from_loc);
-                    $('#dest-loc').text(response.dest_loc);
-                    $('#in-id').text(response.in_id);
-                    $('#out-desc').text(response.out_desc);
-                    $('#asset-id').text(response.asset_id);
-                    $('#asset-name').text(response.asset_name);
-                    $('#asset-tag').text(response.asset_tag);
-                    $('#serial-number').text(response.serial_number);
-                    $('#asset-brand').text(response.brand);
-                    $('#asset-qty').text(response.qty);
-                    $('#asset-uom').text(response.uom);
-                    $('#asset-cond').text(response.condition);
-                    $('#asset-img').text(response.image); // Change this to an <img> tag if needed
+                // Set the data into the modal
+                $('#moveout-id').text(moveoutId);
+                $('#moveout-no').text(moveoutNo);
+                $('#out_date').text(moveoutDate);
+                $('#from_loc').text(moveoutFromloc);
+                $('#dest_loc').text(moveoutDestloc);
+                $('#out_desc').text(moveoutDesc);
+                $('#reason_id').text(moveoutReason);
 
-                    // Show the modal
-                    $('#MoveOutDetailModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching move out details:', error);
-                    alert('Unable to fetch details. Please try again.');
-                }
+                // Show the modal
+                $('#MoveOutDetailModal').modal('show');
             });
         });
     </script>
@@ -1019,43 +731,30 @@
     {{-- Delete data moveout --}}
     <script>
         $(document).on('click', '.delete-button', function(e) {
-            e.preventDefault(); // Prevent default form submission
-            const form = $(this).closest('form'); // Get the closest form to the button
+            e.preventDefault(); // Mencegah submit form default
+            const form = $(this).closest('form'); // Ambil form yang terdekat dari tombol
 
-            // Display confirmation dialog
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: 'Tindakan ini tidak dapat dibatalkan.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Tidak, simpan'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Get the action URL from the form
-                    const actionUrl = form.attr('action');
+            // Tampilkan dialog konfirmasi
+            if (confirm('Apakah Anda yakin ingin menghapus moveout ini?')) {
+                // Ambil URL dari action form
+                const actionUrl = form.attr('action');
 
-                    // Perform AJAX DELETE request
-                    $.ajax({
-                        url: actionUrl, // Form action URL
-                        method: 'DELETE', // HTTP method
-                        data: form.serialize(), // Serialize form data
-                        success: function(response) {
-                            if (response.status === 'success') {
-                                window.location.href = response
-                                    .redirect_url; // Redirect on success
-                            } else {
-                                Swal.fire('Error!', response.message,
-                                    'error'); // Show error message
-                            }
-                        },
-                        error: function(jqXHR) {
-                            Swal.fire('Gagal!', 'Gagal menghapus data. Coba lagi.',
-                                'error'); // Error message
+                $.ajax({
+                    url: actionUrl, // URL dari form
+                    method: 'DELETE', // Method untuk delete
+                    data: form.serialize(), // Kirim data form
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            window.location.href = response.redirect_url; // Redirect ke Admin.moveout
+                        } else {
+                            alert(response.message); // Tampilkan pesan error jika gagal
                         }
-                    });
-                }
-            });
+                    },
+                    error: function(jqXHR) {
+                        alert('Gagal menghapus data. Coba lagi.');
+                    }
+                });
+            }
         });
     </script>
 
@@ -1120,25 +819,6 @@
             }
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            // Menambahkan field baru
-            $('.btn-add-asset').click(function() {
-                var assetFields = $(this).closest('.asset-fields').clone(); // Clone field
-                assetFields.find('input').val(''); // Reset nilai input
-                assetFields.find('select').val(''); // Reset nilai select
-                $('#assetFieldsContainer').append(assetFields); // Tambahkan field yang baru
-            });
-
-            // Menghapus field aset
-            $('#assetFieldsContainer').on('click', '.btn-remove-asset', function() {
-                if ($('.asset-fields').length > 1) {
-                    $(this).closest('.asset-fields').remove();
-                }
-            });
-        });
-    </script>
-
     <!-- login js-->
     <!-- Plugin used-->
 </body>

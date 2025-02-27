@@ -1626,7 +1626,6 @@ public function getLocationUser() {
         ->join('master_resto_v2', 'master_resto_v2.id', '=', 'm_user.location_now')
         ->where('m_user.username', $username)
         ->first();
-
     // Return the location ID and name as JSON
     return response()->json($userLocation);
 }
@@ -1657,8 +1656,9 @@ public function searchRegisterAsset(Request $request)
     }
 
 
-    public function ajaxGetDataRegistAsset()
+    public function ajaxGetDataRegistAsset(Request $request)
     {
+        $loc_user = $request->input('user_loc');
         $assets =  DB::table('table_registrasi_asset')
         ->select('table_registrasi_asset.id'
                 ,'table_registrasi_asset.register_code'    
@@ -1700,9 +1700,11 @@ public function searchRegisterAsset(Request $request)
         ->leftJoin('m_warranty', 'table_registrasi_asset.warranty', '=', 'm_warranty.warranty_id')
         ->leftJoin('m_periodic_mtc', 'table_registrasi_asset.periodic_maintenance', '=', 'm_periodic_mtc.periodic_mtc_id')
         ->leftJoin('t_out_detail', 'table_registrasi_asset.id', '=', 't_out_detail.asset_id')
-        ->where('table_registrasi_asset.qty', '>', 0) 
+        ->when($loc_user !== NULL, function ($query) use ($loc_user) {
+            return $query->where('table_registrasi_asset.register_location', $loc_user);
+        })
+        ->where('table_registrasi_asset.qty', '>', 0)
         ->get();
-
         $data = [];
         foreach ($assets as $asset) {
             $data[] = [
@@ -1727,9 +1729,11 @@ public function searchRegisterAsset(Request $request)
                 // 'serial_number' => $asset->serial_number,
             ];
         }
+
+        $datas = collect($data)->unique('id')->values();
     
         return response()->json([
-            'data' => $data,
+            'data' => $datas,
             'recordsTotal' => count($data),
             'recordsFiltered' => count($data),
         ]);

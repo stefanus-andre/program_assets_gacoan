@@ -176,30 +176,101 @@ class DisposalController extends Controller
         ]);
     }
     
-    public function HalamanHead() 
+    public function HalamanReview() 
     {
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
-        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
-        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
-        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
-        $delivery = DB::table('t_transit')->select('transit_id')->get();
-        $moveins = DB::table('t_out')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('t_in', 't_out.out_id', '=', 't_in.out_id')
-        ->join('mc_approval', 't_in.is_confirm', '=', 'mc_approval.approval_id')
-        ->join('t_in_detail', 't_in_detail.in_id', '=', 't_in.in_id')
-        ->join('t_transit', 't_in_detail.in_det_id', '=', 't_transit.in_det_id')
-        ->select('t_out.*', 't_in.*', 't_in_detail.*', 't_transit.*', 'm_reason.reason_name', 'mc_approval.approval_name', 't_in.is_confirm')
-        ->where('t_out.appr_3', '=', '2')
-        ->paginate(10);
 
-        return view("Admin.revdis-head", [
+        $restos = DB::table('master_resto_v2')->select('store_code', 'name_store_street')->get();
+
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+
+        
+
+        $username = auth()->user()->username;
+
+        $fromLoc = DB::table('m_people')
+
+                ->where('nip', $username)
+
+                ->value('loc_id'); 
+
+
+
+        $registerLocation = DB::table('master_resto')
+
+                ->where('store_code', $fromLoc)
+
+                ->value('resto');
+
+    
+
+        // Filter assets based on the register_location matching the fetched resto
+
+        $assets = DB::table('table_registrasi_asset')
+
+        ->select('id', 'asset_name')
+
+        // ->where('location_now', $registerLocation)
+
+        ->where('qty', '>', 0) 
+
+        ->get();       
+
+        $user_loc = auth()->user()->location_now;
+        $username = auth()->user()->username;
+
+        // Mulai query builder
+        $query = DB::table('t_out')
+            ->distinct()
+            ->select(
+                't_out.*',
+                't_out_detail.*',
+                'm_reason.reason_name',
+                'mc_approval.approval_name',
+                'master_resto_v2.*',
+                't_out_detail.*',
+                'm_uom.uom_name',
+                'm_brand.brand_name'
+            )
+            ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+            ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+            ->join(
+                'master_resto_v2',
+                DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+                '=',
+                DB::raw('CONVERT(master_resto_v2.id USING utf8mb4) COLLATE utf8mb4_unicode_ci')
+            )
+            ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+            ->join('m_uom', 't_out_detail.uom', '=', 'm_uom.uom_id')
+            ->join('m_brand', 't_out_detail.brand', '=', 'm_brand.brand_id')
+            ->join(
+                'm_user',
+                DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+                '=',
+                DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci')
+            );
+
+            // Jika yang login bukan admin, tambahkan filter berdasarkan `user_loc`
+            if ($username !== 'admin') {
+                $query->where(
+                DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+                '=', $user_loc);
+            }
+
+            $moveouts = $query->where('t_out.out_id', 'like', 'DA%')
+            ->paginate(10);
+    
+
+        return view("Admin.review-disposal", [
+            'fromLoc' => $fromLoc,
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
             'approvals' => $approvals,
-            'moveins' => $moveins,
-            'delivery' => $delivery
+            'moveouts' => $moveouts,
+            'restos' => $restos
         ]);
     }
     

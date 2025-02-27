@@ -51,13 +51,15 @@ class AdminController extends Controller
     {
         $dataQuery = DB::table('t_transaction_qty')
         
-        ->join('m_assets', 't_transaction_qty.asset_id', '=', 'm_assets.asset_id')
+        ->leftjoin('m_assets', 't_transaction_qty.asset_id', '=', 'm_assets.asset_id')
 
-        ->join('master_resto_v2', 't_transaction_qty.from_loc', '=', 'master_resto_v2.id')
+        ->leftjoin('master_resto_v2', 't_transaction_qty.from_loc', '=', 'master_resto_v2.id')
 
-        ->join('t_out', 't_transaction_qty.out_id', '=', 't_out.out_id')
+        ->leftjoin('t_out', 't_transaction_qty.out_id', '=', 't_out.out_id')
+
+        ->leftjoin('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
         
-        ->join('m_condition', 't_transaction_qty.condition', '=', 'm_condition.condition_id')
+        ->leftjoin('m_condition', 't_out_detail.condition', '=', 'm_condition.condition_id')
 
         ->select('master_resto_v2.id AS id_resto','master_resto_v2.name_store_street', 'm_assets.asset_model', 'm_condition.condition_name', 'm_condition.condition_id', 't_transaction_qty.qty', 't_transaction_qty.out_id', 't_transaction_qty.created_at');
 

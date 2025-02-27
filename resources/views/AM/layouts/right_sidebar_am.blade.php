@@ -82,7 +82,7 @@
                         </li>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="book"></i><span>Disposal</span></a>
                           <ul class="sidebar-submenu">
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/am/disposal_out"><span>Data Disposal</span></a></li>
+                            {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/am/disposal"><span>Data Disposal</span></a></li> --}}
                             <!-- @if(Auth::user() && Auth::user()->role === 'am')
                                         <li class="sidebar-list">
                                             <a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-am">
@@ -91,7 +91,7 @@
                                         </li>
                             @endif -->
                             <li class="sidebar-list">
-                                            <a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-am">
+                                            <a class="sidebar-link sidebar-title link-nav" href="/am/apprdis-am">
                                                 <span>Approval OPS AM</span>
                                             </a>
                                         </li>

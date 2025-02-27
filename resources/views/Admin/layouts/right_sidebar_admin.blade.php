@@ -1,49 +1,56 @@
 <div class="sidebar-wrapper">
-          <div>
-            <div class="logo-wrapper"><a href="/admin/dashboard"><img class="img-fluid for-light" src="{{asset('assets/images/header-card.png')}}"></a>
-              <div class="back-btn"><i class="fa fa-angle-left"></i></div>
-              <!-- <div class="toggle-sidebar"><i class="fa fa-cog status_toggle middle sidebar-toggle"> </i></div> -->
-            </div>
-            <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon1.png')}}"></a></div>
-            <nav class="sidebar-main">
-              <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
-              <div id="sidebar-menu">
+    <div>
+        <div class="logo-wrapper"><a href="/admin/dashboard"><img class="img-fluid for-light"
+                    src="{{ asset('assets/images/header-card.png') }}"></a>
+            <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+            <!-- <div class="toggle-sidebar"><i class="fa fa-cog status_toggle middle sidebar-toggle"> </i></div> -->
+        </div>
+        <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid"
+                    src="{{ asset('assets/images/logo/logo-icon1.png') }}"></a></div>
+        <nav class="sidebar-main">
+            <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+            <div id="sidebar-menu">
                 <ul class="sidebar-links" id="simple-bar">
-                  <li class="back-btn"><a href="index.html"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
-                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
-                  </li>
-                  <!-- <li class="sidebar-main-title">          
+                    <li class="back-btn"><a href="index.html"><img class="img-fluid"
+                                src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a>
+                        <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2"
+                                aria-hidden="true"></i></div>
+                    </li>
+                    <!-- <li class="sidebar-main-title">
                     <h6 class="lan-1">General </h6>
                   </li>
-                  <li class="menu-box"> 
-                    <ul>             
+                  <li class="menu-box">
+                    <ul>
                       <li class="sidebar-list">           <a class="sidebar-link sidebar-title" href="dashboard-02.html"><i data-feather="home"></i><span class="lan-3">Dashboard              </span></a>
                         <ul class="sidebar-submenu">
                         </ul>
                       </li>
                     </ul>
                   </li> -->
-                  <li class="sidebar-main-title">          
-                    <!-- <h6>Master Data</h6> -->
-                  </li>
-                  <li class="menu-box"> 
-                    <ul>
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/dashboard"><i data-feather="pie-chart"></i><span>Dashboard</span></a></li>
-                        {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li> --}}
-                        {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/halaman_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li>
+                    <li class="sidebar-main-title">
+                        <!-- <h6>Master Data</h6> -->
+                    </li>
+                    <li class="menu-box">
+                        <ul>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/dashboard"><i data-feather="pie-chart"></i><span>Dashboard</span></a>
+                            </li>
+                            {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li> --}}
+                            {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/halaman_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="#"><i data-feather="arrow-right"></i><span>Assets Movement</span></a></li> --}}
-                        <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="cast"></i><span>Schedule Maintenance</span></a></li> -->
-                    </ul>
-                  </li>
+                            <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="cast"></i><span>Schedule Maintenance</span></a></li> -->
+                        </ul>
+                    </li>
 
-                  <li class="sidebar-main-title">          
-                    <h6>Asset</h6>
-                  </li>
-                  <li class="menu-box"> 
-                    <ul>
-                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>Registration</span></a>
-                        <ul class="sidebar-submenu">
-                          {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                    <li class="sidebar-main-title">
+                        <h6>Asset</h6>
+                    </li>
+                    <li class="menu-box">
+                        <ul>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                        data-feather="clipboard"></i><span>Registration</span></a>
+                                <ul class="sidebar-submenu">
+                                    {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                             <ul class="nav-sub-childmenu submenu-content">
                               <li><a href="bootstrap-basic-table.html">Basic Tables</a></li>
                               <li><a href="table-components.html">Table components</a></li>
@@ -56,34 +63,51 @@
                               <li><a href="datatable-data-source.html">Data Sources</a></li>
                             </ul>
                           </li> --}}
-                          {{-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li> --}}
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-reg"><span>Approval OPS SM</span></a></li>
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li> -->
+                                    {{-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li> --}}
+                                    <li><a class="sidebar-link sidebar-title link-nav"
+                                            href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets
+                                                Regist</span></a></li>
+                            </li>
+                            <li><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-reg"><span>Approval
+                                        OPS SM</span></a></li>
+                            <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li> -->
                         </ul>
-                      
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="server"></i><span>Asset Transfer</span></a>
-                          <ul class="sidebar-submenu">
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/moveout"><span>Request Movement Out</span></a></li>
-                            <!-- @if(Auth::user() && Auth::user()->role === 'am')
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprmoveout-am"><span>Approval OPS AM</span></a></li>
-                            @endif -->
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprmoveout-am"><span>Approval OPS AM</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprmoveout-rm"><span>Approval OPS RM</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprmoveout-sdgasset"><span>Approval SDG Assets</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/movein"><span>Request Movement In</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/delivery"><span>Delivery Order</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirm"><span>Confirm Asset</span></a></li>
+
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                data-feather="server"></i><span>Asset Transfer</span></a>
+                        <ul class="sidebar-submenu">
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/moveout"><span>Request Movement Out</span></a></li>
+                            <!-- @if (Auth::user() && Auth::user()->role === 'am')
+<li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprmoveout-am"><span>Approval OPS AM</span></a></li>
+@endif -->
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/apprmoveout-am"><span>Approval OPS AM</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/apprmoveout-rm"><span>Approval OPS RM</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/apprmoveout-sdgasset"><span>Approval SDG Assets</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/movein"><span>Request Movement In</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/delivery"><span>Delivery Order</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/confirm"><span>Confirm Asset</span></a></li>
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-movement"><span>Data Movement</span></a></li> -->
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-head"><span>Review Ops Head</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-mnr"><span>Review MnR Area</span></a></li> 
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-taf"><span>Review TAF Accounting</span></a></li>
-                          </ul>
-                        </li>
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="book"></i><span>Disposal</span></a>
-                          <ul class="sidebar-submenu">
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/disout"><span>Request Disposal</span></a></li>
-                            <!-- @if(Auth::user() && Auth::user()->role === 'am')
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/rev-head"><span>Review Ops Head</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/rev-mnr"><span>Review MnR Area</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/rev-taf"><span>Review TAF Accounting</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                data-feather="book"></i><span>Disposal</span></a>
+                        <ul class="sidebar-submenu">
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/disout"><span>Request Disposal</span></a></li>
+                            <!-- @if (Auth::user() && Auth::user()->role === 'am')
                                         <li class="sidebar-list">
                                             <a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-am">
                                                 <span>Approval OPS AM</span>
@@ -91,130 +115,182 @@
                                         </li>
                             @endif -->
                             <li class="sidebar-list">
-                                            <a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-am">
-                                                <span>Approval OPS AM</span>
-                                            </a>
-                                        </li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-rm"><span>Approval OPS RM</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-sdgasset"><span>Approval SDG Assets</span></a></li>
+                                <a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-am">
+                                    <span>Approval OPS AM</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/apprdis-rm"><span>Approval OPS RM</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/apprdis-sdgasset"><span>Approval SDG Assets</span></a></li>
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/disin"><span>Request Disposal In</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/deliverydis"><span>Delivery Order</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirmdis"><span>Confirm Disposal</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-disposal"><span>Data Disposal</span></a></li> -->
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/revdis-head"><span>Review Ops Head</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/revdis-mnr"><span>Review MnR Area</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/revdis-taf"><span>Review TAF Accounting</span></a></li>
-                          </ul>
-                        </li>
-
-                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="archive"></i><span>Stock Opname</span></a>
-                        <ul class="sidebar-submenu">
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/stockopname"><span>Data Stock Opname</span></a></li>
-                          <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/adjustmentstock"><span>Adjustment Stock</span></a></li> -->
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                  href="/admin/review-disposal"><span>Review Disposal</span></a></li>
+                            {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                  href="/admin/revdis-mnr"><span>Review MnR Area</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                  href="/admin/revdis-taf"><span>Review TAF Accounting</span></a></li> --}}
                         </ul>
-                      </li>
-                    </ul>
-                  </li>
+                    </li>
+
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                data-feather="archive"></i><span>Stock Opname</span></a>
+                        <ul class="sidebar-submenu">
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="/admin/stockopname"><span>Data Stock Opname</span></a></li>
+                            <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/adjustmentstock"><span>Adjustment Stock</span></a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+                </li>
 
 
-                  
-                  <li class="sidebar-main-title">          
+
+                <li class="sidebar-main-title">
                     <h6>Maintenance</h6>
-                  </li>
-                  <li class="menu-box"> 
+                </li>
+                <li class="menu-box">
                     <ul>
-                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clock"></i><span>Schedule</span></a>
-                        <ul class="sidebar-submenu">
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/schedule/lihat_data_schedule"><span> Data Schedule</span></a></li></li>
-                        </ul>
-                        
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="trello"></i><span>Preventive Maintenance</span></a>
-                        <ul class="sidebar-submenu">
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/preventive_maintenance/lihat_data_preventive_maintenance"><span> Data Preventive Schedule</span></a></li></li>
-                        </ul>
-
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="edit"></i><span>Corrective Maintenance</span></a>
-                        <ul class="sidebar-submenu">
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/corrective_maintenance/lihat_data_corrective_maintenance"><span> Data Corrective Schedule</span></a></li></li>
-                        </ul>
-
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="check-circle"></i><span>Checklist</span></a>
-                        <ul class="sidebar-submenu">
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/checklist/lihat_data_checklist"><span> Data Checklist Schedule</span></a></li></li>
-                        </ul>
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                    data-feather="clock"></i><span>Schedule</span></a>
+                            <ul class="sidebar-submenu">
+                                <li><a class="sidebar-link sidebar-title link-nav"
+                                        href="/schedule/lihat_data_schedule"><span> Data Schedule</span></a></li>
+                        </li>
                     </ul>
-                  </li>
+
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                            data-feather="trello"></i><span>Preventive Maintenance</span></a>
+                    <ul class="sidebar-submenu">
+                        <li><a class="sidebar-link sidebar-title link-nav"
+                                href="/preventive_maintenance/lihat_data_preventive_maintenance"><span> Data Preventive
+                                    Schedule</span></a></li>
+                </li>
+                </ul>
+
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                            data-feather="edit"></i><span>Corrective Maintenance</span></a>
+                    <ul class="sidebar-submenu">
+                        <li><a class="sidebar-link sidebar-title link-nav"
+                                href="/corrective_maintenance/lihat_data_corrective_maintenance"><span> Data Corrective
+                                    Schedule</span></a></li>
+                </li>
+                </ul>
+
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                            data-feather="check-circle"></i><span>Checklist</span></a>
+                    <ul class="sidebar-submenu">
+                        <li><a class="sidebar-link sidebar-title link-nav"
+                                href="/checklist/lihat_data_checklist"><span> Data Checklist Schedule</span></a></li>
+                </li>
+                </ul>
+                </ul>
+                </li>
 
 
-                  <li class="sidebar-main-title">          
+                <li class="sidebar-main-title">
                     <h6>Master Data</h6>
-                  </li>
-                  
-                  <li class="menu-box"> 
+                </li>
+
+                <li class="menu-box">
                     <ul>
-                      <li class="sidebar-list">
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="database"></i><span>Master Data</span></a>
-                        <ul class="sidebar-submenu">
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/regist"><span>Asset</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registeqp"><span>Asset Equipment</span></a></li>
-                          <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="#"><span>Merk</span></a></li> -->
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/brand"><span>Brand</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/category"><span>Kategori</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/subcategory"><span>Sub Kategori</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/checklist"><span>Checklist</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/condition"><span>Kondisi</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/control"><span>Kontrol Checklist</span></a></li>
+                        <li class="sidebar-list">
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                    data-feather="database"></i><span>Master Data</span></a>
+                            <ul class="sidebar-submenu">
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/regist"><span>Asset</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/registeqp"><span>Asset Equipment</span></a></li>
+                                <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="#"><span>Merk</span></a></li> -->
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/brand"><span>Brand</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/category"><span>Kategori</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/subcategory"><span>Sub Kategori</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/checklist"><span>Checklist</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/condition"><span>Kondisi</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/control"><span>Kontrol Checklist</span></a></li>
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/dept"><span>Departement</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/division"><span>Division</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/groupuser"><span>Group User</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/joblevel"><span>Job Level</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/dept"><span>Departement</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/division"><span>Division</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/groupuser"><span>Group User</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/joblevel"><span>Job Level</span></a></li>
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/layout"><span>Tata Letak</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/layout"><span>Tata Letak</span></a></li>
 
-                          <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/location"><span>Lokasi</span></a></li> -->
+                                <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/location"><span>Lokasi</span></a></li> -->
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/mtc"><span>Maintenance</span></a></li>
-                          
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/people"><span>People</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/mtc"><span>Maintenance</span></a></li>
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/type"><span>Tipe Asset</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/tipe_maintenance"><span>Tipe Maintenance Asset</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/periodic"><span>Periodic Maintenance</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/priority"><span>Prioritas</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/reason"><span>Alasan Mutasi</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/reasonso"><span>Alasan Stock Opname</span></a></li>
-                          
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/region"><span>Regional</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/repair"><span>Perbaikan</span></a></li>
-                          
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/supplier"><span>Pemasok</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/uom"><span>Satuan</span></a></li>
-                          
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/warranty"><span>Garansi</span></a></li>
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/city"><span>Kota</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/people"><span>People</span></a></li>
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/resto"><span>Resto</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/type"><span>Tipe Asset</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/tipe_maintenance"><span>Tipe Maintenance Asset</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/periodic"><span>Periodic Maintenance</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/priority"><span>Prioritas</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/reason"><span>Alasan Mutasi</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/reasonso"><span>Alasan Stock Opname</span></a></li>
 
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval_maintenance"><span>Approval Maintenance</span></a></li>
-                            
-                          
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/region"><span>Regional</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/repair"><span>Perbaikan</span></a></li>
 
-                        </ul>
-                      </li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/supplier"><span>Pemasok</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/uom"><span>Satuan</span></a></li>
+
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/warranty"><span>Garansi</span></a></li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/city"><span>Kota</span></a></li>
+
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/resto"><span>Resto</span></a></li>
+
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/approval_maintenance"><span>Approval Maintenance</span></a></li>
+
+
+
+                            </ul>
+                        </li>
                     </ul>
-                  </li>
+                </li>
 
-                  
 
-                  <li class="sidebar-main-title">          
+
+                <li class="sidebar-main-title">
                     <h6>User Management</h6>
-                  </li>
-                  <li class="menu-box"> 
+                </li>
+                <li class="menu-box">
                     <ul>
-                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>User</span></a>
-                        <ul class="sidebar-submenu">
-                          {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                    data-feather="clipboard"></i><span>User</span></a>
+                            <ul class="sidebar-submenu">
+                                {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                             <ul class="nav-sub-childmenu submenu-content">
                               <li><a href="bootstrap-basic-table.html">Basic Tables</a></li>
                               <li><a href="table-components.html">Table components</a></li>
@@ -227,22 +303,27 @@
                               <li><a href="datatable-data-source.html">Data Sources</a></li>
                             </ul>
                           </li> --}}
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/user"><span>User</span></a></li></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/permission"><span>Permission</span></a></li></li>
-                        </ul>
-                    </ul>
-                  </li>
+                                <li><a class="sidebar-link sidebar-title link-nav"
+                                        href="/admin/user"><span>User</span></a></li>
+                        </li>
+                        <li><a class="sidebar-link sidebar-title link-nav"
+                                href="/admin/permission"><span>Permission</span></a></li>
+                </li>
+                </ul>
+                </ul>
+                </li>
 
 
 
-                  <li class="sidebar-main-title">          
+                <li class="sidebar-main-title">
                     <h6>Report</h6>
-                  </li>
-                  <li class="menu-box"> 
+                </li>
+                <li class="menu-box">
                     <ul>
-                      <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>Report</span></a>
-                        <ul class="sidebar-submenu">
-                          {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                    data-feather="clipboard"></i><span>Report</span></a>
+                            <ul class="sidebar-submenu">
+                                {{-- <li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                             <ul class="nav-sub-childmenu submenu-content">
                               <li><a href="bootstrap-basic-table.html">Basic Tables</a></li>
                               <li><a href="table-components.html">Table components</a></li>
@@ -255,24 +336,36 @@
                               <li><a href="datatable-data-source.html">Data Sources</a></li>
                             </ul>
                           </li> --}}
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/registrasi_asset_report"><span>Registrasi Asset</span></a></li></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/mutasi_stock_asset"><span>Mutasi Stock Asset</span></a></li></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/kartu_stock_asset"><span>Kartu Stock Asset</span></a></li></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_opname"><span>Stock Opname</span></a></li></li>
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/checklist_asset"><span>Checklist Asset</span></a></li></li> -->
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/maintenance_asset"><span>Maintenance Asset</span></a></li></li> -->
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/history_maintenance_asset"><span>History Maintenance Asset</span></a></li></li> -->
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_asset_per_location"><span>Stock Asset Per Location</span></a></li></li>
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/garansi_asset"><span>Garansi Asset</span></a></li></li> -->
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/reports/disposal_asset"><span>Disposal Asset</span></a></li></li>
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_opname"><span>Stock Opname</span></a></li></li> -->
-                          <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/trend_issue_maintenace"><span>Trend Issue Maintenance</span></a></li></li> -->
-                        </ul>
-                    </ul>
-                  </li> 
+                                <li><a class="sidebar-link sidebar-title link-nav"
+                                        href="/reports/registrasi_asset_report"><span>Registrasi Asset</span></a></li>
+                        </li>
+                        <li><a class="sidebar-link sidebar-title link-nav"
+                                href="/reports/mutasi_stock_asset"><span>Mutasi Stock Asset</span></a></li>
+                </li>
+                <li><a class="sidebar-link sidebar-title link-nav" href="/reports/kartu_stock_asset"><span>Kartu Stock
+                            Asset</span></a></li>
+                </li>
+                <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_opname"><span>Stock
+                            Opname</span></a></li>
+                </li>
+                <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/checklist_asset"><span>Checklist Asset</span></a></li></li> -->
+                <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/maintenance_asset"><span>Maintenance Asset</span></a></li></li> -->
+                <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/history_maintenance_asset"><span>History Maintenance Asset</span></a></li></li> -->
+                <li><a class="sidebar-link sidebar-title link-nav"
+                        href="/reports/stock_asset_per_location"><span>Stock Asset Per Location</span></a></li>
+                </li>
+                <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/garansi_asset"><span>Garansi Asset</span></a></li></li> -->
+                <li><a class="sidebar-link sidebar-title link-nav" href="/reports/disposal_asset"><span>Disposal
+                            Asset</span></a></li>
+                </li>
+                <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/stock_opname"><span>Stock Opname</span></a></li></li> -->
+                <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/trend_issue_maintenace"><span>Trend Issue Maintenance</span></a></li></li> -->
+                </ul>
+                </ul>
+                </li>
 
 
-				        {{-- <li class="sidebar-main-title">          
+                {{-- <li class="sidebar-main-title">          
                     <h6>Registrasi Asset    </h6>
                   </li>
                   <li class="menu-box"> 
@@ -283,7 +376,7 @@
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php" target="_blank"><i data-feather="anchor"></i><span>Schedule Mainten</span></a></li>
                     </ul>
                   </li> --}}
-                  {{-- <li class="sidebar-main-title">          
+                {{-- <li class="sidebar-main-title">          
                     <h6>Checklist Asset             </h6>
                   </li>
                   <li class="menu-box"> 
@@ -343,10 +436,10 @@
                       </li>
                     </ul>
                   </li> --}}
-                  <!-- <li class="sidebar-main-title">          
+                <!-- <li class="sidebar-main-title">
                     <h6>Components</h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="box"></i><span>Ui Kits</span></a>
                         <ul class="sidebar-submenu">
@@ -373,7 +466,7 @@
                           <li><a href="list.html">Lists</a></li>
                         </ul>
                       </li> -->
-                      <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="folder-plus"></i><span>Bonus Ui</span></a>
+                <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="folder-plus"></i><span>Bonus Ui</span></a>
                         <ul class="sidebar-submenu">
                           <li><a href="scrollable.html">Scrollable</a></li>
                           <li><a href="tree.html">Tree view</a></li>
@@ -428,7 +521,7 @@
                         </ul>
                       </li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="bar-chart"></i><span>Charts</span></a>
-                        <ul class="sidebar-submenu">                
+                        <ul class="sidebar-submenu">
                           <li><a href="chart-apex.html">Apex Chart</a></li>
                           <li><a href="chart-google.html">Google Chart</a></li>
                           <li><a href="chart-sparkline.html">Sparkline chart</a></li>
@@ -442,11 +535,11 @@
                       </li>
                     </ul>
                   </li>
-                  <li class="sidebar-main-title">          
+                  <li class="sidebar-main-title">
                     <h6>Pages    </h6>
                   </li>
-                  <li class="menu-box"> 
-                    <ul>        
+                  <li class="menu-box">
+                    <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="landing-page.html"><i data-feather="cast"> </i><span>Landing page</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="sample-page.html"><i data-feather="file-text"> </i><span>Sample page</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="internationalization.html"><i data-feather="globe"> </i><span>Internationalization</span></a></li>
@@ -524,10 +617,10 @@
                       </li>
                     </ul>
                   </li> -->
-                  <!-- <li class="sidebar-main-title">          
+                <!-- <li class="sidebar-main-title">
                     <h6>Miscellaneous             </h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="image"></i><span>Gallery</span></a>
                         <ul class="sidebar-submenu">
@@ -581,12 +674,12 @@
                           <li><a href="knowledge-detail.html">Knowledge detail              </a></li>
                         </ul>
                       </li> -->
-                      <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="support-ticket.html"><i data-feather="users"> </i><span>Support Ticket</span></a></li> -->
-                    </ul>
-                  </li>
+                <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="support-ticket.html"><i data-feather="users"> </i><span>Support Ticket</span></a></li> -->
                 </ul>
-              </div>
-              <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
-            </nav>
-          </div>
-        </div>
+                </li>
+                </ul>
+            </div>
+            <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+        </nav>
+    </div>
+</div>

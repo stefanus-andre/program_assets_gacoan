@@ -895,7 +895,296 @@ public function ajaxGetAssetMovement(Request $request) {
 
     //disposal controller
 
-    public function HalamanDisposalSM() {
+    public function HalamanDisposalSM()
+    {
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+
+        $restos = DB::table('master_resto_v2')->select('store_code', 'name_store_street')->get();
+
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+
+        
+
+        $username = auth()->user()->username;
+
+        $fromLoc = DB::table('m_people')
+
+                ->where('nip', $username)
+
+                ->value('loc_id'); 
+
+
+
+        $registerLocation = DB::table('master_resto')
+
+                ->where('store_code', $fromLoc)
+
+                ->value('resto');
+
+    
+
+        // Filter assets based on the register_location matching the fetched resto
+
+        $assets = DB::table('table_registrasi_asset')
+
+        ->select('id', 'asset_name')
+
+        // ->where('location_now', $registerLocation)
+
+        ->where('qty', '>', 0) 
+
+        ->get();       
+
+        $user_loc = auth()->user()->location_now;
+        $username = auth()->user()->username;
+
+        // Mulai query builder
+        $query = DB::table('t_out')
+            ->distinct()
+            ->select(
+                't_out.*',
+                't_out_detail.*',
+                'm_reason.reason_name',
+                'mc_approval.approval_name',
+                'master_resto_v2.*',
+                't_out_detail.*',
+                'm_uom.uom_name',
+                'm_brand.brand_name'
+            )
+            ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+            ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+            ->join(
+                'master_resto_v2',
+                DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+                '=',
+                DB::raw('CONVERT(master_resto_v2.id USING utf8mb4) COLLATE utf8mb4_unicode_ci')
+            )
+            ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+            ->join('m_uom', 't_out_detail.uom', '=', 'm_uom.uom_id')
+            ->join('m_brand', 't_out_detail.brand', '=', 'm_brand.brand_id')
+            ->join(
+                'm_user',
+                DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+                '=',
+                DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci')
+            );
+
+            // Jika yang login bukan admin, tambahkan filter berdasarkan `user_loc`
+            if ($username !== 'admin') {
+                $query->where(
+                DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+                '=', $user_loc);
+            }
+
+            $moveouts = $query->where('t_out.out_id', 'like', 'DA%')
+            ->paginate(10);
+    
+
+        return view("SM.disposal.lihat_data_disposal", [
+            'fromLoc' => $fromLoc,
+            'reasons' => $reasons,
+            'assets' => $assets,
+            'conditions' => $conditions,
+            'approvals' => $approvals,
+            'moveouts' => $moveouts,
+            'restos' => $restos
+        ]);
+    }
+
+
+    public function HalamanAddDataDisposal()
+    {
+
+        $location_user = auth()->user()->location_now;
+        $loc = DB::table('master_resto_v2')->where('id', $location_user)->first();
+
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
+        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
+        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+        $moveouts = DB::table('t_out')
+        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name','fromResto.name_store_street as from_location', 
+        'toResto.name_store_street as dest_location')
+        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->join('master_resto_v2 as fromResto', 't_out.from_loc', '=', 'fromResto.id') // Alias for from_loc
+        ->join('master_resto_v2 as toResto', 't_out.dest_loc', '=', 'toResto.id')   // Alias for dest_loc
+        ->get();
+
+        return view('SM.disposal.add_data_disposal', [
+            'reasons' => $reasons,
+            'assets' => $assets, 
+            'conditions' => $conditions,
+            'moveouts' => $moveouts,
+            'loc_user' => $loc
+        ]);
+    }
+
+
+    public function AddDataDisOut(Request $request)
+    {
+        $data = $request->validate([
+            'out_date' => 'required|date',
+            'from_loc_id' => 'required|string|max:255',
+            'out_desc' => 'required|string|max:255',
+            'reason_id' => 'required|string|max:255',
+            'asset_id' => 'required|array',
+            'register_code' => 'required|array',
+            'serial_number' => 'required|array',
+            'merk' => 'required|array',
+            'qty' => 'required|array',
+            'satuan' => 'required|array',
+            'condition_id' => 'required|array',
+            'image' => 'required|array'
+        ]);
+    
+        try {
+            $trx_code = DB::table('t_trx')->where('trx_name', 'Disposal Asset')->value('trx_code');
+            $today = Carbon::now()->format('ymd');
+            $todayCount = MasterDisOut::whereDate('create_date', Carbon::now())->count() + 1;
+            $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT);
+            $out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc_id')}.{$transaction_number}";
+    
+            $moveout = new MasterDisOut();
+            $moveout->out_date = $request->input('out_date');
+            $moveout->from_loc = $request->input('from_loc_id');
+            $moveout->out_desc = $request->input('out_desc');
+            $moveout->reason_id = $request->input('reason_id');
+            $moveout->appr_1 = '1';
+            $moveout->is_active = '1';
+            $moveout->is_verify = '1';
+            $moveout->is_confirm = '1';
+            $moveout->create_by = Auth::user()->username;
+    
+            $maxMoveoutId = MasterDisOut::max('out_no');
+            $out_no_base = $maxMoveoutId ? $maxMoveoutId + 1 : 1;
+            $moveout->out_no = $out_no_base;
+    
+            $moveout->out_id = $out_id;
+            $moveout->save();
+    
+            foreach ($request->input('asset_id') as $index => $assetId) {
+                $transaction_number_str = str_pad($transaction_number, 3, '0', STR_PAD_LEFT);
+                $out = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc')}.{$transaction_number_str}";
+    
+                $imagePath = null;
+                if ($request->hasFile("image.$index") && $request->file("image.$index")->isValid()) {
+                    // Store the uploaded file and get its path
+                    $imagePath = $request->file("image.$index")->store('moveout_item/images', 'public');
+                }
+    
+                $currentQty = DB::table('table_registrasi_asset')
+                    ->where('id', $assetId)
+                    ->value('qty');
+                $moveoutQty = $request->input('qty')[$index];
+                
+                if ($currentQty === null) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => "Asset ID {$assetId} not found."
+                    ], 404);
+                }
+    
+                $newQty = max(0, $currentQty - $moveoutQty);
+                DB::table('table_registrasi_asset')
+                    ->where('id', $assetId)
+                    ->update(['qty' => $newQty]);
+    
+                DB::table('t_out_detail')->insert([
+                    'out_det_id' => $moveout->out_no,
+                    'out_id' => $out_id,
+                    'asset_id' => $assetId,
+                    'asset_tag' => $request->input('register_code')[$index],
+                    'serial_number' => $request->input('serial_number')[$index],
+                    'brand' => $request->input('merk')[$index],
+                    'qty' => $moveoutQty,
+                    'uom' => $request->input('satuan')[$index],
+                    'condition' => $request->input('condition_id')[$index],
+                    'image' => $imagePath,
+                ]);
+
+                DB::table('t_transaction_qty')->insert([
+                    'out_det_id' => $moveout->out_no,
+                    'out_id' => $out_id, 
+                    'asset_tag' => $request->input('register_code')[$index],
+                    'asset_id' => $assetId,
+                    'from_loc' => $request->input('from_loc_id')[$index],
+                    'qty' => $moveoutQty,
+                    'qty_continue' => 1,
+                    'qty_total' => 0,
+                    'qty_disposal' => 0,
+                    'qty_difference' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data moveout berhasil ditambahkan',
+                'redirect_url' => route('sm.disposal')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+
+    public function detailPageDataDisposalOut($id) 
+    {
+        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
+
+        $moveOutAssets = DB::table('t_out')
+        ->select(
+            't_out.*',
+            't_out_detail.out_id AS detail_out_id',
+            't_out_detail.qty',
+            'm_reason.reason_name',
+            'master_resto_v2.name_store_street AS from_location'
+        )
+        ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->join('master_resto_v2', 't_out.from_loc', '=', 'master_resto_v2.id')
+        ->where('t_out.out_id', '=', $id) // Ensure specific match
+        ->where('t_out.out_id', 'like', 'DA%')
+        ->first();
+
+        $assets = DB::table('table_registrasi_asset')
+        ->leftjoin('t_out_detail', 'table_registrasi_asset.register_code', 't_out_detail.asset_tag')
+        ->leftjoin('t_transaction_qty', 't_out_detail.out_id', '=', 't_transaction_qty.out_id')
+        ->leftjoin('t_out', 't_transaction_qty.out_id', 't_out.out_id')
+        ->leftjoin('m_assets', 'table_registrasi_asset.asset_name', '=', 'm_assets.asset_id')
+        ->leftjoin('m_brand', 'table_registrasi_asset.merk', '=', 'm_brand.brand_id')
+        ->leftjoin('m_condition', 'table_registrasi_asset.condition', '=', 'm_condition.condition_id')
+        ->leftjoin('m_uom', 'table_registrasi_asset.satuan', '=', 'm_uom.uom_id')
+        ->select('m_assets.asset_model', 'm_brand.brand_name', 't_transaction_qty.qty', 'm_uom.uom_name', 'table_registrasi_asset.serial_number', 'table_registrasi_asset.register_code', 'm_condition.condition_name', 't_out_detail.image')
+        ->where('t_out.out_id', 'like', 'DA%')
+        ->get();
+
+        // dd($moveOutAssets);
+
+        return view('SM.disposal.detail_data_disposal', compact('reasons', 'moveOutAssets', 'assets'));
+    }
+
+    public function filterDisposal(Request $request)
+    {
+        $startDate = $request->input('start_date');
+
+        $endDate = $request->input('end_date');
+
+    
+        // Validate the date inputs
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
+
+
         $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
 
         $restos = DB::table('master_resto_v2')->select('store_code', 'name_store_street')->get();
@@ -936,225 +1225,75 @@ public function ajaxGetAssetMovement(Request $request) {
 
             ->get();       
 
-            $user_loc = auth()->user()->location_now;
-
-            $moveouts = DB::table('t_out')
-            ->distinct()
-            ->select(
-                't_out.*',
-                'm_reason.reason_name',
-                'mc_approval.approval_name',
-                'master_resto_v2.*',
-                't_out_detail.*',
-                'm_uom.uom_name',
-                'm_brand.brand_name'
-            )
-            ->leftJoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-            ->leftJoin('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
-            ->leftJoin(
-                'master_resto_v2',
-                DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
-                '=',
-                DB::raw('CONVERT(master_resto_v2.id USING utf8mb4) COLLATE utf8mb4_unicode_ci')
-            )
-            ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
-            ->join('m_uom', 't_out_detail.uom', '=', 'm_uom.uom_id')
-            ->join('m_brand', 't_out_detail.brand', '=', 'm_brand.brand_id')
-            ->join(
-                'm_user',
-                DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
-                '=',
-                DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci')
-            )
-            ->where('t_out.out_id', 'like', 'DA%')
-            ->where(
-                DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
-                '=',
-                $user_loc
-            )
-            ->paginate(10);
         
-
-return view("SM.disposal.lihat_data_disposal", [
-    'fromLoc' => $fromLoc,
-    'reasons' => $reasons,
-    'assets' => $assets,
-    'conditions' => $conditions,
-    'approvals' => $approvals,
-    'moveouts' => $moveouts,
-    'restos' => $restos
-]);
-    }   
-
-
-    public function HalamanAddDataDisposal() {
-
-        $userLocation = auth()->user()->location_now;
-
-        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
-        $approvals = DB::table('mc_approval')->select('approval_id', 'approval_name')->get();
-        $assets = DB::table('table_registrasi_asset')->select('id', 'asset_name')->get();
-        $conditions = DB::table('m_condition')->select('condition_id', 'condition_name')->get();
+    
         $moveouts = DB::table('t_out')
-        ->select('t_out.*', 'm_reason.reason_name', 'mc_approval.approval_name','fromResto.name_store_street as from_location', 
-        'toResto.name_store_street as dest_location')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
-        ->join('master_resto_v2 as fromResto', 't_out.from_loc', '=', 'fromResto.id') 
-        ->join('master_resto_v2 as toResto', 't_out.dest_loc', '=', 'toResto.id') 
-        ->get();
+        ->distinct()
+        ->select(
+            't_out.*',
+            'm_reason.reason_name',
+            'mc_approval.approval_name',
+            'master_resto_v2.*',
+            't_out_detail.*',
+            'm_uom.uom_name',
+            'm_brand.brand_name'
+        )
 
-        return view('SM.disposal.add_data_disposal', [
+        ->leftJoin('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
+        ->leftJoin('mc_approval', 't_out.is_confirm', '=', 'mc_approval.approval_id')
+        ->leftJoin(
+            'master_resto_v2',
+            DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+            '=',
+            DB::raw('CONVERT(master_resto_v2.id USING utf8mb4) COLLATE utf8mb4_unicode_ci')
+        )
+        ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
+        ->join('m_uom', 't_out_detail.uom', '=', 'm_uom.uom_id')
+        ->join('m_brand', 't_out_detail.brand', '=', 'm_brand.brand_id')
+        ->join(
+            'm_user',
+            DB::raw('CONVERT(t_out.from_loc USING utf8mb4) COLLATE utf8mb4_unicode_ci'),
+            '=',
+            DB::raw('CONVERT(m_user.location_now USING utf8mb4) COLLATE utf8mb4_unicode_ci')
+        )
+        
+        ->when($startDate, function ($query, $startDate) {
+            return $query->whereDate('out_date', '>=', $startDate);
+            })
+        ->when($endDate, function ($query, $endDate) {
+                return $query->whereDate('out_date', '<=', $endDate);
+            })
+            
+            
+            ->where('t_out.out_id', 'like', 'DA%')// Only include active records
+            
+        ->paginate(10);
+
+
+        return view("SM.disposal.lihat_data_disposal", [
             'reasons' => $reasons,
             'assets' => $assets,
             'conditions' => $conditions,
+            'approvals' => $approvals,
             'moveouts' => $moveouts,
+            'restos' => $restos
         ]);
-    }
 
-
-    public function AddDataDisOut(Request $request)
-{
-    $request->validate([
-        'out_date' => 'required|date',
-        'from_loc_id' => 'required|string|max:255',
-        'out_desc' => 'required|string|max:255',
-        'reason_id' => 'required|string|max:255',
-        'asset_id' => 'required|array',
-        'register_code' => 'required|array',
-        'serial_number' => 'required|array',
-        'merk' => 'required|array',
-        'qty' => 'required|array',
-        'satuan' => 'required|array',
-        'condition_id' => 'required|array',
-        'image' => 'required|array'
-    ]);
-
-    DB::beginTransaction();
-    try {
-        $trx_code = DB::table('t_trx')->where('trx_name', 'Disposal Asset')->value('trx_code');
-        $today = Carbon::now()->format('ymd');
-        $todayCount = MasterDisOut::whereDate('create_date', Carbon::now())->count() + 1;
-        $transaction_number = str_pad($todayCount, 3, '0', STR_PAD_LEFT);
-        $out_id = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc_id')}.{$transaction_number}";
-
-        // Create Disposal Entry
-        $moveout = new MasterDisOut();
-        $moveout->out_date = $request->input('out_date');
-        $moveout->from_loc = $request->input('from_loc_id');
-        $moveout->out_desc = $request->input('out_desc');
-        $moveout->reason_id = $request->input('reason_id');
-        $moveout->appr_1 = '1';
-        $moveout->is_active = '1';
-        $moveout->is_verify = '1';
-        $moveout->is_confirm = '1';
-        $moveout->create_by = Auth::user()->username;
-
-        $maxMoveoutId = MasterDisOut::max('out_no');
-        $out_no_base = $maxMoveoutId ? $maxMoveoutId + 1 : 1;
-        $moveout->out_no = $out_no_base;
-        $moveout->out_id = $out_id;
-        $moveout->save();
-
-        // Loop through assets
-        foreach ($request->input('asset_id') as $index => $assetId) {
-            $transaction_number_str = str_pad($transaction_number, 3, '0', STR_PAD_LEFT);
-            $out = "{$trx_code}.{$today}.{$request->input('reason_id')}.{$request->input('from_loc_id')}.{$transaction_number_str}";
-
-            // Image Upload
-            $imagePath = null;
-            if ($request->hasFile("image.$index") && $request->file("image.$index")->isValid()) {
-                $imagePath = $request->file("image.$index")->store('moveout_item/images', 'public');
-            }
-
-            // Check Current Qty
-            $currentQty = DB::table('t_out_detail')
-                ->where('id', $assetId)
-                ->value('qty_total'); // Fix: Use qty_total instead of qty_final
-
-            if ($currentQty === null) {
-                DB::rollBack();
-                return response()->json([
-                    'status' => 'error',
-                    'message' => "Asset ID {$assetId} not found."
-                ], 404);
-            }
-
-            $moveoutQty = $request->input('qty')[$index];
-
-            if ($currentQty < $moveoutQty) {
-                DB::rollBack();
-                return response()->json([
-                    'status' => 'error',
-                    'message' => "Not enough quantity for Asset ID {$assetId}. Available: {$currentQty}, Requested: {$moveoutQty}."
-                ], 400);
-            }
-
-            // Reduce qty_total
-            DB::table('t_out_detail')
-                ->where('id', $assetId)
-                ->decrement('qty_total', $moveoutQty); 
-            // Insert into t_out_detail
-            DB::table('t_out_detail')->insert([
-                'out_no' => $moveout->out_no, 
-                'out_id' => $out_id,
-                'asset_id' => $assetId,
-                'asset_tag' => $request->input('register_code')[$index],
-                'serial_number' => $request->input('serial_number')[$index],
-                'brand' => $request->input('merk')[$index],
-                'qty' => $moveoutQty,
-                'qty_disposal' => $moveoutQty,
-                'uom' => $request->input('satuan')[$index],
-                'condition' => $request->input('condition_id')[$index],
-                'image' => $imagePath,
-            ]);
-        }
-
-        DB::commit();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data disposal out berhasil ditambahkan',
-            'redirect_url' => route('SM.disout')
-        ]);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-        ]);
-    }
-}
-
+        // Query to filter the data
+        // $moveouts = DB::table('t_out')
+        //     ->when($startDate, function ($query, $startDate) {
+        //         return $query->whereDate('out_date', '>=', $startDate);
+        //     })
+        //     ->when($endDate, function ($query, $endDate) {
+        //         return $query->whereDate('out_date', '<=', $endDate);
+        //     })
+        //     ->where('t_out.out_id', 'like', 'DA%')
+        //     ->paginate(10); 
     
-
-
-    public function detailPageDataDisposalOut($id) {
-        $reasons = DB::table('m_reason')->select('reason_id', 'reason_name')->get();
-
-        $moveOutAssets = DB::table('t_out')
-        ->select(
-            't_out.*',
-            't_out.out_id',
-            't_out_detail.out_id AS detail_out_id',
-            't_out_detail.qty',
-            'm_reason.reason_name',
-            'master_resto_v2.name_store_street AS from_location'
-        )
-        ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('master_resto_v2', 't_out.from_loc', '=', 'master_resto_v2.id')
-        ->where('t_out.out_id', '=', $id) 
-        ->where('t_out.out_id', 'like', 'DA%')
-        ->first();
-
-        // dd($moveOutAssets);
-
-        return view('SM.disposal.detail_data_disposal', compact('reasons', 'moveOutAssets'));
     }
 
-
-
-    public function getAjaxDataDisposal() {
+    public function getAjaxDataDisposal()
+    {
 
            
         $user = Auth::user();
@@ -1294,110 +1433,85 @@ return view("SM.disposal.lihat_data_disposal", [
                     }
                 }
                 
-                public function ajaxGetAssetDisposal(Request $request) {
-
-                    if (!Auth::check()) {
-                        return response()->json(['error' => 'Unauthorized'], 401);
-                    }
-                
-                    $user = Auth::user();
-                
-                    $user_role = $user->role ?? null;
-                    $user_location = $user->location_now ?? null;
-                
-                    if (!$user_role || !$user_location) {
-                        return response()->json(['error' => 'User data missing'], 400);
-                    }
-
-                    $dataGetMovement = DB::table('table_registrasi_asset')
-                    ->select(
-                        'table_registrasi_asset.*',
-                        't_out.*',
-                        't_out_detail.*',
-                        'm_assets.*',
-                        'm_type.*',
-                        'm_category.*',
-                        'm_condition.*',
-                        'm_brand.*',
-                        'm_uom.*',
-                        'm_assets.*'
-                    )
-                    // First, join `t_out` before using it
-                    ->leftJoin('t_out_detail', 'table_registrasi_asset.id', '=', 't_out_detail.asset_id') // Now `t_out` exists
-                    ->leftJoin('t_out', 't_out_detail.out_id', '=', 't_out.out_id')
+                public function ajaxGetAssetDisposal(Request $request) 
+                {
+                    $assets =  DB::table('table_registrasi_asset')
+                    ->select('table_registrasi_asset.id'
+                            ,'table_registrasi_asset.register_code'    
+                            ,'table_registrasi_asset.serial_number'
+                            ,'table_registrasi_asset.register_date'
+                            ,'table_registrasi_asset.purchase_date'
+                            ,'table_registrasi_asset.approve_status'
+                            ,'table_registrasi_asset.serial_number'
+                            ,'table_registrasi_asset.width'
+                            ,'table_registrasi_asset.height'
+                            ,'table_registrasi_asset.depth'
+                            ,'table_registrasi_asset.qty'
+                            ,'m_assets.asset_model'
+                            ,'m_type.type_name'
+                            ,'m_category.cat_name'
+                            ,'m_priority.priority_name'
+                            ,'m_brand.brand_name'
+                            ,'m_brand.brand_id'
+                            ,'m_uom.uom_name'
+                            ,'m_uom.uom_id'
+                            ,'master_resto_v2.name_store_street'
+                            ,'m_layout.layout_name'
+                            ,'m_supplier.supplier_name'
+                            ,'m_condition.condition_name'
+                            ,'m_warranty.warranty_name'
+                            ,'m_periodic_mtc.periodic_mtc_name'
+                            ,'t_out_detail.image'
+                            ,'table_registrasi_asset.deleted_at')
                     ->leftJoin('m_assets', 'table_registrasi_asset.asset_name', '=', 'm_assets.asset_id')
                     ->leftJoin('m_type', 'table_registrasi_asset.type_asset', '=', 'm_type.type_code')
                     ->leftJoin('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_code')
-                    ->leftJoin('m_condition', 'table_registrasi_asset.condition', '=', 'm_condition.condition_id')
+                    ->leftJoin('m_priority', 'table_registrasi_asset.prioritas', '=', 'm_priority.priority_code')
                     ->leftJoin('m_brand', 'table_registrasi_asset.merk', '=', 'm_brand.brand_id')
                     ->leftJoin('m_uom', 'table_registrasi_asset.satuan', '=', 'm_uom.uom_id')
-                    ->leftJoin('m_user', 'table_registrasi_asset.register_location', '=', 'm_user.location_now')
-                    ->where('m_user.location_now', $user_location)
-                    ->where('m_user.role', $user_role)
+                    ->leftJoin('master_resto_v2', 'table_registrasi_asset.register_location', '=', 'master_resto_v2.id')
+                    ->leftJoin('m_layout', 'table_registrasi_asset.layout', '=', 'm_layout.layout_id')
+                    ->leftJoin('m_supplier', 'table_registrasi_asset.supplier', '=', 'm_supplier.supplier_code')
+                    ->leftJoin('m_condition', 'table_registrasi_asset.condition', '=', 'm_condition.condition_id')
+                    ->leftJoin('m_warranty', 'table_registrasi_asset.warranty', '=', 'm_warranty.warranty_id')
+                    ->leftJoin('m_periodic_mtc', 'table_registrasi_asset.periodic_maintenance', '=', 'm_periodic_mtc.periodic_mtc_id')
+                    ->leftJoin('t_out_detail', 'table_registrasi_asset.id', '=', 't_out_detail.asset_id')
+                    ->where('table_registrasi_asset.qty', '>', 0)
                     ->get();
+            
+                    $data = [];
+                    foreach ($assets as $asset) {
+                        $data[] = [
+                            'id' => $asset->id,
+                            'register_code' => $asset->register_code,
+                            'asset_name' => $asset->asset_model,
+                            'merk' => $asset->brand_name,
+                            'qty' => $asset->qty,
+                            'satuan' => $asset->uom_name,
+                            'serial_number' => $asset->serial_number,
+                            'register_code' => $asset->register_code,
+                            'condition' => $asset->condition_name,
+                            'type_asset' => $asset->type_name,
+                            'category_asset' => $asset->cat_name,
+                            'condition' => $asset->condition_name,
+                            'width' => $asset->width,
+                            'height' => $asset->height,
+                            'depth' => $asset->depth,
+                            'brand_id' => $asset->brand_id,
+                            'uom_id' => $asset->uom_id,
+            
+                            // 'serial_number' => $asset->serial_number,
+                        ];
+                    }
+            
+                    $datas = collect($data)->unique('id')->values();
                 
-                    // $dataGetMovement = DB::table('t_out')
-                    //     ->select(
-                    //         't_out.*',
-                    //         't_out_detail.*',
-                    //         'table_registrasi_asset.*',
-                    //         'm_assets.*',
-                    //         'm_user.*',
-                    //         'm_type.*',
-                    //         'm_category.*',
-                    //         'm_condition.*',
-                    //         'm_brand.*',
-                    //         'm_uom.*',
-                    //         'm_assets.*'
-                    //     )
-                    //     ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id')
-                    //     ->join('table_registrasi_asset', 't_out_detail.asset_id', '=', 'table_registrasi_asset.id')
-                    //     ->join('m_user', 't_out.dest_loc', '=', 'm_user.location_now')
-                    //     ->join('m_type', 'table_registrasi_asset.type_asset', '=', 'm_type.type_code')
-                    //     ->join('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_code')
-                    //     ->join('m_brand', 'table_registrasi_asset.merk', '=', 'm_brand.brand_id')
-                    //     ->join('m_uom', 'table_registrasi_asset.satuan', '=', 'm_uom.uom_id')
-                    //     ->join('master_resto_v2', 'table_registrasi_asset.register_location', '=', 'master_resto_v2.id')
-                    //     ->join('m_layout', 'table_registrasi_asset.layout', '=', 'm_layout.layout_id')
-                    //     ->join('m_supplier', 'table_registrasi_asset.supplier', '=', 'm_supplier.supplier_code')
-                    //     ->join('m_condition', 'table_registrasi_asset.condition', '=', 'm_condition.condition_id')
-                    //     ->join('m_warranty', 'table_registrasi_asset.warranty', '=', 'm_warranty.warranty_id')
-                    //     ->join('m_periodic_mtc', 'table_registrasi_asset.periodic_maintenance', '=', 'm_periodic_mtc.periodic_mtc_id')
-                    //     ->join('m_assets', 'table_registrasi_asset.asset_name', '=', 'm_assets.asset_id')
-                    //     ->where('t_out_detail.qty', '>', 0)
-                    //     ->where('m_user.location_now', $user_location)
-                    //     ->where('m_user.role', $user_role)
-                    //     ->get(); 
-                
-                        $data = []; 
-                        foreach ($dataGetMovement as $item) {
-                            $data[] = [
-                                'id' => $item->id,
-                                'register_code' => $item->register_code,
-                                'asset_name' => $item->asset_model,
-                                'merk' => $item->brand_name,
-                                'qty' => $item->qty,
-                                'satuan' => $item->uom_name,
-                                'serial_number' => $item->serial_number,
-                                'register_code' => $item->register_code,
-                                'condition' => $item->condition_name,
-                                'type_asset' => $item->type_name,
-                                'category_asset' => $item->cat_name,
-                                'condition' => $item->condition_name,
-                                'width' => $item->width,
-                                'height' => $item->height,
-                                'depth' => $item->depth,
-                                'brand_id' => $item->brand_id,
-                                'uom_id' => $item->uom_id,
-                
-                            ];
-                        }
-                
-                        return response()->json([
-                            'data' => $data,
-                            'recordsTotal' => count($data),
-                            'recordsFiltered' => count($data),
-                        ]);
-                }
+                    return response()->json([
+                        'data' => $datas,
+                        'recordsTotal' => count($data),
+                        'recordsFiltered' => count($data),
+                    ]);
+                } 
 
 }
+ 

@@ -333,7 +333,7 @@
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
             <!-- Page Sidebar Start-->
-            @include('Admin.layouts.right_sidebar_admin')
+            @include('AM.layouts.right_sidebar_am')
             <!-- Page Sidebar Ends-->
             <div class="page-body pb-5">
                 <br>

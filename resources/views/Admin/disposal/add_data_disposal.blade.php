@@ -294,149 +294,166 @@
        @include('Admin.layouts.right_sidebar_admin')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
+            <div class="card p-4 mt-2">
           <!-- Container-fluid starts-->
             <br>
-          <h3><b>Create Data Disposal</b></h3>
-
-          <div class="btn-showcase">
-              <div class="button_between">
-				          <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#searchRegistData"> <i class="fa fa-search" ></i> Search Data </button>
-                </div> 
-					</div>
-
-
-<div class="modal fade" id="searchRegistData" tabindex="-1" role="dialog" aria-labelledby="searchRegistDataLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="searchRegistDataLabel">Search data Register Asset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <h3 class="mb-5 ps-4"><b>Create Data Disposal</b></h3>
+            <div class="modal fade" id="searchRegistData" tabindex="-1" role="dialog" aria-labelledby="searchRegistDataLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchRegistDataLabel">Search data Register Asset</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="assetTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Register Code</th>
+                                        <th>Asset Name</th>
+                                        <th>Type</th>
+                                        <th>Category</th>
+                                        <th>Condition</th>
+                                        <th>Width</th>
+                                        <th>Height</th>
+                                        <th>Depth</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </div>
             </div>
-            <div class="modal-body">
-                <table id="assetTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Register Code</th>
-                            <th>Asset Name</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Condition</th>
-                            <th>Width</th>
-                            <th>Height</th>
-                            <th>Depth</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    </div>
-</div>
-
-
-
-          <br>
-          <div class="container-fluid">
-          <div class="section">
+    <div class="container-fluid">
+        <div class="section">
             <div class="form-group">
-                <form action="{{ route('add.disout')}}" method="POST">
+                <form action="{{ route('add.disposal_out')}}" method="POST">
                     @csrf
-              <div class="row">
-            <div class="col-sm-12">
-                <label for="out_date">Tanggal Disposal Out:</label>
-                <input type="date" name="out_date" id="out_date" class="form-control" required>
-            </div>
-            <div class="col-sm-12">
-    <label for="from_loc">Lokasi Asal:</label>
-    <select name="from_loc_id" id="from_loc" class="form-control" required></select>
-    <!-- <input type="text" id="from_loc" class="form-control" readonly>
-    <input type="hidden" name="from_loc_id" id="from_loc_id"> -->
-</div>
-            <!-- <div class="col-sm-12">
-              <label for="dest_loc">Lokasi Tujuan:</label>
-              <select name="dest_loc" id="dest_loc" class="form-control" required></select>
-            </div> -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="out_date">Tanggal Disposal Out:</label>
+                                <input type="date" name="out_date" id="out_date" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="from_loc">Lokasi Asal:</label>
+                                <select name="from_loc_id" id="from_loc" class="form-control" required></select>
+                                <!-- <input type="text" id="from_loc" class="form-control" readonly>
+                                    <input type="hidden" name="from_loc_id" id="from_loc_id"> -->
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12">
+                        <label for="dest_loc">Lokasi Tujuan:</label>
+                        <select name="dest_loc" id="dest_loc" class="form-control" required></select>
+                        </div> -->
 
-            <div class="col-sm-12">
-                <label for="out_desc">Deskripsi Disposal Out:</label>
-                    <input type="text" name="out_desc" id="out_desc" class="form-control" required>
-                </div>
-                <div class="col-sm-12">
-                    <label for="reason_id">Alasan Disposal Out:</label>
-                        <select name="reason_id" id="reason_id" class="form-control" required>
-                            <option value="">Pilih Alasan</option>
-                                @foreach($reasons as $reason)
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="out_desc">Deskripsi Disposal Out:</label>
+                                <input type="text" name="out_desc" id="out_desc" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="reason_id">Alasan Disposal Out:</label>
+                                <select name="reason_id" id="reason_id" class="form-control" required>
+                                    <option value="">Pilih Alasan</option>
+                                    @foreach($reasons as $reason)
                                     <option value="{{ $reason->reason_id }}">{{ $reason->reason_name }}</option>
-                                @endforeach
-                        </select>
-                </div>
-                <br><br><br>
-
-                <div id="assetFieldsContainer">
-                                    <!-- Field Asset Pertama -->
-                                    <div class="asset-fields">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                            <label for="asset_id">Data Asset:</label>
-                                            <select name="asset_id[]" id="asset_id" class="form-control asset-select" required>
-                                                <!-- <option value="">Pilih Asset</option>
-                                                @foreach($assets as $asset)
-                                                <option value="{{ $asset->id }}">{{ $asset->asset_name }}</option>
-                                                @endforeach -->
-                                            </select>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="btn-showcase mt-4">
+                            <div class="button_between">
+                                <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#searchRegistData"> <i class="fa fa-search" ></i> Search Data </button>
+                            </div> 
+                        </div>
+                            <div id="assetFieldsContainer" class="mt-4">
+                                <!-- Field Asset Pertama -->
+                                <div class="asset-fields">
+                                    <hr class="mb-4">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="asset_id">Data Asset:</label>
+                                                <select name="asset_id[]" id="asset_id" class="form-control asset-select" required>
+                                                    <!-- <option value="">Pilih Asset</option>
+                                                    @foreach($assets as $asset)
+                                                    <option value="{{ $asset->id }}">{{ $asset->asset_name }}</option>
+                                                    @endforeach -->
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <label for="merk">Merk:</label>
-                                            <input type="text" name="merk_display[]" readonly> <!-- Displayed to the user -->
-                                            <input type="hidden" name="merk[]" > <!-- Submitted to the database -->
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="merk">Merk:</label>
+                                                <input class="form-control" type="text" name="merk_display[]" readonly> <!-- Displayed to the user -->
+                                                <input type="hidden" name="merk[]" > <!-- Submitted to the database -->
                                             </div>
-                                            <div class="col-sm-4">
-                                            <label for="qty">Quantity:</label>
-                                            <input type="text" name="qty[]" id="qty" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="qty">Quantity:</label>
+                                                <input type="text" name="qty[]" id="qty" class="form-control" readonly>
                                             </div>
-                                            <div class="col-sm-3">
-                                            <label for="satuan">Satuan:</label>
-                                            <input type="text" name="satuan_display[]" readonly> <!-- Displayed to the user -->
-                                            <input type="hidden" name="satuan[]" > <!-- Submitted to the database -->
-                                            <!-- <input type="text" name="satuan[]" id="satuan" class="form-control" readonly> -->
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="satuan">Satuan:</label>
+                                                <input class="form-control" type="text" name="satuan_display[]" readonly> <!-- Displayed to the user -->
+                                                <input type="hidden" name="satuan[]" > <!-- Submitted to the database -->
+                                                <!-- <input type="text" name="satuan[]" id="satuan" class="form-control" readonly> -->
                                             </div>
-                                            <div class="col-sm-3">
-                                            <label for="serial_number">Serial Number:</label>
-                                            <input type="text" name="serial_number[]" id="serial_number" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="serial_number">Serial Number:</label>
+                                                <input type="text" name="serial_number[]" id="serial_number" class="form-control" readonly>
                                             </div>
-                                            <div class="col-sm-3">
-                                            <label for="register_code">Register Code:</label>
-                                            <input type="text" name="register_code[]" id="register_code" class="form-control" readonly>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="register_code">Register Code:</label>
+                                                <input type="text" name="register_code[]" id="register_code" class="form-control" readonly>
                                             </div>
-                                            <div class="col-sm-3">
-                                            <label for="condition_id_0">Kondisi Asset:</label>
-                                            <select name="condition_id[]" id="condition_id_0" class="form-control" required>
-                                                <option value="">Pilih Kondisi</option>
-                                                @foreach($conditions as $condition)
-                                                <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
-                                                @endforeach
-                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="condition_id_0">Kondisi Asset:</label>
+                                                <select name="condition_id[]" id="condition_id_0" class="form-control" required>
+                                                    <option value="">Pilih Kondisi</option>
+                                                    @foreach($conditions as $condition)
+                                                    <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            <div class="col-sm-3 mb-3">
+                                        </div>
+                                        <div class="col-sm-3 mb-3">
+                                            <div class="form-group">
                                                 <label for="image">Image:</label>
                                                 <input type="file" name="image[]" id="image" class="form-control" required>
                                             </div>
-                                      </div>
-                                      <button type="button" class="btn btn-success btn-add-asset mt-2">+</button>
-                                      <button type="button" class="btn btn-danger btn-remove-asset mt-2">-</button>
                                         </div>
-                    </div> 
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-add-asset mt-2">+</button>
+                                    <button type="button" class="btn btn-danger btn-remove-asset mt-2">-</button>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
-            </form> 
-            </div>
-        </div>
-          </div>
           <!-- Container-fluid Ends-->
         
         </div>
@@ -887,21 +904,35 @@ $(document).ready(function () {
             return;
         }
 
+        // Cek jika ID aset sudah ada dalam form yang sudah ada
+        const existingAssetIds = $('#assetFieldsContainer').find('select.asset-select').map(function() {
+            return $(this).val();
+        }).get();
+
+        // Jika ID sudah ada, tampilkan peringatan dan hentikan proses
+        if (existingAssetIds.includes(rowData.id.toString())) {
+            alert('Data ini sudah dipilih sebelumnya.');
+            return;
+        }
+
         // Create a new asset field
         const $newField = createFreshAssetField();
 
         // Populate the new field with the selected data
         $newField.find('select.asset-select').html(`<option value="${rowData.id}" selected>${rowData.asset_name}</option>`);
-    $newField.find('input[name="merk_display[]"]').val(rowData.merk); 
-    $newField.find('input[name="merk[]"]').val(rowData.brand_id)
-    $newField.find('input[name="qty[]"]').val(rowData.qty);
-    $newField.find('input[name="satuan_display[]"]').val(rowData.satuan);
-    $newField.find('input[name="satuan[]"]').val(rowData.uom_id);
-    $newField.find('input[name="serial_number[]"]').val(rowData.serial_number);
-    $newField.find('input[name="register_code[]"]').val(rowData.register_code);
+        $newField.find('input[name="merk_display[]"]').val(rowData.merk); 
+        $newField.find('input[name="merk[]"]').val(rowData.brand_id);
+        $newField.find('input[name="qty[]"]').val(rowData.qty);
+        $newField.find('input[name="satuan_display[]"]').val(rowData.satuan);
+        $newField.find('input[name="satuan[]"]').val(rowData.uom_id);
+        $newField.find('input[name="serial_number[]"]').val(rowData.serial_number);
+        $newField.find('input[name="register_code[]"]').val(rowData.register_code);
 
         // Append the new field
         $('#assetFieldsContainer').append($newField);
+
+        // Sembunyikan baris data yang sudah dipilih
+        $(this).hide();
 
         // Initialize Select2 for new fields
         initializeAssetSelect2($newField.find('.asset-select'));
@@ -911,82 +942,84 @@ $(document).ready(function () {
         $('#searchRegistData').modal('hide');
     });
 
+
+
     function createFreshAssetField() {
-    // Clone the template
-    const $template = $('.asset-fields').first();
-    const $newField = $template.clone();
-    
-    // Generate unique ID
-    const uniqueId = 'asset_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    // Reset and update all form elements
-    $newField.find('input').each(function() {
-        $(this).val('');
-        $(this).attr('id', $(this).attr('id') + '_' + uniqueId);
-    });
-    
-    // Clear and update asset select
-    const $assetSelect = $newField.find('.asset-select');
-    $assetSelect.empty();
-    $assetSelect.attr('id', 'asset_select_' + uniqueId);
-    $assetSelect.removeData();
-    $assetSelect.removeClass('select2-hidden-accessible');
-    $assetSelect.find('option').remove();
-    
-    // Clear and update condition select
-    const $conditionSelect = $newField.find('select[name="condition_id[]"]');
-    $conditionSelect.attr('id', 'condition_' + uniqueId);
-    $conditionSelect.val('');
-    $conditionSelect.removeData();
-    $conditionSelect.removeClass('select2-hidden-accessible');
-    
-    // Remove any existing select2 containers
-    $newField.find('.select2-container').remove();
-    
-    return $newField;
-}
+        // Clone the template
+        const $template = $('.asset-fields').first();
+        const $newField = $template.clone();
+        
+        // Generate unique ID
+        const uniqueId = 'asset_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // Reset and update all form elements
+        $newField.find('input').each(function() {
+            $(this).val('');
+            $(this).attr('id', $(this).attr('id') + '_' + uniqueId);
+        });
+        
+        // Clear and update asset select
+        const $assetSelect = $newField.find('.asset-select');
+        $assetSelect.empty();
+        $assetSelect.attr('id', 'asset_select_' + uniqueId);
+        $assetSelect.removeData();
+        $assetSelect.removeClass('select2-hidden-accessible');
+        $assetSelect.find('option').remove();
+        
+        // Clear and update condition select
+        const $conditionSelect = $newField.find('select[name="condition_id[]"]');
+        $conditionSelect.attr('id', 'condition_' + uniqueId);
+        $conditionSelect.val('');
+        $conditionSelect.removeData();
+        $conditionSelect.removeClass('select2-hidden-accessible');
+        
+        // Remove any existing select2 containers
+        $newField.find('.select2-container').remove();
+        
+        return $newField;
+    }
 
     
-function initializeAssetSelect2(element) {
-    $(element).select2({
-        placeholder: 'Pilih Asset',
-        allowClear: true,
-        width: '100%',
-        ajax: {
-            url: '/api/get_data_disposal',
-            type: 'GET',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    search: params.term
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            id: item.id,
-                            text: item.asset_tag
-                        };
-                    })
-                };
-            },
-            cache: true
-        }
-    }).on('select2:clear', function() {
-        var $parent = $(this).closest('.asset-fields');
-        $parent.find('input').val('');
-    });
-}
+    function initializeAssetSelect2(element) {
+        $(element).select2({
+            placeholder: 'Pilih Asset',
+            allowClear: true,
+            width: '100%',
+            ajax: {
+                url: '/api/get_data_disposal',
+                type: 'GET',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.asset_tag
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        }).on('select2:clear', function() {
+            var $parent = $(this).closest('.asset-fields');
+            $parent.find('input').val('');
+        });
+    }
 
-function initializeConditionSelect2(element) {
-    $(element).select2({
-        placeholder: 'Pilih Kondisi',
-        allowClear: true,
-        width: '100%'
-    });
-}
+    function initializeConditionSelect2(element) {
+        $(element).select2({
+            placeholder: 'Pilih Kondisi',
+            allowClear: true,
+            width: '100%'
+        });
+    }
 
 });
 

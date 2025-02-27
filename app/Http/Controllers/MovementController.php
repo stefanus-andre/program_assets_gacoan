@@ -572,6 +572,14 @@ class MovementController extends Controller
                         \Log::info("Reset qty for asset_tag {$detail->asset_tag} to 1.");
                     }
                 }
+            } else if($request->appr_3 == '3'){
+                DB::table('t_out')
+                    ->where('out_id', $id)  // Menentukan kondisi pencarian berdasarkan 'id'
+                    ->update([
+                        'is_confirm' => '3'
+                ]);
+            
+                
             }
             
             

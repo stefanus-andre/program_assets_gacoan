@@ -574,7 +574,7 @@
                             <tbody>
                               @php $no = 1; @endphp
                                 @foreach($moveouts as $moveout) 
-                                @if($moveout->from_loc == auth()->user()->location_now)
+                                {{-- @if($moveout->from_loc == auth()->user()->location_now) --}}
                                     <tr class="text-center">
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $moveout->out_id }}</td>
@@ -587,29 +587,29 @@
                                         <td>{{ $moveout->reason_name }}</td>
                                         <td>{{ $moveout->approval_name }}</td>
                                         <td>
-                                                    {{ 
-                                                        $moveout->appr_1 == 2 ? "Approved" : 
-                                                        ($moveout->appr_1 == 4 ? "Rejected" : "Belum Approved") 
-                                                    }}
-                                                </td>
-                                                <td>
-                                                    {{ 
-                                                        $moveout->appr_2 == 2 ? "Approved" : 
-                                                        ($moveout->appr_2 == 4 ? "Rejected" : "Belum Approved") 
-                                                    }}
-                                                </td>
-                                                <td>
-                                                    {{ 
-                                                        $moveout->appr_3 == 2 ? "Approved" : 
-                                                        ($moveout->appr_3 == 4 ? "Rejected" : "Belum Approved") 
-                                                    }}
-                                                </td>
+                                            {{ 
+                                                $moveout->appr_1 == 2 ? "Approved" : 
+                                                ($moveout->appr_1 == 4 ? "Rejected" : "Belum Approved") 
+                                            }}
+                                        </td>
+                                        <td>
+                                            {{ 
+                                                $moveout->appr_2 == 2 ? "Approved" : 
+                                                ($moveout->appr_2 == 4 ? "Rejected" : "Belum Approved") 
+                                            }}
+                                        </td>
+                                        <td>
+                                            {{ 
+                                                $moveout->appr_3 == 3 ? "Confirmed" : 
+                                                ($moveout->appr_3 == 4 ? "Rejected" : "Belum Approved") 
+                                            }}
+                                        </td>
                                         <td>
                                         @if($moveout->deleted_at)
-                                                          Nonactive
-                                                      @else
-                                                          Active
-                                                      @endif
+                                            Nonactive
+                                        @else
+                                            Active
+                                        @endif
                                         </td>
                                         <td class="text-center">
                                             @if($moveout->appr_1 != 2)
@@ -632,7 +632,7 @@
                                           <a href="{{ route('admin.disoutPDF', $moveout->out_id) }}" target="_blank"><i class="fas fa-print mx-1"></i></a></a>
                                         </td>
                                     </tr>
-                                    @endif
+                                    {{-- @endif --}}
                                 @endforeach
                             </tbody>
                         </table>
@@ -890,10 +890,10 @@ $('#updateForm').on('submit', function(e) {
         }
     });
 });
-  </script>
-    
-    {{-- Detail --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</script>
+
+{{-- Detail --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).on('click', '.detail-button', function() {
         var outId = $(this).data('id');

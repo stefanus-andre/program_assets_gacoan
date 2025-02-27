@@ -227,7 +227,7 @@
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
             <!-- Page Sidebar Start-->
-            @include('SM.layouts.right_sidebar_sm')
+            @include('Admin.layouts.right_sidebar_admin')
             <!-- Page Sidebar Ends-->
             <div class="page-body">
                 <!-- Container-fluid starts-->
@@ -236,14 +236,14 @@
                     <div class="page-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3>Disposal Out Name List</h3>
+                                <h3>Review Disposal</h3>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a>
                                     </li>
                                     <li class="breadcrumb-item">ASMI</li>
-                                    <li class="breadcrumb-item active">Disposal Out Name List</li>
+                                    <li class="breadcrumb-item active">Review Disposal</li>
                                 </ol>
                             </div>
                         </div>
@@ -256,365 +256,14 @@
                         <!-- Individual column searching (text inputs) Starts-->
                         <div class="col-sm-12">
                             <div class="card">
-                                <div class="card-header pb-0">
-                                    <h5>Disposal Out Name List</h5>
-                                    <span>adalah daftar atau kumpulan aset yang dimiliki oleh seseorang, organisasi,
-                                        atau perusahaan. Daftar ini biasanya mencakup rincian tentang setiap aset,
-                                        seperti jenis aset, nilai, lokasi, dan informasi relevan lainnya.</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="btn-showcase">
-                                        <div class="button_between">
-                                            <a href="{{ url('/sm/tambah_data_disposal') }}"
-                                                class="btn btn-square btn-primary">+ Add Data Disposal Out</a>
-                                            {{-- <button class="btn btn-square btn-primary" type="button" data-toggle="modal" data-target="#importDataExcel"> <i class="fa fa-file-excel-o" ></i> Import Data Excel </button>
-                                <button class="btn btn-square btn-primary" type="button"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                Download PDF Data</button> --}}
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Button trigger modal -->
-                                @if (session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-
-                                @if (session('error'))
-                                    <div class="alert alert-danger">
-                                        {{ session('error') }}
-                                    </div>
-                                @endif
-
-                                <!-- Modal add -->
-                                <!-- Modal Add Data Asset -->
-                                <div class="modal fade" id="addDataMoveOut" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Data Disposal Out
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="addMoveOutForm" enctype="multipart/form-data">
-                                                    @csrf
-                                                    <div class="row">
-                                                        <!-- Tanggal, Lokasi, dan Deskripsi -->
-                                                        <div class="col-sm-12">
-                                                            <label for="out_date">Tanggal Disposal Out:</label>
-                                                            <input type="date" name="out_date" id="out_date"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="from_loc">Lokasi Asal:</label>
-                                                            <input type="text" name="from_loc" id="from_loc"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="dest_loc">Lokasi Tujuan:</label>
-                                                            <input type="text" name="dest_loc" id="dest_loc"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="out_desc">Deskripsi Disposal Out:</label>
-                                                            <input type="text" name="out_desc" id="out_desc"
-                                                                class="form-control" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="reason_id">Alasan Disposal Out:</label>
-                                                            <select name="reason_id" id="reason_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Alasan</option>
-                                                                @foreach ($reasons as $reason)
-                                                                    <option value="{{ $reason->reason_id }}">
-                                                                        {{ $reason->reason_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="images">Upload Images:</label>
-                                                            <input type="file" name="images[]" id="images"
-                                                                class="form-control" multiple>
-                                                        </div>
-
-                                                        <!-- Container untuk data asset -->
-                                                        <div id="assetFieldsContainer">
-                                                            <!-- Field Asset Pertama -->
-                                                            <div class="asset-fields">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                        <label for="asset_id">Data Asset:</label>
-                                                                        <select name="asset_id[]"
-                                                                            class="form-control asset-select" required>
-                                                                            <option value="">Pilih Asset</option>
-                                                                            @foreach ($assets as $asset)
-                                                                                <option value="{{ $asset->id }}">
-                                                                                    {{ $asset->asset_name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="merk">Merk:</label>
-                                                                        <input type="text" name="merk[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="qty">Quantity:</label>
-                                                                        <input type="text" name="qty[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="satuan">Satuan:</label>
-                                                                        <input type="text" name="satuan[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="serial_number">Serial
-                                                                            Number:</label>
-                                                                        <input type="text" name="serial_number[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="register_code">Register
-                                                                            Code:</label>
-                                                                        <input type="text" name="register_code[]"
-                                                                            class="form-control" readonly>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <label for="condition_id">Kondisi
-                                                                            Asset:</label>
-                                                                        <select name="condition_id[]"
-                                                                            class="form-control" required>
-                                                                            <option value="">Pilih Kondisi
-                                                                            </option>
-                                                                            @foreach ($conditions as $condition)
-                                                                                <option
-                                                                                    value="{{ $condition->condition_id }}">
-                                                                                    {{ $condition->condition_name }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Tombol untuk menambah atau menghapus field -->
-                                                                <button type="button"
-                                                                    class="btn btn-success btn-add-asset mt-2">+</button>
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-remove-asset mt-2">-</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary"
-                                                    id="saveMoveOutButton">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Update Modal -->
-                                <div id="updateModal" class="modal fade" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Update Disposal Out
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form id="updateForm">
-                                                @csrf
-                                                @method('PUT') <!-- Method override untuk PUT -->
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <label for="out_date">Tanggal Disposal Out: </label>
-                                                            <input type="date" name="out_date" id="out_date"
-                                                                class="form-control"
-                                                                placeholder="Enter Tanggal Disposal Out" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="from_loc">Lokasi Asal: </label>
-                                                            <input type="text" name="from_loc" id="from_loc"
-                                                                class="form-control" placeholder="Enter Lokasi Asal"
-                                                                required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="dest_loc">Lokasi Tujuan: </label>
-                                                            <input type="text" name="dest_loc" id="dest_loc"
-                                                                class="form-control" placeholder="Enter Lokasi Tujuan"
-                                                                required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="out_desc">Deskripsi Disposal Out: </label>
-                                                            <input type="text" name="out_desc" id="out_desc"
-                                                                class="form-control"
-                                                                placeholder="Enter Deskripsi Disposal Out" required>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="reason_id">Alasan Disposal Out: </label>
-                                                            <select name="reason_id" id="reason_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Alasan</option>
-                                                                @foreach ($reasons as $reason)
-                                                                    <option value="{{ $reason->reason_id }}">
-                                                                        {{ $reason->reason_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="asset_id">Data Asset: </label>
-                                                            <select name="asset_id" id="asset_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Asset</option>
-                                                                @foreach ($assets as $asset)
-                                                                    <option value="{{ $asset->id }}">
-                                                                        {{ $asset->asset_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="merk">Merk: </label>
-                                                            <input type="text" name="merk" id="merk"
-                                                                class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="qty">Quantity: </label>
-                                                            <input type="text" name="qty" id="qty"
-                                                                class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="satuan">Satuan: </label>
-                                                            <input type="text" name="satuan" id="satuan"
-                                                                class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="serial_number">Serial Number: </label>
-                                                            <input type="text" name="serial_number"
-                                                                id="serial_number" class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="register_code">Register Code: </label>
-                                                            <input type="text" name="register_code"
-                                                                id="register_code" class="form-control" readonly>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <label for="condition_id">Kondisi Asset: </label>
-                                                            <select name="condition_id" id="condition_id"
-                                                                class="form-control" required>
-                                                                <option value="">Pilih Kondisi</option>
-                                                                @foreach ($conditions as $condition)
-                                                                    <option value="{{ $condition->condition_id }}">
-                                                                        {{ $condition->condition_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <input type="hidden" name="out_id" id="out_id">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="MoveOutDetailModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="brandModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="brandModalLabel">Detail Disposal Out</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>ID:</strong> <span id="moveout-id"></span></p>
-                                                <p><strong>No Disposal Out:</strong> <span id="moveout-no"></span></p>
-                                                <p><strong>Tanggal:</strong> <span id="out-date"></span></p>
-                                                <p><strong>Lokasi Asal:</strong> <span id="from-loc"></span></p>
-                                                <p><strong>Lokasi Tujuan:</strong> <span id="dest-loc"></span></p>
-                                                <p><strong>ID Movement In:</strong> <span id="in-id"></span></p>
-                                                <p><strong>Deskripsi:</strong> <span id="out-desc"></span></p>
-                                                <p><strong>ID Asset:</strong> <span id="asset-id"></span></p>
-                                                <p><strong>Nama Asset:</strong> <span id="asset-name"></span></p>
-                                                <p><strong>Tag Asset:</strong> <span id="asset-tag"></span></p>
-                                                <p><strong>Serial Number:</strong> <span id="serial-number"></span></p>
-                                                <p><strong>Brand:</strong> <span id="asset-brand"></span></p>
-                                                <p><strong>Quantity:</strong> <span id="asset-qty"></span></p>
-                                                <p><strong>Satuan:</strong> <span id="asset-uom"></span></p>
-                                                <p><strong>Condition:</strong> <span id="asset-cond"></span></p>
-                                                <p><strong>Gambar:</strong> <span id="asset-img"></span></p>
-                                                <!-- You can add more brand details here -->
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="importDataExcel" tabindex="-1" role="dialog"
-                                    aria-labelledby="importDataExcelLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="importDataExcelLabel">Import Data Excel
-                                                    Asset</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="" method="post" enctype="multipart/form-data">
-                                                    <label for="import-data">Import Data Excel : </label>
-                                                    <input type="file" name="data_excel" id="data_excel"
-                                                        class="form-control" placeholder="Upload File Excel">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Close</button>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-
                                 <div class="card-body">
                                     <div class="table-responsive product-table"
                                         style="max-width: 100%; overflow-x: auto;">
                                         <div class="d-flex justify-content-between mb-3 mt-3">
-                                            <h5>Disposal Out Data</h5> <!-- Add a heading for the table if needed -->
+                                            <h5>Review Disposal Out Data</h5> <!-- Add a heading for the table if needed -->
                                             <!-- Search Input Field aligned to the right -->
                                         </div>
-                                        <form action="/sm/filter_data_disposal" method="POST">
+                                        <form action="{{ route('admin.filterdisout') }}" method="POST">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -629,7 +278,7 @@
                                                 </div>
                                                 <div class="col-md-4 d-flex align-items-end">
                                                     <button type="submit" class="btn btn-primary">Filter</button>
-                                                    <a href="/sm/disposal"
+                                                    <a href="{{ route('Admin.disout') }}"
                                                         class="btn btn-secondary ml-2">Reset</a>
                                                 </div>
                                             </div>
@@ -696,14 +345,32 @@
                                                             @endif
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="{{ url('/sm/get_detail_data_disposal_out/' . $moveout->out_id) }}"
+                                                            @if ($moveout->appr_1 != 2)
+                                                                <a href="{{ url('/admin/edit_data_disposal_out', $moveout->out_id) }}"
+                                                                    data-id="{{ $moveout->out_id }}" title="Edit">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+                                                                <form class="delete-form"
+                                                                    action="{{ url('admin/disouts/delete', $moveout->out_id) }}"
+                                                                    method="POST" style="display:inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="button" class="delete-button"
+                                                                        title="Delete"
+                                                                        style="border: none; background: none; cursor: pointer;"
+                                                                        onclick="confirmDelete(event, this)">
+                                                                        <i class="fas fa-trash-alt"
+                                                                            style="color: red;"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @endif
+                                                            <a href="{{ url('/admin/get_detail_data_disposal_out/' . $moveout->out_id) }}"
                                                                 title="Detail">
                                                                 <i class="fas fa-book"></i>
                                                             </a>
                                                             <a href="{{ route('admin.disoutPDF', $moveout->out_id) }}"
-                                                                target="_blank">
-                                                                <i class="fas fa-print mx-1"></i>
-                                                              </a>
+                                                                target="_blank"><i
+                                                                    class="fas fa-print mx-1"></i></a></a>
                                                         </td>
                                                     </tr>
                                                     {{-- @endif --}}
@@ -1043,15 +710,15 @@
                         success: function(response) {
                             if (response.status === 'success') {
                                 window.location.href = response
-                                    .redirect_url; // Redirect on success
+                                .redirect_url; // Redirect on success
                             } else {
                                 Swal.fire('Error!', response.message,
-                                    'error'); // Show error message
+                                'error'); // Show error message
                             }
                         },
                         error: function(jqXHR) {
                             Swal.fire('Gagal!', 'Gagal menghapus data. Coba lagi.',
-                                'error'); // Error message
+                            'error'); // Error message
                         }
                     });
                 }

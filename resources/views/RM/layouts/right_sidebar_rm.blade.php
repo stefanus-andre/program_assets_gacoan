@@ -95,7 +95,7 @@
                                                 <span>Approval OPS AM</span>
                                             </a>
                                         </li> -->
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-rm"><span>Approval OPS RM</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/rm/apprdis-rm"><span>Approval OPS RM</span></a></li>
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-sdgasset"><span>Approval SDG Assets</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/disin"><span>Request Disposal In</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/deliverydis"><span>Delivery Order</span></a></li> -->
