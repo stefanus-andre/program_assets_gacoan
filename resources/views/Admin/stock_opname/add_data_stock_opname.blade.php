@@ -311,20 +311,15 @@
        @include('Admin.layouts.right_sidebar_admin')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
-    <br>
-    <h3><b>Stock Opname</b></h3>
-    <br>
-
-
-      <!-- Details Asset Section -->
+            <br>
  
 
     <div class="container-fluid">
+        <form enctype="multipart/form-data" action=" {{ url('/add-stockopname') }}" method="POST">
         <!-- Stock Opname Section -->
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title"><b>Stock Opname</b></h5>
-                <form enctype="multipart/form-data" action=" {{ url('/add-stockopname') }}" method="POST">
+                <h3 class="card-title mb-5"><b>Stock Opname</b></h3>
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
@@ -374,115 +369,108 @@
                 </div>
             </div>
         </div>
-
-     
-      
-    <br><br>
-
-    <div class="mb-4">
-          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#searchRegistData">
-            <i class="fa fa-search"></i> Search Data
-          </button>
+        <div id="assetFieldsContainer" class="mt-5">
+            <div class="asset-fields card p-4">
+                <h3 class="card-title mb-4"><b>Detail Assets</b></h3>
+                <div id="buttonSearch" class="pt-2 mb-5">
+                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#searchRegistData">
+                        <i class="fa fa-search"></i> Search Data
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 mb-3">
+                        <label for="asset_id">Data Asset:</label>
+                        <select name="asset_id[]" id="asset_id" class="form-control asset-select" required></select>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="merk">Merk :</label>
+                        <input type="text" name="merk_display[]" readonly class="form-control">
+                        <input type="hidden" name="merk[]">
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="qty">Quantity :</label>
+                        <input type="text" name="qty[]" id="qty" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="satuan">Uom :</label>
+                        <input type="text" name="satuan_display[]" readonly class="form-control">
+                        <input type="hidden" name="satuan[]">
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="serial_number">Serial Number :</label>
+                        <input type="text" name="serial_number[]" id="serial_number" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="register_code">Asset Tag :</label>
+                        <input type="text" name="register_code[]" id="register_code" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="condition_id_0">Condition :</label>
+                        <select name="condition_id[]" id="condition_id_0" class="form-control" required>
+                        <option value="">Pilih Kondisi</option>
+                        @foreach($conditions as $condition)
+                            <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="image">Qty OnHand :</label>
+                        <input type="number" name="qty_onhand[]" id="qty_onhand" class="form-control" readonly>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="image">Qty Physical :</label>
+                        <input type="number" name="qty_physical[]" id="qty_physical" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label for="image">Image:</label>
+                        <input type="file" name="image[]" id="image" class="form-control" required>
+                    </div>  
+                </div>
+                <div class="d-block">
+                    <!-- Add and Remove Buttons -->
+                    <button type="button" class="btn btn-success btn-add-asset">+</button>
+                    <button type="button" class="btn btn-danger btn-remove-asset">-</button>
+                </div>
+                <!-- Submit Buttons -->
+                <div id="buttonSubmit" class="text-right">
+                    <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
         </div>
 
-    <div class="modal fade" id="searchRegistData" tabindex="-1" role="dialog" aria-labelledby="searchRegistDataLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="searchRegistDataLabel">Search data Register Asset</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table id="assetTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Register Code</th>
-                            <th>Asset Name</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Condition</th>
-                            <th>Width</th>
-                            <th>Height</th>
-                            <th>Depth</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="modal fade" id="searchRegistData" tabindex="-1" role="dialog" aria-labelledby="searchRegistDataLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchRegistDataLabel">Search data Register Asset</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="assetTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Register Code</th>
+                                        <th>Asset Name</th>
+                                        <th>Type</th>
+                                        <th>Category</th>
+                                        <th>Condition</th>
+                                        <th>Width</th>
+                                        <th>Height</th>
+                                        <th>Depth</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </div>
             </div>
         </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    </form>
     </div>
-</div>
-
-<br><br>
-
-<div id="assetFieldsContainer" >
-          <div class="asset-fields border rounded p-3 mb-3">
-            <div class="row">
-            <div class="col-sm-4 mb-3">
-                <label for="asset_id">Data Asset:</label>
-                <select name="asset_id[]" id="asset_id" class="form-control asset-select" required></select>
-              </div>
-              <div class="col-sm-4 mb-3">
-                <label for="merk">Merk :</label>
-                <input type="text" name="merk_display[]" readonly class="form-control">
-                <input type="hidden" name="merk[]">
-              </div>
-              <div class="col-sm-4 mb-3">
-                <label for="qty">Quantity :</label>
-                <input type="text" name="qty[]" id="qty" class="form-control" readonly>
-              </div>
-              <div class="col-sm-3 mb-3">
-                <label for="satuan">Uom :</label>
-                <input type="text" name="satuan_display[]" readonly class="form-control">
-                <input type="hidden" name="satuan[]">
-              </div>
-              <div class="col-sm-3 mb-3">
-                <label for="serial_number">Serial Number :</label>
-                <input type="text" name="serial_number[]" id="serial_number" class="form-control" readonly>
-              </div>
-              <div class="col-sm-3 mb-3">
-                <label for="register_code">Asset Tag :</label>
-                <input type="text" name="register_code[]" id="register_code" class="form-control" readonly>
-              </div>
-              <div class="col-sm-3 mb-3">
-                <label for="condition_id_0">Condition :</label>
-                <select name="condition_id[]" id="condition_id_0" class="form-control" required>
-                  <option value="">Pilih Kondisi</option>
-                  @foreach($conditions as $condition)
-                    <option value="{{ $condition->condition_id }}">{{ $condition->condition_name }}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-sm-3 mb-3">
-                <label for="image">Image:</label>
-                <input type="file" name="image[]" id="image" class="form-control" required>
-              </div>  
-              <div class="col-sm-3 mb-3">
-                <label for="image">Qty OnHand :</label>
-                <input type="number" name="qty_onhand[]" id="qty_onhand" class="form-control" readonly>
-              </div>
-              <div class="col-sm-3 mb-3">
-                <label for="image">Qty Physical :</label>
-                <input type="number" name="qty_physical[]" id="qty_physical" class="form-control" required>
-              </div>
-            </div>
-            <!-- Add and Remove Buttons -->
-            <button type="button" class="btn btn-success btn-add-asset">+</button>
-            <button type="button" class="btn btn-danger btn-remove-asset">-</button>
-          </div>
-        </div>
-
-        <!-- Submit Buttons -->
-        <div class="text-right">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
 </div>
 
 
@@ -777,6 +765,10 @@ function createFreshAssetField() {
     const $template = $('.asset-fields').first();
     const $newField = $template.clone();
     
+    // Remove the buttonSearch from the cloned field
+    $newField.find('#buttonSearch').remove();
+    $newField.find('#buttonSubmit').remove();
+    
     // Generate unique ID
     const uniqueId = 'asset_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     
@@ -806,6 +798,7 @@ function createFreshAssetField() {
     
     return $newField;
 }
+
 
 // Initialize existing fields
 $(document).ready(function() {
@@ -860,7 +853,9 @@ $(document).on('click', '.btn-add-asset', function() {
     // Initialize Select2 on new fields
     initializeAssetSelect2($newField.find('.asset-select'));
     initializeConditionSelect2($newField.find('select[name="condition_id[]"]'));
+
 });
+
 
 // Remove asset field
 $(document).on('click', '.btn-remove-asset', function() {

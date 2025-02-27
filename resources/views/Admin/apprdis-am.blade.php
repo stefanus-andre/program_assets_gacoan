@@ -281,7 +281,9 @@
                                                       <select name="appr_1" id="appr_1" class="form-control" required>
                                                         <option value="">Pilih Status</option>
                                                         @foreach($approvals as $approval)
+                                                          @if ($approval->approval_id != 3 && $approval->approval_id != 1)
                                                             <option value="{{ $approval->approval_id }}">{{ $approval->approval_name }}</option>
+                                                          @endif
                                                         @endforeach
                                                     </select>
                                                   </div>
@@ -391,14 +393,14 @@
                                         <td>{{ $moveout->approval_name }}</td>
                                         <td class="text-center">
                                           @if($moveout->appr_1 != 2 && $moveout->appr_1 != 4)
-                                                <a href="javascript:void(0);" class="edit-button" data-id="{{ $moveout->out_id }}" data-no="{{ $moveout->out_no }}" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                @endif
-                                                <a href="javascript:void(0);" class="detail-button" data-id="{{ $moveout->out_id }}" data-no="{{ $moveout->out_no }}" title="Detail">
-                                                    <i class="fas fa-book"></i>
-                                                  </a>
-                                                </td>
+                                            <a href="javascript:void(0);" class="edit-button" data-id="{{ $moveout->out_id }}" data-no="{{ $moveout->out_no }}" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                          @endif
+                                            <a href="{{ url('/admin/get_detail_data_disposal_out/' . $moveout->out_id) }}" title="Detail">
+                                              <i class="fas fa-book"></i>
+                                            </a>
+                                        </td>
                                         <td>{{ $moveout->appr_1_date }}</td>
                                     </tr>
                                 @endforeach

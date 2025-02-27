@@ -96,6 +96,7 @@ Route::prefix('admin/registrasi_asset')->group(function(){
 
 Route::group([RoleMiddleware::class => ':admin'], function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
+    Route::get('/admin/get-resto-json', [AdminController::class, 'getDataResto']);
     // Asset Route
     Route::get('/admin/halaman_asset', [AdminController::class, 'HalamanAsset']);
     Route::get('/admin/GetDataAsset', [AdminController::class, 'GetDataAsset']);
@@ -599,7 +600,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
      // Disposal
      Route::get('/admin/disout', [DisposalOutController::class, 'HalamanDisOut']);
      Route::get('/admin/disout', [DisposalOutController::class, 'HalamanDisOut'])->name('Admin.disout');
-     Route::post('/add-disout', [DisposalOutController::class, 'AddDataDisOut'])->name('add.disout');
+     Route::post('/add-disout', [DisposalOutController::class, 'AddDataDisOut'])->name('add.disposal_out');
      Route::get('/get-disout', [DisposalOutController::class, 'GetDisOut'])->name('get.disout');
      Route::get('/admin/disouts', [DisposalOutController::class, 'Index'])->name('Admin.disout');
     //  Route::get('/admin/disouts/edit/{id}', [DisposalOutController::class, 'showEditForm'])->name('edit.disout');
@@ -706,7 +707,7 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
 
 
        //Review    
-       Route::get('/admin/revdis-head', [DisposalController::class, 'HalamanHead']);
+       Route::get('/admin/review-disposal', [DisposalController::class, 'HalamanReview']);
        Route::get('/admin/revdis-head', [DisposalController::class, 'HalamanHead'])->name('Admin.revdis-head');
        Route::get('/admin/revdis-mnr', [DisposalController::class, 'HalamanMnr']);
        Route::get('/admin/revdis-mnr', [DisposalController::class, 'HalamanMnr'])->name('Admin.revdis-mnr');
@@ -714,9 +715,8 @@ Route::group([RoleMiddleware::class => ':admin'], function(){
        Route::get('/admin/revdis-taf', [DisposalController::class, 'HalamanTaf'])->name('Admin.revdis-taf');
 
 
- // Stock Opname
- Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname']);
- Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname'])->name('Admin.stockopname');
+// Stock Opname
+ Route::get('/admin/stockopname', [StockOpnameController::class, 'HalamanStockOpname'])->name('admin.stockopname');
  Route::post('/add-stockopname', [StockOpnameController::class, 'AddDataStockOpname'])->name('add.stockopname');
  Route::get('/get-stockopname', [StockOpnameController::class, 'GetStockOpname'])->name('get.stockopname');
  Route::get('/admin/stockopnames', [StockOpnameController::class, 'Index'])->name('Admin.stockopname');
@@ -852,16 +852,24 @@ Route::group([RoleMiddleware::class => ':user'], function(){
 });
 
 
-Route::group([
-    'middleware' => [RoleMiddleware::class . ':am'], 
-    'prefix' => 'am'
-], function () {
+Route::group(['middleware' => [RoleMiddleware::class . ':am'], 'prefix' => 'am'], function () {
+  
     Route::get('/dashboard', [AmController::class, 'dashboard']);
     Route::get('/moveout', [AmController::class, 'HalamanMovementOut']);
     
-    
-    Route::get('/disposal_out', [AmController::class, 'HalamanDisposalOut']);
-    Route::get('/add_data_disposal_out',[AmController::class, 'HalamanAddDataDisposalOut']);
+    //disposal
+    Route::get('/disposal', [AmController::class, 'HalamanDisposalAM']);
+    Route::get('/disposal', [AmController::class, 'HalamanDisposalAM'])->name('am.disposal');
+    Route::get('/tambah_data_disposal', [AmController::class, 'HalamanAddDataDisposal']);
+
+    Route::post('/add-disout', [AmController::class, 'AddDataDisOut'])->name('add.disout');
+
+    Route::post('/filter_data_disposal', [AmController::class, 'filterDisposal']);
+
+    Route::get('/get_detail_data_disposal/{id}', [AmController::class, 'detailPageDataDisposalOut']);
+
+    Route::get('/apprdis-am', [AmController::class, 'HalamanAmd1']);
+    //end disposal
 
     Route::get('/apprmoveout-am', [AmController::class, 'HalamanAmo1']);
     Route::get('/apprmoveout-am', [AmController::class, 'HalamanAmo1'])->name('Admin.apprmoveout-am');
@@ -872,32 +880,16 @@ Route::group([
     Route::put('/apprmoveout-ams/edit/{id}', [AmController::class, 'updateDataAmo1'])->name('update.apprmoveout-am');
 
     Route::get('/confirm',[AmController::class, 'HalamanConfirm']);
-
-
-    //halaman disposal 
-    Route::get('/approve', [AmController::class, 'HalamanApprovalDisposalOutAM']);
-
-    Route::get('/apprdisout-ams/edit/{id}', [MovementController::class, 'showEditForm1'])->name('edit.apprmoveout-am');
-    Route::put('/apprdisout-ams/edit/{id}', [MovementController::class, 'updateDataAmo1'])->name('update.apprmoveout-am');
-
-   
-  
   });
 
 
 
   Route::group([RoleMiddleware::class => ':sdg', 'prefix' => 'sdg'], function(){
-      Route::get('/dashboard', [SDGControllers::class, 'DashboardSDG']);
-
-      Route::get('/apprmoveout-sdgassets', [MovementController::class, 'Index3'])->name('Admin.apprmoveout-sdgasset');
-      Route::get('/apprmoveout-sdgassets/edit/{id}', [MovementController::class, 'showEditForm3'])->name('edit.apprmoveout-sdgasset');
-      Route::put('/apprmoveout-sdgassets/edit/{id}', [MovementController::class, 'updateDataAmo3'])->name('update.apprmoveout-sdgasset');
-    
-      Route::get('/apprdis-sdg', [SDGControllers::class, 'HalamanAmd3']);
-      Route::get('/apprdis-sdgassets/edit/{id}', [DisposalController::class, 'showEditForm3'])->name('edit.apprdis-sdgasset');
-      Route::put('/apprdis-sdgassets/edit/{id}', [DisposalController::class, 'updateDataAmd3'])->name('update.apprdis-sdgasset');
-  
-    });
+      Route::get('/dashboard', [SDGControllers::class, 'index']);
+      Route::get('/get-resto-json', [SDGControllers::class, 'GetDataResto']);
+      Route::get('/apprdis-sdgasset', [SDGControllers::class, 'HalamanAmd3']);
+      Route::get('/get_detail_data_disposal/{id}', [SDGControllers::class, 'DetailPageDataDisposalOut']);
+  });
 
 Route::group([RoleMiddleware::class => ':ops'], function(){
 
@@ -933,78 +925,58 @@ Route::group([RoleMiddleware::class => ':rm', 'prefix' => 'rm'], function(){
 
   Route::put('/confirms/edit/{id}', [DeliveryController::class, 'updateDataConfirm'])->name('update.confirm');
 
-  Route::get('/confirm', [RestoManagerController::class, 'HalamanConfirm']); 
+  Route::get('/confirm', [RestoManagerController::class, 'HalamanConfirm']);
 
-
-  //halaman disposal
-  Route::get('/approval', [RestoManagerController::class, 'HalamanApproveDisposalRM']);
-
-
-  Route::get('/rm/apprdis-rms/edit/{id}', [DisposalController::class, 'showEditForm2'])->name('edit.apprdis-rm');
-  Route::put('/rm/apprdis-rms/edit/{id}', [DisposalController::class, 'updateDataAmd2'])->name('update.apprdis-rm');
-  
+  Route::get('/apprdis-rm', [RestoManagerController::class, 'HalamanAmd2']);
+  Route::get('/get_detail_data_disposal/{id}', [RestoManagerController::class, 'DetailPageDataDisposalOut']);
 });
 
 Route::group([RoleMiddleware::class => ':sm', 'prefix' => 'sm'], function() {
-  Route::get('/dashboard', [StoreManagerController::class, 'dashboard']);
+  
+    Route::get('/dashboard', [StoreManagerController::class, 'dashboard']);
 
 
-  //halaman registrasi asset 
-  Route::get('/registrasi_asset', [StoreManagerController::class, 'HalamanRegistrasiAsset']);
+    //halaman registrasi asset 
+    Route::get('/registrasi_asset', [StoreManagerController::class, 'HalamanRegistrasiAsset']);
 
-  //halaman movement
-  Route::get('/movement/lihat_data_movement', [StoreManagerController::class, 'HalamanMovement']);
-  Route::get('/movement/add_data_movement', [StoreManagerController::class, 'HalamanAddMoveout'])->name('SM.addMovement');
-  Route::get('/api/get-location', [StoreManagerController::class, 'getLocationUser']);
-  Route::post('/movement/tambah_data_movement', [StoreManagerController::class, 'AddDataMoveOut']);
-  Route::post('/movement/lihat_data_movement', [StoreManagerController::class, 'filter'])->name('moveout.filter.sm');
+    //halaman movement
+    Route::get('/movement/lihat_data_movement', [StoreManagerController::class, 'HalamanMovement']);
+    Route::get('/movement/add_data_movement', [StoreManagerController::class, 'HalamanAddMoveout'])->name('SM.addMovement');
+    Route::get('/api/get-location', [StoreManagerController::class, 'getLocationUser']);
+    Route::post('/movement/tambah_data_movement', [StoreManagerController::class, 'AddDataMoveOut']);
+    Route::post('/movement/lihat_data_movement', [StoreManagerController::class, 'filter'])->name('moveout.filter.sm');
 
-  Route::get('/confirm', [StoreManagerController::class, 'HalamanConfirm']);
-
-
-  Route::get('/api/ajaxGetAssetMovement', [StoreManagerController::class, 'ajaxGetAssetMovement']);
-  Route::get('/api/get-data-movement', [StoreManagerController::class, 'getAjaxDataMovement']);
+    Route::get('/confirm', [StoreManagerController::class, 'HalamanConfirm']);
 
 
-  Route::get('/movement/data_confirm', [StoreManagerController::class, 'DataConfirmationSM']); 
-  Route::put('/movement/confirms/edit/{id}', [StoreManagerController::class, 'updateDataConfirm'])->name('update.confirm_sm');
-
-  Route::get('/api/get-movement-details/{id}', [StoreManagerController::class, 'getAjaxMovementSMDetails']);
-
-  //disposal routes
-  Route::get('/disposal', [StoreManagerController::class, 'HalamanDisposalSM']);  
-  Route::get('/tambah_data_disposal', [StoreManagerController::class, 'HalamanAddDataDisposal']);
-
-  Route::post('/add-disout', [StoreManagerController::class, 'AddDataDisOut'])->name('add.disout');
-
-  Route::get('/get_detail_data_disposal_out/{id}', [StoreManagerController::class, 'detailPageDataDisposalOut']);
+    Route::get('/api/ajaxGetAssetMovement', [StoreManagerController::class, 'ajaxGetAssetMovement']);
+    Route::get('/api/get-data-movement', [StoreManagerController::class, 'getAjaxDataMovement']);
 
 
-  Route::get('/api/get-data-disposal', [StoreManagerController::class, 'getAjaxDataDisposal']);
-  Route::get('/api/ajaxGetAssetDisposal', [StoreManagerController::class, 'ajaxGetAssetDisposal']);
-  Route::get('/api/get-disposal-details/{id}', [StoreManagerController::class, 'getAjaxDisposalSMDetails']);
+    Route::get('/movement/data_confirm', [StoreManagerController::class, 'DataConfirmationSM']); 
+    Route::put('/movement/confirms/edit/{id}', [StoreManagerController::class, 'updateDataConfirm'])->name('update.confirm_sm');
+
+    Route::get('/api/get-movement-details/{id}', [StoreManagerController::class, 'getAjaxMovementSMDetails']);
+
+    //disposal routes
+    Route::get('/disposal', [StoreManagerController::class, 'HalamanDisposalSM']);
+    Route::get('/disposal', [StoreManagerController::class, 'HalamanDisposalSM'])->name('sm.disposal');
+    Route::get('/tambah_data_disposal', [StoreManagerController::class, 'HalamanAddDataDisposal']);
+
+    Route::post('/add-disout', [StoreManagerController::class, 'AddDataDisOut'])->name('add.disout');
+
+    Route::post('/filter_data_disposal', [StoreManagerController::class, 'filterDisposal']);
+
+    Route::get('/get_detail_data_disposal_out/{id}', [StoreManagerController::class, 'detailPageDataDisposalOut']);
 
 
-  Route::get('/confirmdis', [StoreManagerController::class, 'HalamanConfirmDis']);
-  Route::get('/confirmdiss/edit/{id}', [StoreManagerController::class, 'showEditForm'])->name('edit.confirmdis');
-  Route::put('/confirmdiss/edit/{id}', [StoreManagerController::class, 'updateDataConfirmDis'])->name('update.confirmdis');
+    Route::get('/api/get-data-disposal', [StoreManagerController::class, 'getAjaxDataDisposal']);
+    Route::get('/api/ajaxGetAssetDisposal', [StoreManagerController::class, 'ajaxGetAssetDisposal']);
+    Route::get('/api/get-disposal-details/{id}', [StoreManagerController::class, 'getAjaxDisposalSMDetails']);
 
-  //stockopname
-  Route::get('/stockopname', [StoreManagerController::class, 'HalamanStockOpname']);
-  Route::get('/stockopname/add_data_stockopname', [StoreManagerController::class, 'HalamanAddDataStockOpname']);
-  Route::get('/stockopname/edit_data_stockopname', [StoreManagerController::class, 'HalamanEditDataStockOpname']);
-
-  Route::get('/api/getCodeStockOpname', [StoreManagerController::class, 'GetCodeStockOpname']);
-  Route::get('/api/get-stockopname-asset-details', [StoreManagerController::class, 'getAjaxDataAssetsStockOpname']);
-
-  Route::get('/api/get-asset-details-stockopname/{id}', [StoreManagerController::class, 'getAjaxAssetDetailsStockOpname']);
-
-  Route::get('/admin/stockopname/get_detail_data_stock_opname/{id}', [StoreManagerController::class, 'GetDetailDataStockOpname']);
-  Route::get('/api/get-out-stock-opname-detail/{outId}' , [StoreManagerController::class, 'GetDetailDataStockOpnameDetails']);
-
-  Route::get('/admin/stokopname/edit_detail_data_stock_opname/{id}', [StoreManagerController::class, 'EditDetailDataStockOpname']);
-  Route::put('/admin/stockopname/update_detail_data_stock_opname/{id}', [StoreManagerController::class, 'UpdateDetailDataStockOpname']);
-
+  
+ 
+  
 });
 
 

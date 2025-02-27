@@ -56,9 +56,9 @@
                               <li><a href="datatable-data-source.html">Data Sources</a></li>
                             </ul>
                           </li> --}}
-                          {{-- <li><a class="sidebar-link sidebar-title link-nav" href="/rm/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li> --}}
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/rm/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li>
-                          <li><a class="sidebar-link sidebar-title link-nav" href="/rm/approval"><span>Approval OPS SM</span></a></li>
+                          {{-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li> --}}
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><span>Assets Regist</span></a></li></li>
+                          <li><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-reg"><span>Approval OPS SM</span></a></li>
                           <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li> -->
                         </ul> 
                       
@@ -95,7 +95,7 @@
                                                 <span>Approval OPS AM</span>
                                             </a>
                                         </li> -->
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/rm/approval"><span>Approval OPS RM</span></a></li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/rm/apprdis-rm"><span>Approval OPS RM</span></a></li>
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-sdgasset"><span>Approval SDG Assets</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/disin"><span>Request Disposal In</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/deliverydis"><span>Delivery Order</span></a></li> -->

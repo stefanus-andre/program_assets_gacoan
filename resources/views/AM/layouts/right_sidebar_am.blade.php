@@ -73,7 +73,7 @@
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprmoveout-sdgasset"><span>Approval SDG Assets</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/movein"><span>Requet Movement In</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/delivery"><span>Delivery Order</span></a></li> -->
-                            <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/am/confirm"><span>Confirm Asset</span></a></li>   -->
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/am/confirm"><span>Confirm Asset</span></a></li>  
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-movement"><span>Data Movement</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-head"><span>Review Ops Head</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-mnr"><span>Review MnR Area</span></a></li> 
@@ -82,7 +82,7 @@
                         </li>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="book"></i><span>Disposal</span></a>
                           <ul class="sidebar-submenu">
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/am/disposal_out"><span>Data Disposal</span></a></li>
+                            {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/am/disposal"><span>Data Disposal</span></a></li> --}}
                             <!-- @if(Auth::user() && Auth::user()->role === 'am')
                                         <li class="sidebar-list">
                                             <a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-am">
@@ -91,7 +91,7 @@
                                         </li>
                             @endif -->
                             <li class="sidebar-list">
-                                            <a class="sidebar-link sidebar-title link-nav" href="/am/approve">
+                                            <a class="sidebar-link sidebar-title link-nav" href="/am/apprdis-am">
                                                 <span>Approval OPS AM</span>
                                             </a>
                                         </li>

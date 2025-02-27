@@ -252,17 +252,19 @@
 						</div>
 
                     <!-- Button trigger modal -->
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                    <div class="px-4">
+                      @if (session('success'))
+                          <div class="alert alert-success">
+                              {{ session('success') }}
+                          </div>
+                      @endif
 
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                      @if (session('error'))
+                          <div class="alert alert-danger">
+                              {{ session('error') }}
+                          </div>
+                      @endif
+                    </div>
 
                     <!-- Modal add -->
                     <!-- Modal Add Data Asset -->
@@ -442,7 +444,7 @@
                             </div>
                         </div>
 
-                    <div class="modal fade" id="importDataExcel" tabindex="-1" role="dialog" aria-labelledby="importDataExcelLabel" aria-hidden="true">
+                    {{-- <div class="modal fade" id="importDataExcel" tabindex="-1" role="dialog" aria-labelledby="importDataExcelLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -463,7 +465,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
   <div class="modal fade" id="importDataExcel" tabindex="-1" role="dialog" aria-labelledby="importDataExcelLabel" aria-hidden="true">
@@ -480,7 +482,7 @@
                 @csrf
                     <div class="form-group">
                         <label for="data_excel">Import Data Excel:</label>
-                        <input type="file" name="file" class="form-control" placeholder="Upload File Excel" required accept=".xlsx,.xls">
+                        <input type="file" name="file" class="form-control" placeholder="Upload File Excel" required accept=".xlsx,.xls,.csv">
                     </div>
             </div>
             <div class="modal-footer">
@@ -488,14 +490,15 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </form>
-                          @if(session('success'))
-              <div class="alert alert-success">{{ session('success') }}</div>
-          @endif
+          <div class="px-4">
+            @if(session('success'))
+               <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
-          @if(session('error'))
-              <div class="alert alert-danger">{{ session('error') }}</div>
-          @endif
-
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+          </div>
                   </div>
               </div>
           </div>
@@ -515,8 +518,8 @@
                                     <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request('end_date') }}">
                                 </div>
                                 <div class="col-md-4 d-flex align-items-end">
-                                    <button type="submit" class="btn btn-primary">Filter</button>
-                                    <a href="{{ route('Admin.stockopname') }}" class="btn btn-secondary ml-2">Reset</a>
+                                    <button type="submit" class="btn btn-primary me-2">Filter</button>
+                                    <a href="{{ route('admin.stockopname') }}" class="btn btn-secondary ml-2">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -536,8 +539,8 @@
                                     <th>Asset Tag</th>
                                     <th>Qty OnHand</th>
                                     <th>Qty Actual</th>
-                                    <!-- <th>Qty  Difference</th>
-                                    <th>Kondisi</th> -->
+                                    <th>Qty  Difference</th>
+                                    {{-- <th>Kondisi</th> --}}
                                     <th>Satuan</th>
                                     <!-- <th>Data Dibuat</th> -->
                                     <th>Verify</th>
@@ -557,6 +560,7 @@
                                         <td>{{ $moveout->register_code }}</td>
                                         <td>{{ $moveout->qty_onhand }}</td>
                                         <td>{{ $moveout->qty_physical }}</td>
+                                        <td>{{ $moveout->qty_difference }}</td>
                                         <td>{{ $moveout->uom_name }}</td>
                                         <td>{{ $moveout->verify }}</td>
                                         <td>

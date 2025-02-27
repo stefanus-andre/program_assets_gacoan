@@ -317,25 +317,26 @@ class MovementOutController  extends Controller
 
         $data = DB::table('t_out')
         ->select(
-            't_out.*', 
-            't_transaction_qty.*', 
-            'fromResto.store_code as origin_site', 
-            'toResto.store_code as destination_site', 
-            'table_registrasi_asset.register_code', 
-            'm_assets.asset_model', 
-            'm_reason.reason_name', 
+            't_out.*',
+            't_out_detail.*',
+            'fromResto.store_code as origin_site',
+            'toResto.store_code as destination_site',
+            'table_registrasi_asset.asset_name',
+            'm_assets.asset_model',
+            'm_brand.brand_name',
             'm_category.cat_name',
+            'm_reason.reason_name',
             'm_condition.condition_name'
         )
-        ->join('t_transaction_qty', 't_out.out_id', '=', 't_transaction_qty.out_id')
-        ->join('master_resto_v2 as fromResto', 't_out.from_loc', '=', 'fromResto.id')
-        ->join('master_resto_v2 as toResto', 't_out.dest_loc', '=', 'toResto.id')
-        ->join('table_registrasi_asset', 't_transaction_qty.asset_tag', '=', 'table_registrasi_asset.register_code')
-        ->join('m_assets', 'table_registrasi_asset.asset_name', '=', 'm_assets.asset_id')
-        ->join('m_reason', 't_out.reason_id', '=', 'm_reason.reason_id')
-        ->join('m_category', 'table_registrasi_asset.category_asset', '=', 'm_category.cat_code')
-        ->join('m_condition', 'table_registrasi_asset.condition', '=', 'm_condition.condition_id')
-    
+        ->join('t_out_detail', 't_out.out_id', '=', 't_out_detail.out_id',)
+        ->leftJoin('master_resto_v2 as fromResto', 't_out.from_loc', '=', 'fromResto.id')
+        ->leftJoin('master_resto_v2 as toResto', 't_out.dest_loc', '=', 'toResto.id')
+        ->join('table_registrasi_asset', 't_out_detail.asset_id', '=', 'table_registrasi_asset.id')
+        ->join('m_assets','table_registrasi_asset.asset_name', '=', 'm_assets.asset_id')
+        ->join('m_category','table_registrasi_asset.category_asset', '=', 'm_category.cat_code')
+        ->join('m_brand','t_out_detail.brand', '=', 'm_brand.brand_id')
+        ->join('m_reason','t_out.reason_id', '=', 'm_reason.reason_id')
+        ->join('m_condition','t_out_detail.condition', '=', 'm_condition.condition_id')
         ->where('t_out.out_id', $out_id)
         ->get();
 
@@ -374,8 +375,6 @@ class MovementOutController  extends Controller
 
 
 
-
-
         // Jika data tidak ditemukan, tampilkan halaman 404
 
         if (!$data) {
@@ -384,13 +383,16 @@ class MovementOutController  extends Controller
 
         }
 
-        // dd($data);
 
-        // // Buat PDF menggunakan data yang ditemukan
+
+        // Buat PDF menggunakan data yang ditemukan
 
         $pdf = PDF::loadView('Admin.pdf-moveout', compact('data', 'firstRecord'));
 
+
+
         return response($pdf->output(), 200)->header('Content-Type', 'application/pdf');
+
     }
 
 
@@ -1049,10 +1051,13 @@ foreach ($request->input('asset_id') as $index => $assetId) {
        'out_id' => $out_id, 
        'asset_tag' => $registerCode,
        'asset_id' => $assetId,
-       'from_loc' => $moveoutData->dest_loc,
-    //    'dest_loc' => $moveoutData->from_loc, 
+       'from_loc' => $moveoutData->from_loc,
+       'dest_loc' => $moveoutData->dest_loc,
        'qty' => $moveoutQty,
        'qty_continue' => 0,
+    //    'qty_continue' => DB::table('t_transaction_qty')
+    //        ->where('asset_tag', $registerCode)
+    //        ->sum('qty_continue') + $moveoutQty,
        'qty_total' => DB::table('t_transaction_qty')
            ->where('asset_tag', $registerCode)
            ->sum('qty_total') + $moveoutQty,
@@ -1063,7 +1068,6 @@ foreach ($request->input('asset_id') as $index => $assetId) {
        'created_at' => Carbon::now(),
        'updated_at' => Carbon::now(),
    ]);
-   
 }
 
    
@@ -1622,7 +1626,6 @@ public function getLocationUser() {
         ->join('master_resto_v2', 'master_resto_v2.id', '=', 'm_user.location_now')
         ->where('m_user.username', $username)
         ->first();
-
     // Return the location ID and name as JSON
     return response()->json($userLocation);
 }
@@ -1653,8 +1656,9 @@ public function searchRegisterAsset(Request $request)
     }
 
 
-    public function ajaxGetDataRegistAsset()
+    public function ajaxGetDataRegistAsset(Request $request)
     {
+        $loc_user = $request->input('user_loc');
         $assets =  DB::table('table_registrasi_asset')
         ->select('table_registrasi_asset.id'
                 ,'table_registrasi_asset.register_code'    
@@ -1696,9 +1700,11 @@ public function searchRegisterAsset(Request $request)
         ->leftJoin('m_warranty', 'table_registrasi_asset.warranty', '=', 'm_warranty.warranty_id')
         ->leftJoin('m_periodic_mtc', 'table_registrasi_asset.periodic_maintenance', '=', 'm_periodic_mtc.periodic_mtc_id')
         ->leftJoin('t_out_detail', 'table_registrasi_asset.id', '=', 't_out_detail.asset_id')
-        ->where('table_registrasi_asset.qty', '>', 0) 
+        ->when($loc_user !== NULL, function ($query) use ($loc_user) {
+            return $query->where('table_registrasi_asset.register_location', $loc_user);
+        })
+        ->where('table_registrasi_asset.qty', '>', 0)
         ->get();
-
         $data = [];
         foreach ($assets as $asset) {
             $data[] = [
@@ -1723,9 +1729,11 @@ public function searchRegisterAsset(Request $request)
                 // 'serial_number' => $asset->serial_number,
             ];
         }
+
+        $datas = collect($data)->unique('id')->values();
     
         return response()->json([
-            'data' => $data,
+            'data' => $datas,
             'recordsTotal' => count($data),
             'recordsFiltered' => count($data),
         ]);

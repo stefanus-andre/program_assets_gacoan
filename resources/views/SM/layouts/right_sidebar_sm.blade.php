@@ -99,7 +99,7 @@
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/apprdis-sdgasset"><span>Approval SDG Assets</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/disin"><span>Request Disposal In</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/deliverydis"><span>Delivery Order</span></a></li> -->
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/sm/confirmdis"><span>Confirm Disposal</span></a></li>
+                            <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirmdis"><span>Confirm Disposal</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-disposal"><span>Data Disposal</span></a></li> -->
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/revdis-head"><span>Review Ops Head</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/revdis-mnr"><span>Review MnR Area</span></a></li>
@@ -109,7 +109,7 @@
 
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="archive"></i><span>Stock Opname</span></a>
                         <ul class="sidebar-submenu">
-                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/sm/stockopname"><span>Data Stock Opname</span></a></li>
+                          <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/stockopname"><span>Data Stock Opname</span></a></li>
                           <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/adjustmentstock"><span>Adjustment Stock</span></a></li> -->
                         </ul>
                       </li>
