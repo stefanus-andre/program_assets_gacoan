@@ -19,19 +19,20 @@ class RestoController extends Controller
 {
 
 
-    public function DataResto() {
+    public function DataResto()
+    {
         $datas = DB::table('master_resto_v2')
-        ->select('master_resto_v2.*')
-        ->paginate(10);
+            ->select('master_resto_v2.*')
+            ->paginate(10);
         return view('Admin.resto', compact('datas'));
     }
 
 
-    public function GetDataResto(Request $request) {
+    public function GetDataResto(Request $request)
+    {
 
         $searchTerm = $request->input('search');
 
-    
 
         if ($searchTerm) {
 
@@ -44,23 +45,20 @@ class RestoController extends Controller
                 ->orWhere('name_store_street', 'LIKE', '%' . $searchTerm . '%')
 
                 ->get();
-
         } else {
 
             $dataResto = MasterRestoModel::all();
-
         }
 
-    
+
 
         // Log data for debugging (optional)
 
         // \Log::info($dataResto);
 
-    
+
 
         return response()->json($dataResto);
-
     }
 
 
@@ -82,10 +80,9 @@ class RestoController extends Controller
             'register_location' => $initialResto ? $initialResto->kode_resto . ' - ' . $initialResto->resto . ' - ' . $initialResto->kom_resto : null
 
         ]);
-
     }
 
-    
+
     public function getResto()
 
     {
@@ -93,11 +90,10 @@ class RestoController extends Controller
         // Mengambil semua data dari tabel m_city
 
         $datas = DB::table('master_resto_v2')
-        ->select('master_resto_v2.*')
-        ->get();
+            ->select('master_resto_v2.*')
+            ->get();
 
         return response()->json($datas);
-
     }
 
     public function details($restoId)
@@ -111,14 +107,10 @@ class RestoController extends Controller
         if (!$resto) {
 
             abort(404, 'Resto not found');
-
         }
 
 
 
         return view('resto.details', ['asset' => $city]);
-
     }
-
 }
-

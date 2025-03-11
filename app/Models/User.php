@@ -1,15 +1,16 @@
-<?php 
+<?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
 
-    protected $table = 'm_user'; 
+    protected $table = 'm_user';
 
     protected $fillable = [
         'username',
@@ -20,4 +21,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    // protected $guard_name = 'web'; // Add this line
 }

@@ -12,23 +12,23 @@
                   <li class="back-btn"><a href="index.html"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
                     <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
                   </li>
-                  <!-- <li class="sidebar-main-title">          
+                  <!-- <li class="sidebar-main-title">
                     <h6 class="lan-1">General </h6>
                   </li>
-                  <li class="menu-box"> 
-                    <ul>             
+                  <li class="menu-box">
+                    <ul>
                       <li class="sidebar-list">           <a class="sidebar-link sidebar-title" href="dashboard-02.html"><i data-feather="home"></i><span class="lan-3">Dashboard              </span></a>
                         <ul class="sidebar-submenu">
                         </ul>
                       </li>
                     </ul>
                   </li> -->
-                  <li class="sidebar-main-title">          
+                  <li class="sidebar-main-title">
                     <!-- <h6>Master Data</h6> -->
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
-                        <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/dashboard"><i data-feather="pie-chart"></i><span>Dashboard</span></a></li>
+                        <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{route('dashboard')}}"><i data-feather="pie-chart"></i><span>Dashboard</span></a></li>
                         {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/registrasi_asset/lihat_data_registrasi_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li> --}}
                         {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/halaman_asset"><i data-feather="clipboard"></i><span>Registration</span></a></li>
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="#"><i data-feather="arrow-right"></i><span>Assets Movement</span></a></li> --}}
@@ -36,10 +36,10 @@
                     </ul>
                   </li>
 
-                  <li class="sidebar-main-title">          
+                  <li class="sidebar-main-title">
                     <h6>Asset</h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>Registration</span></a>
                         <ul class="sidebar-submenu">
@@ -61,7 +61,7 @@
                           <li><a class="sidebar-link sidebar-title link-nav" href="/admin/approval-reg"><span>Approval OPS SM</span></a></li>
                           <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/admin/review-reg"><span>Review TAF</span></a></li> -->
                         </ul>
-                      
+
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="server"></i><span>Asset Transfer</span></a>
                           <ul class="sidebar-submenu">
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/moveout"><span>Request Movement Out</span></a></li>
@@ -76,7 +76,7 @@
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/confirm"><span>Confirm Asset</span></a></li>
                             <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/data-movement"><span>Data Movement</span></a></li> -->
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-head"><span>Review Ops Head</span></a></li>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-mnr"><span>Review MnR Area</span></a></li> 
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-mnr"><span>Review MnR Area</span></a></li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/rev-taf"><span>Review TAF Accounting</span></a></li>
                           </ul>
                         </li>
@@ -117,17 +117,17 @@
                   </li>
 
 
-                  
-                  <li class="sidebar-main-title">          
+
+                  <li class="sidebar-main-title">
                     <h6>Maintenance</h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clock"></i><span>Schedule</span></a>
                         <ul class="sidebar-submenu">
                           <li><a class="sidebar-link sidebar-title link-nav" href="/schedule/lihat_data_schedule"><span> Data Schedule</span></a></li></li>
                         </ul>
-                        
+
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="trello"></i><span>Preventive Maintenance</span></a>
                         <ul class="sidebar-submenu">
                           <li><a class="sidebar-link sidebar-title link-nav" href="/preventive_maintenance/lihat_data_preventive_maintenance"><span> Data Preventive Schedule</span></a></li></li>
@@ -146,11 +146,11 @@
                   </li>
 
 
-                  <li class="sidebar-main-title">          
+                  <li class="sidebar-main-title">
                     <h6>Master Data</h6>
                   </li>
-                  
-                  <li class="menu-box"> 
+
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list">
                         <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="database"></i><span>Master Data</span></a>
@@ -175,7 +175,7 @@
                           <!-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/location"><span>Lokasi</span></a></li> -->
 
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/mtc"><span>Maintenance</span></a></li>
-                          
+
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/people"><span>People</span></a></li>
 
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/type"><span>Tipe Asset</span></a></li>
@@ -184,33 +184,33 @@
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/priority"><span>Prioritas</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/reason"><span>Alasan Mutasi</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/reasonso"><span>Alasan Stock Opname</span></a></li>
-                          
+
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/region"><span>Regional</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/repair"><span>Perbaikan</span></a></li>
-                          
+
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/supplier"><span>Pemasok</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/uom"><span>Satuan</span></a></li>
-                          
+
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/warranty"><span>Garansi</span></a></li>
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/city"><span>Kota</span></a></li>
 
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/resto"><span>Resto</span></a></li>
 
                           <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="/admin/approval_maintenance"><span>Approval Maintenance</span></a></li>
-                            
-                          
+
+
 
                         </ul>
                       </li>
                     </ul>
                   </li>
 
-                  
 
-                  <li class="sidebar-main-title">          
+
+                  <li class="sidebar-main-title">
                     <h6>User Management</h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>User</span></a>
                         <ul class="sidebar-submenu">
@@ -235,10 +235,10 @@
 
 
 
-                  <li class="sidebar-main-title">          
+                  <li class="sidebar-main-title">
                     <h6>Report</h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="clipboard"></i><span>Report</span></a>
                         <ul class="sidebar-submenu">
@@ -269,24 +269,24 @@
                           <!-- <li><a class="sidebar-link sidebar-title link-nav" href="/reports/trend_issue_maintenace"><span>Trend Issue Maintenance</span></a></li></li> -->
                         </ul>
                     </ul>
-                  </li> 
+                  </li>
 
 
-				        {{-- <li class="sidebar-main-title">          
+				        {{-- <li class="sidebar-main-title">
                     <h6>Registrasi Asset    </h6>
                   </li>
-                  <li class="menu-box"> 
-                    <ul>        
+                  <li class="menu-box">
+                    <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="cast"> </i><span>Asset list</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="file-text"> </i><span>Component list</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php"><i data-feather="globe"> </i><span>Priority list</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="list-products.php" target="_blank"><i data-feather="anchor"></i><span>Schedule Mainten</span></a></li>
                     </ul>
                   </li> --}}
-                  {{-- <li class="sidebar-main-title">          
+                  {{-- <li class="sidebar-main-title">
                     <h6>Checklist Asset             </h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="file-text"></i><span>dash</span></a>
                         <ul class="sidebar-submenu">
@@ -343,10 +343,10 @@
                       </li>
                     </ul>
                   </li> --}}
-                  <!-- <li class="sidebar-main-title">          
+                  <!-- <li class="sidebar-main-title">
                     <h6>Components</h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="box"></i><span>Ui Kits</span></a>
                         <ul class="sidebar-submenu">
@@ -428,7 +428,7 @@
                         </ul>
                       </li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="bar-chart"></i><span>Charts</span></a>
-                        <ul class="sidebar-submenu">                
+                        <ul class="sidebar-submenu">
                           <li><a href="chart-apex.html">Apex Chart</a></li>
                           <li><a href="chart-google.html">Google Chart</a></li>
                           <li><a href="chart-sparkline.html">Sparkline chart</a></li>
@@ -442,11 +442,11 @@
                       </li>
                     </ul>
                   </li>
-                  <li class="sidebar-main-title">          
+                  <li class="sidebar-main-title">
                     <h6>Pages    </h6>
                   </li>
-                  <li class="menu-box"> 
-                    <ul>        
+                  <li class="menu-box">
+                    <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="landing-page.html"><i data-feather="cast"> </i><span>Landing page</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="sample-page.html"><i data-feather="file-text"> </i><span>Sample page</span></a></li>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="internationalization.html"><i data-feather="globe"> </i><span>Internationalization</span></a></li>
@@ -524,10 +524,10 @@
                       </li>
                     </ul>
                   </li> -->
-                  <!-- <li class="sidebar-main-title">          
+                  <!-- <li class="sidebar-main-title">
                     <h6>Miscellaneous             </h6>
                   </li>
-                  <li class="menu-box"> 
+                  <li class="menu-box">
                     <ul>
                       <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i data-feather="image"></i><span>Gallery</span></a>
                         <ul class="sidebar-submenu">
